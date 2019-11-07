@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MathNet.Numerics.LinearAlgebra.Double;
+using GFunctions;
+using GFunctions.Graphics;
 
 namespace Hexapod_Simulator
 {
@@ -18,8 +20,8 @@ namespace Hexapod_Simulator
         
         //public Ball_Test BTest;
         public Ball_Local_Test BTest;
-        public Simulation Sim = new Simulation();
-        public Simulation TrajSim = new Simulation();
+        public TimeSimulation Sim = new TimeSimulation();
+        public TimeSimulation TrajSim = new TimeSimulation();
 
         public PIDController XController = new PIDController(3, 1, 1, -0.5, 30);
         public PIDController YController = new PIDController(-3, 1, 1, -0.5, 30);
@@ -154,7 +156,7 @@ namespace Hexapod_Simulator
             servoActive = Btn.Checked; 
         }
 
-        private void SimulationTimeStepDoWork(object sender, SimulationTimeStepEventArgs e)
+        private void SimulationTimeStepDoWork(object sender, TimeSimulationStepEventArgs e)
         {
             //------------ Do Calculations -------------------------
             
@@ -223,7 +225,7 @@ namespace Hexapod_Simulator
         }
 
 
-        private void TrajSimulationTimeStepDoWork(object sender, SimulationTimeStepEventArgs e)
+        private void TrajSimulationTimeStepDoWork(object sender, TimeSimulationStepEventArgs e)
         {
             //------------ Do Calculations -------------------------
 

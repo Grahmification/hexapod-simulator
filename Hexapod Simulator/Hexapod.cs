@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using MathNet.Numerics.LinearAlgebra.Double;
-
+using GFunctions;
+using GFunctions.Graphics;
 
 
 namespace Hexapod_Simulator

@@ -1,4 +1,6 @@
-﻿namespace Hexapod_Simulator.UserControls
+﻿using GFunctions.Winforms.Controls;
+
+namespace Hexapod_Simulator.UserControls
 {
     partial class PlatformConfigControl
     {
@@ -37,11 +39,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button_apply = new System.Windows.Forms.Button();
-            this.numericalInputTextBox_posZ = new Hexapod_Simulator.NumericalInputTextBox();
-            this.numericalInputTextBox_posY = new Hexapod_Simulator.NumericalInputTextBox();
-            this.numericalInputTextBox_posX = new Hexapod_Simulator.NumericalInputTextBox();
-            this.numericalInputTextBox_jointAngle = new Hexapod_Simulator.NumericalInputTextBox();
-            this.numericalInputTextBox_radius = new Hexapod_Simulator.NumericalInputTextBox();
+            this.numericalInputTextBox_posZ = new GFunctions.Winforms.Controls.NumericalInputTextBox();
+            this.numericalInputTextBox_posY = new GFunctions.Winforms.Controls.NumericalInputTextBox();
+            this.numericalInputTextBox_posX = new GFunctions.Winforms.Controls.NumericalInputTextBox();
+            this.numericalInputTextBox_jointAngle = new GFunctions.Winforms.Controls.NumericalInputTextBox();
+            this.numericalInputTextBox_radius = new GFunctions.Winforms.Controls.NumericalInputTextBox();
             this.SuspendLayout();
             // 
             // label_title

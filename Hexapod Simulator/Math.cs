@@ -7,7 +7,7 @@ using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace Hexapod_Simulator
 {
-    public class KinematicMath
+    public class KinematicMath_OLD
     {
         public static DenseMatrix RotationMatrixFromPRY(double[] Rot)
         {
@@ -75,7 +75,7 @@ namespace Hexapod_Simulator
             DenseMatrix StartingMat = new DenseMatrix(3, 1);
             StartingMat.SetColumn(0, Trans2);
 
-            DenseMatrix GlobalCoords = (KinematicMath.RotationMatrixFromPRY(Rot) * LocalCoords) + TranslationMat + StartingMat;
+            DenseMatrix GlobalCoords = (KinematicMath_OLD.RotationMatrixFromPRY(Rot) * LocalCoords) + TranslationMat + StartingMat;
 
             return new double[] { GlobalCoords[0, 0], GlobalCoords[1, 0], GlobalCoords[2, 0] };
         }
@@ -99,11 +99,10 @@ namespace Hexapod_Simulator
             TranslationMat2.SetColumn(0, Trans2);
 
 
-            DenseMatrix GlobalCoords = (KinematicMath.RotationMatrixFromPRY(Rot) * (LocalCoords - RotCenter + TranslationMat)) + TranslationMat2 + RotCenter; //Rotcenter needs to be added before rotation, then removed after
+            DenseMatrix GlobalCoords = (KinematicMath_OLD.RotationMatrixFromPRY(Rot) * (LocalCoords - RotCenter + TranslationMat)) + TranslationMat2 + RotCenter; //Rotcenter needs to be added before rotation, then removed after
 
             return new double[] { GlobalCoords[0, 0], GlobalCoords[1, 0], GlobalCoords[2, 0] };
         }
-
         public static double VectorLength(double[] pos1, double[] pos2)
         {
             double output = 0;

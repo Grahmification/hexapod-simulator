@@ -39,18 +39,18 @@ namespace Hexapod_Simulator
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBox_simInterval = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer_main = new System.Windows.Forms.SplitContainer();
             this.tabControl_main = new System.Windows.Forms.TabControl();
             this.tabPage_movement = new System.Windows.Forms.TabPage();
+            this.tabPage_config = new System.Windows.Forms.TabPage();
+            this.glControl_main = new OpenTK.GLControl();
             this.control_ServoPos1 = new Hexapod_Simulator.UserControls.Control_ServoPos();
             this.control_CurrentPos1 = new Hexapod_Simulator.UserControls.Control_CurrentPos();
             this.control_ManualDrag_main = new Hexapod_Simulator.UserControls.Control_ManualDrag();
-            this.tabPage_config = new System.Windows.Forms.TabPage();
             this.control_RotationCenter1 = new Hexapod_Simulator.UserControls.Control_RotationCenter();
             this.platformConfigControl_base = new Hexapod_Simulator.UserControls.PlatformConfigControl();
             this.platformConfigControl_top = new Hexapod_Simulator.UserControls.PlatformConfigControl();
-            this.glControl_main = new OpenTK.GLControl();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip_bottom.SuspendLayout();
             this.toolStrip_top.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_main)).BeginInit();
@@ -130,6 +130,15 @@ namespace Hexapod_Simulator
             this.toolStripTextBox_simInterval.Size = new System.Drawing.Size(100, 25);
             this.toolStripTextBox_simInterval.Text = "50";
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(78, 22);
+            this.toolStripButton1.Text = "Trajectory";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // splitContainer_main
             // 
             this.splitContainer_main.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -174,6 +183,29 @@ namespace Hexapod_Simulator
             this.tabPage_movement.Text = "Move";
             this.tabPage_movement.UseVisualStyleBackColor = true;
             // 
+            // tabPage_config
+            // 
+            this.tabPage_config.Controls.Add(this.control_RotationCenter1);
+            this.tabPage_config.Controls.Add(this.platformConfigControl_base);
+            this.tabPage_config.Controls.Add(this.platformConfigControl_top);
+            this.tabPage_config.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_config.Name = "tabPage_config";
+            this.tabPage_config.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_config.Size = new System.Drawing.Size(252, 669);
+            this.tabPage_config.TabIndex = 1;
+            this.tabPage_config.Text = "Config";
+            this.tabPage_config.UseVisualStyleBackColor = true;
+            // 
+            // glControl_main
+            // 
+            this.glControl_main.BackColor = System.Drawing.Color.Black;
+            this.glControl_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.glControl_main.Location = new System.Drawing.Point(0, 0);
+            this.glControl_main.Name = "glControl_main";
+            this.glControl_main.Size = new System.Drawing.Size(785, 695);
+            this.glControl_main.TabIndex = 0;
+            this.glControl_main.VSync = false;
+            // 
             // control_ServoPos1
             // 
             this.control_ServoPos1.BackColor = System.Drawing.SystemColors.ControlDark;
@@ -187,7 +219,7 @@ namespace Hexapod_Simulator
             // 
             this.control_CurrentPos1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.control_CurrentPos1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.control_CurrentPos1.Location = new System.Drawing.Point(6, 227);
+            this.control_CurrentPos1.Location = new System.Drawing.Point(10, 227);
             this.control_CurrentPos1.Name = "control_CurrentPos1";
             this.control_CurrentPos1.Size = new System.Drawing.Size(236, 187);
             this.control_CurrentPos1.TabIndex = 2;
@@ -208,19 +240,6 @@ namespace Hexapod_Simulator
         0D};
             this.control_ManualDrag_main.Size = new System.Drawing.Size(236, 215);
             this.control_ManualDrag_main.TabIndex = 1;
-            // 
-            // tabPage_config
-            // 
-            this.tabPage_config.Controls.Add(this.control_RotationCenter1);
-            this.tabPage_config.Controls.Add(this.platformConfigControl_base);
-            this.tabPage_config.Controls.Add(this.platformConfigControl_top);
-            this.tabPage_config.Location = new System.Drawing.Point(4, 22);
-            this.tabPage_config.Name = "tabPage_config";
-            this.tabPage_config.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_config.Size = new System.Drawing.Size(252, 669);
-            this.tabPage_config.TabIndex = 1;
-            this.tabPage_config.Text = "Config";
-            this.tabPage_config.UseVisualStyleBackColor = true;
             // 
             // control_RotationCenter1
             // 
@@ -248,25 +267,6 @@ namespace Hexapod_Simulator
             this.platformConfigControl_top.Name = "platformConfigControl_top";
             this.platformConfigControl_top.Size = new System.Drawing.Size(236, 205);
             this.platformConfigControl_top.TabIndex = 0;
-            // 
-            // glControl_main
-            // 
-            this.glControl_main.BackColor = System.Drawing.Color.Black;
-            this.glControl_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glControl_main.Location = new System.Drawing.Point(0, 0);
-            this.glControl_main.Name = "glControl_main";
-            this.glControl_main.Size = new System.Drawing.Size(785, 695);
-            this.glControl_main.TabIndex = 0;
-            this.glControl_main.VSync = false;
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(80, 22);
-            this.toolStripButton1.Text = "Trajectory";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // Mainform
             // 

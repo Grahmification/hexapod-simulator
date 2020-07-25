@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
-using GFunctions;
-using GFunctions.Graphics;
+using GFunctions.OpenTK;
+using GFunctions.Mathematics;
+using GFunctions.Mathnet;
 
 namespace Hexapod_Simulator.SimObject
 {

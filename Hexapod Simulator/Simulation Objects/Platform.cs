@@ -1,9 +1,9 @@
-﻿using MathNet.Numerics.LinearAlgebra.Double;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using GFunctions;
-using GFunctions.Graphics;
+using GFunctions.OpenTK;
+using GFunctions.Mathematics;
+using GFunctions.Mathnet;
 
 namespace Hexapod_Simulator.SimObject
 {
@@ -318,12 +318,8 @@ namespace Hexapod_Simulator.SimObject
 
         private void CalcNormalVector()
         {
-            DenseVector normal = new DenseVector(new double[] { 0, 0, 1 }); //local vector without rotation;
-            DenseMatrix rotation = KinematicMath.RotationMatrixFromPRY(this.Rotation);
-
-            DenseVector globalNormal = rotation * normal; //apply rotation
-
-            this.NormalVector = globalNormal.ToArray();
+            double[] normal = new double[] { 0, 0, 1 }; //local vector without rotation
+            this.NormalVector = GFunctions.Mathnet.KinematicMath.RotateVector(normal, this.Rotation);
         }
 
         public static double CalcJointOffsetAngle(int Index, double OffsetAngle)

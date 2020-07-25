@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Hexapod_Simulator.SimObject;
+using GFunctions.Winforms.Controls;
 
 namespace Hexapod_Simulator.UserControls
 {

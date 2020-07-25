@@ -1,5 +1,5 @@
 ﻿using System;
-using GFunctions.Graphics;
+using GFunctions.OpenTK;
 
 namespace Hexapod_Simulator.SimObject
 {

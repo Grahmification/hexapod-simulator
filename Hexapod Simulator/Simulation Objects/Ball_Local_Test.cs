@@ -1,8 +1,8 @@
 ﻿using MathNet.Numerics.LinearAlgebra.Double;
 using System;
 using System.Drawing;
-using GFunctions;
-using GFunctions.Graphics;
+using GFunctions.Mathematics;
+using GFunctions.OpenTK;
 
 
 namespace Hexapod_Simulator.SimObject
@@ -54,9 +54,9 @@ namespace Hexapod_Simulator.SimObject
         {
             GLObjects.Cube(Color.LightGreen, _globalPosition, 5);
         }
-        public void CalculateTimeStep(double TimeIncrement, DenseVector normalForceVector)
+        public void CalculateTimeStep(double TimeIncrement, double[] normalForceVector)
         {
-            CalcKineticSolution(normalForceVector); //calculates acceleration
+            CalcKineticSolution(new DenseVector(normalForceVector)); //calculates acceleration
 
             for (int i = 0; i < 2; i++)
             {

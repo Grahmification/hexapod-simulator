@@ -1,8 +1,8 @@
 ﻿using MathNet.Numerics.LinearAlgebra.Double;
 using System;
 using System.Drawing;
-using GFunctions;
-using GFunctions.Graphics;
+using GFunctions.Mathematics;
+using GFunctions.OpenTK;
 
 
 namespace Hexapod_Simulator.SimObject

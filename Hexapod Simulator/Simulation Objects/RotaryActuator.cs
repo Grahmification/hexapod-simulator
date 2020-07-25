@@ -1,4 +1,5 @@
-﻿using GFunctions;
+﻿using GFunctions.Mathematics;
+using GFunctions.Mathnet;
 
 namespace Hexapod_Simulator.SimObject
 {

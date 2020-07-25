@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Hexapod_Simulator.SimObject;
 
-namespace Hexapod_Simulator
+namespace Hexapod_Simulator.UserControls
 {
     public partial class PlatformConfigControl : UserControl
     {

@@ -1,4 +1,6 @@
-﻿namespace Hexapod_Simulator
+﻿using Hexapod_Simulator.UserControls;
+
+namespace Hexapod_Simulator
 {
     partial class Mainform
     {
@@ -40,13 +42,13 @@
             this.splitContainer_main = new System.Windows.Forms.SplitContainer();
             this.tabControl_main = new System.Windows.Forms.TabControl();
             this.tabPage_movement = new System.Windows.Forms.TabPage();
-            this.control_ServoPos1 = new Hexapod_Simulator.Control_ServoPos();
-            this.control_CurrentPos1 = new Hexapod_Simulator.Control_CurrentPos();
-            this.control_ManualDrag_main = new Hexapod_Simulator.Control_ManualDrag();
+            this.control_ServoPos1 = new Hexapod_Simulator.UserControls.Control_ServoPos();
+            this.control_CurrentPos1 = new Hexapod_Simulator.UserControls.Control_CurrentPos();
+            this.control_ManualDrag_main = new Hexapod_Simulator.UserControls.Control_ManualDrag();
             this.tabPage_config = new System.Windows.Forms.TabPage();
-            this.control_RotationCenter1 = new Hexapod_Simulator.Control_RotationCenter();
-            this.platformConfigControl_base = new Hexapod_Simulator.PlatformConfigControl();
-            this.platformConfigControl_top = new Hexapod_Simulator.PlatformConfigControl();
+            this.control_RotationCenter1 = new Hexapod_Simulator.UserControls.Control_RotationCenter();
+            this.platformConfigControl_base = new Hexapod_Simulator.UserControls.PlatformConfigControl();
+            this.platformConfigControl_top = new Hexapod_Simulator.UserControls.PlatformConfigControl();
             this.glControl_main = new OpenTK.GLControl();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip_bottom.SuspendLayout();

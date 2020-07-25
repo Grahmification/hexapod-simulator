@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Hexapod_Simulator
+namespace Hexapod_Simulator.UserControls
 {
     public partial class Control_ManualDrag : UserControl
     {

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MathNet.Numerics.LinearAlgebra.Double;
 using GFunctions;
 using GFunctions.Graphics;
+using Hexapod_Simulator.SimObject;
 
 namespace Hexapod_Simulator
 {

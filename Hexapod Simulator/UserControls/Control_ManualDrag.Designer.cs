@@ -1,4 +1,4 @@
-﻿namespace Hexapod_Simulator
+﻿namespace Hexapod_Simulator.UserControls
 {
     partial class Control_ManualDrag
     {

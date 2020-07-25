@@ -71,13 +71,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Simulation Objects\IActuator.cs" />
-    <Compile Include="Simulation Objects\LinearActuator.cs" />
-    <Compile Include="Simulation Objects\Ball.cs" />
-    <Compile Include="Simulation Objects\Ball_Local_Test.cs" />
-    <Compile Include="Simulation Objects\Ball_Test.cs" />
-    <Compile Include="Simulation Objects\Platform.cs" />
-    <Compile Include="Simulation Objects\RotaryActuator.cs" />
+    <Compile Include="SimObject\BallDrawable.cs" />
+    <Compile Include="SimObject\IActuator.cs" />
+    <Compile Include="SimObject\LinearActuator.cs" />
+    <Compile Include="SimObject\Ball.cs" />
+    <Compile Include="SimObject\Ball_Local_Test.cs" />
+    <Compile Include="SimObject\Ball_Test.cs" />
+    <Compile Include="SimObject\Platform.cs" />
+    <Compile Include="SimObject\RotaryActuator.cs" />
     <Compile Include="UserControls\Control_ServoPos.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -96,7 +97,7 @@
     <Compile Include="UserControls\Control_ManualDrag.Designer.cs">
       <DependentUpon>Control_ManualDrag.cs</DependentUpon>
     </Compile>
-    <Compile Include="Simulation Objects\Hexapod.cs" />
+    <Compile Include="SimObject\Hexapod.cs" />
     <Compile Include="Mainform.cs">
       <SubType>Form</SubType>
     </Compile>

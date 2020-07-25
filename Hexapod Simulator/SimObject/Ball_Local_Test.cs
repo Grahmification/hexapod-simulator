@@ -7,61 +7,30 @@ using GFunctions.OpenTK;
 
 namespace Hexapod_Simulator.SimObject
 {
-    public class Ball_Local_Test : IGLDrawable
+    public class Ball_Local_Test : BallDrawable
     {
         private double[] _globalPosition = new double[] { 0, 0, 0 };
-
-        private double[] _position = new double[] { 0, 0, 0 }; //XYZ position of centerpoint relative to platform [m]
-        private double[] _velocity = new double[] { 0, 0, 0 }; //XYZ velocity of centerpoint [m/s]
-        private double[] _acceleration = new double[] { 0, 0, 0 }; //XYZ accel of centerpoint [m/s/s]
         private double _normalForce = 0; //last calculated normal force magnitude
-
-
-        public double Radius { get; set; } //radius [m]
-        public double Density { get; set; } //density [kg/m^3]
-        public double Volume
-        {
-            get
-            {
-                return (4 / 3.0) * Math.PI * Math.Pow(this.Radius, 3);
-            }
-        } //volume [m^3]
-        public double Mass
-        {
-            get { return (this.Density * this.Volume); }
-        } //mass [kg]
-        public double[] Position
-        {
-            get { return this._position; }
-        }
-
-
-        public bool IsDrawn { get; set; }
-
-        public event EventHandler RedrawRequired;
 
         public Ball_Local_Test(double radius, double density, double[] startingPos)
         {
             this.Radius = radius;
             this.Density = density;
             this.IsDrawn = true;
-            this._position = startingPos;
+            this.Position = startingPos;
 
             this._normalForce = this.Mass * 9.81; //give an initial estimate assuming ball is on flat surface
         } //only calculates local coords
 
-        public void Draw()
-        {
-            GLObjects.Cube(Color.LightGreen, _globalPosition, 5);
-        }
+ 
         public void CalculateTimeStep(double TimeIncrement, double[] normalForceVector)
         {
             CalcKineticSolution(new DenseVector(normalForceVector)); //calculates acceleration
 
             for (int i = 0; i < 2; i++)
             {
-                _velocity[i] = _velocity[i] + Calculus.Integrate(_acceleration[i], TimeIncrement);
-                _position[i] = _position[i] + Calculus.Integrate(_velocity[i], TimeIncrement);
+                Velocity[i] = Velocity[i] + Calculus.Integrate(Acceleration[i], TimeIncrement);
+                Position[i] = Position[i] + Calculus.Integrate(Velocity[i], TimeIncrement);
             }
         }
         public void UpdateGlobalCoords(double[] globalCoords)
@@ -92,7 +61,7 @@ namespace Hexapod_Simulator.SimObject
                 {
                     //this.SolutionValid = true;
 
-                    this._acceleration = CalcAccelVector(gravityForceVector, normalForceVector, this._normalForce, mass);
+                    this.Acceleration = CalcAccelVector(gravityForceVector, normalForceVector, this._normalForce, mass);
                     return;
                 }
 

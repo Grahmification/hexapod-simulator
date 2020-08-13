@@ -1,7 +1,7 @@
 ﻿using GFunctions.Mathematics;
 using GFunctions.Mathnet;
 
-namespace Hexapod_Simulator.SimObject
+namespace Hexapod_Simulator.Shared
 {
     public class RotaryActuator : LinearActuator, IActuator
     {
@@ -34,7 +34,6 @@ namespace Hexapod_Simulator.SimObject
             double[] coords = KinematicMath.CalcGlobalCoord(localCoord, trans, trans2, rot);
             this._armEndPosition = coords;
         } //needs to be different for rotary
-
         public static double calcMotorOffsetAngle(int Index, double armAngle, double jointOffsetAngle)
         {
             double angle = 0;

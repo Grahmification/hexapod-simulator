@@ -1,9 +1,8 @@
-﻿using System.Drawing;
-using GFunctions.OpenTK;
-using GFunctions.Mathematics;
+﻿using GFunctions.Mathematics;
 using GFunctions.Mathnet;
+using System;
 
-namespace Hexapod_Simulator.SimObject
+namespace Hexapod_Simulator.Shared
 {
     public class LinearActuator : IActuator
     {
@@ -79,6 +78,8 @@ namespace Hexapod_Simulator.SimObject
 
         public virtual ActuatorTypes ActuatorType { get { return ActuatorTypes.Linear; } }
 
+        public event EventHandler RedrawRequired; //not called by anything currently, but could be
+
         public LinearActuator(double maxTravel, double linkLength, double[] position, double[] linkEndPosition)
         {
             this._maxTravel = maxTravel;
@@ -90,19 +91,6 @@ namespace Hexapod_Simulator.SimObject
 
             calcMotorAngle();
         }
-        public void Draw()
-        {
-            Color clr = Color.Yellow;
-
-            if (this.SolutionValid == false)
-            {
-                clr = Color.Red;
-            }
-
-            GLObjects.Line(clr, this.Position, this.ArmEndPosition);
-            GLObjects.Line(clr, this.LinkEndPosition, this.ArmEndPosition);
-        }
-
 
         protected void calcMotorAngle()
         {

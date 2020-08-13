@@ -1,4 +1,6 @@
-﻿namespace Hexapod_Simulator.SimObject
+﻿using System;
+
+namespace Hexapod_Simulator.Shared
 {
     public interface IActuator
     {
@@ -15,7 +17,7 @@
         bool SolutionValid { get; }
         ActuatorTypes ActuatorType { get; }
 
-        void Draw();
+        event EventHandler RedrawRequired;
     }
     public enum ActuatorTypes
     {

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Hexapod_Simulator.SimObject;
 using GFunctions.Winforms.Controls;
+using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.UserControls
 {
     public partial class PlatformConfigControl : UserControl
     {
         private List<NumericalInputTextBox> Txts = new List<NumericalInputTextBox>();
-        private Platform platform;
+        private IPlatform platform;
         
         
         public PlatformConfigControl()
@@ -17,7 +18,7 @@ namespace Hexapod_Simulator.UserControls
             InitializeComponent();
         }
 
-        public void AssignPlatform(Platform platform)
+        public void AssignPlatform(IPlatform platform)
         {
             this.platform = platform;
 

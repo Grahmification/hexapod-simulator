@@ -5,16 +5,16 @@ using GFunctions.Mathematics;
 using GFunctions.Timing;
 using GFunctions.OpenTK;
 using Hexapod_Simulator.SimObject;
+using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator
 {
     public partial class Mainform : Form
     {
         public GLControlDraggable GLCont;
-        public Hexapod Hexa;
+        public HexapodDrawable Hexa;
         
-        //public Ball_Test BTest;
-        public Ball_Local_Test BTest;
+        public IBall BTest;
         public TimeSimulation Sim = new TimeSimulation();
         public TimeSimulation TrajSim = new TimeSimulation();
 
@@ -34,15 +34,15 @@ namespace Hexapod_Simulator
         {
             
             
-            Hexa = new Hexapod(30, 30, 10, 30, 5);
+            Hexa = new HexapodDrawable(30, 30, 10, 30, 5);
             //BTest = new Ball_Test(0.1, 9800, Hexa.Top.Position);
-            BTest = new Ball_Local_Test(0.1, 9800, new double[]{0,0,0});
+            BTest = new Ball_Local_TestDrawable(0.1, 9800, new double[]{0,0,0});
             
 
             GLCont = new GLControlDraggable(glControl_main);
 
             GLCont.DrawnObjects.Add(Hexa);
-            GLCont.DrawnObjects.Add(BTest);
+            GLCont.DrawnObjects.Add((IGLDrawable)BTest);
 
             GLCont.Refresh();
 
@@ -83,7 +83,7 @@ namespace Hexapod_Simulator
         }
         private void TopPosChanged(object sender, EventArgs e)
         {
-            Platform plat = (Platform)sender;
+            IPlatform plat = (IPlatform)sender;
 
             control_CurrentPos1.SetPosition(plat.Translation);
             control_CurrentPos1.SetRotation(plat.Rotation);
@@ -94,7 +94,7 @@ namespace Hexapod_Simulator
         }
         private void ServosCalculated(object sender, EventArgs e)
         {
-            Hexapod hex = (Hexapod)sender;
+            HexapodDrawable hex = (HexapodDrawable)sender;
 
             for (int i = 0; i < hex.Actuators.Length; i++)
             {
@@ -218,8 +218,6 @@ namespace Hexapod_Simulator
                 TrajSim.Start(Convert.ToDouble(1.0 / simSpeed));
             }
         }
-
-
         private void TrajSimulationTimeStepDoWork(object sender, TimeSimulationStepEventArgs e)
         {
             //------------ Do Calculations -------------------------
@@ -242,7 +240,6 @@ namespace Hexapod_Simulator
 
             e.WorkDoneCallback.Set(); //allow simulation to proceed
         }
-
         private void numericalInputTextBox1_TextChanged(object sender, EventArgs e)
         {
 

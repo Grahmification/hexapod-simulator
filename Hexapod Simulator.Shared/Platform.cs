@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using GFunctions.OpenTK;
 using GFunctions.Mathematics;
 using GFunctions.Mathnet;
 
-namespace Hexapod_Simulator.SimObject
+namespace Hexapod_Simulator.Shared
 {
-    public class Platform : IGLDrawable
+    public class Platform : IPlatform
     {
         private double radius = 1; //radius of joints [mm]
         private double jointAngle = 0; //angle of base nodes from 120 [deg]
@@ -133,9 +131,7 @@ namespace Hexapod_Simulator.SimObject
         }
 
         public string Name { get; set; }
-        public bool IsDrawn { get; set; }
-
-
+ 
         public event EventHandler RedrawRequired;
         public event EventHandler PositionChanged; //rotation or translation has changed
 
@@ -143,7 +139,6 @@ namespace Hexapod_Simulator.SimObject
         {
             //------------- Initialize Everything ------------------------
 
-            this.IsDrawn = true;
             this.Name = name;
             this.LocalJointCoords = new double[6][];
             this.GlobalJointCoords = new double[6][];
@@ -201,32 +196,6 @@ namespace Hexapod_Simulator.SimObject
             this.RotationCenter = Position; //will also re-calculate coords
 
         } //allows whole rotation center to be updated without many re-calculations
-
-        public void Draw()
-        {
-            if (GlobalJointCoords != null)
-            {
-                if (GlobalJointCoords.Length == 6)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        GLObjects.Cube(System.Drawing.Color.Red, this.GlobalJointCoords[i], 1);
-
-                        if (i != 5)
-                        {
-                            GLObjects.Line(Color.Green, this.GlobalJointCoords[i], this.GlobalJointCoords[i + 1]);
-                        }
-                        else
-                        {
-                            GLObjects.Line(Color.Green, this.GlobalJointCoords[i], this.GlobalJointCoords[0]);
-                        }
-
-                    }
-
-                    GLObjects.Cube(System.Drawing.Color.Yellow, this.AbsRotationCenter, 1);
-                }
-            }
-        }
 
         //---------------------------- Servo Stuff ---------------------------------
 
@@ -308,11 +277,9 @@ namespace Hexapod_Simulator.SimObject
                 }
                 CalcNormalVector();
 
-                if (PositionChanged != null)
-                    PositionChanged(this, new EventArgs());
 
-                if (RedrawRequired != null)
-                    RedrawRequired(this, new EventArgs());
+                PositionChanged?.Invoke(this, new EventArgs());
+                RedrawRequired?.Invoke(this, new EventArgs());
             }
         }
 

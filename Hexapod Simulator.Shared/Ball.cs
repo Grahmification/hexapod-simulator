@@ -1,7 +1,6 @@
 ﻿using System;
-using GFunctions.OpenTK;
 
-namespace Hexapod_Simulator.SimObject
+namespace Hexapod_Simulator.Shared
 {
     public class Ball
     {
@@ -9,7 +8,7 @@ namespace Hexapod_Simulator.SimObject
         public double[] Position { get; protected set; } = new double[] { 0, 0, 0 }; //XYZ position of centerpoint [m]
         public double[] Velocity { get; protected set; } = new double[] { 0, 0, 0 }; //XYZ velocity of centerpoint [m/s]
         public double[] Acceleration { get; protected set; } = new double[] { 0, 0, 0 }; //XYZ accel of centerpoint [m/s/s]
-
+       
         public double Radius { get; set; } //radius [m]
         public double Density { get; set; } //density [kg/m^3]
         public double Volume
@@ -23,6 +22,7 @@ namespace Hexapod_Simulator.SimObject
         {
             get { return (this.Density * this.Volume); }
         } //mass [kg]
+      
     }
 
 

@@ -1,13 +1,11 @@
-﻿using MathNet.Numerics.LinearAlgebra.Double;
-using System;
-using System.Drawing;
+﻿using System;
 using GFunctions.Mathematics;
-using GFunctions.OpenTK;
+using MathNet.Numerics.LinearAlgebra.Double;
 
 
-namespace Hexapod_Simulator.SimObject
+namespace Hexapod_Simulator.Shared
 {
-    public class Ball_Local_Test : BallDrawable
+    public class Ball_Local_Test : Ball, IBall
     {
         private double[] _globalPosition = new double[] { 0, 0, 0 };
         private double _normalForce = 0; //last calculated normal force magnitude
@@ -16,7 +14,6 @@ namespace Hexapod_Simulator.SimObject
         {
             this.Radius = radius;
             this.Density = density;
-            this.IsDrawn = true;
             this.Position = startingPos;
 
             this._normalForce = this.Mass * 9.81; //give an initial estimate assuming ball is on flat surface

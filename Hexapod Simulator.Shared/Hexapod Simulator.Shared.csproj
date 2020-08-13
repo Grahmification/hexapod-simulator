@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Hexapod_Simulator.Shared</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MathNet.Numerics" Version="4.12.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="GFunctions">
+      <HintPath>..\Dependencies\GFunctions.dll</HintPath>
+    </Reference>
+    <Reference Include="GFunctions.Mathnet">
+      <HintPath>..\Dependencies\GFunctions.Mathnet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

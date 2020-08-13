@@ -1,13 +1,11 @@
-﻿using MathNet.Numerics.LinearAlgebra.Double;
-using System;
-using System.Drawing;
+﻿using System;
 using GFunctions.Mathematics;
-using GFunctions.OpenTK;
+using MathNet.Numerics.LinearAlgebra.Double;
 
 
-namespace Hexapod_Simulator.SimObject
+namespace Hexapod_Simulator.Shared
 {
-    public class Ball_Test : BallDrawable
+    public class Ball_Test : Ball, IBall
     {
         private double _normalForce = 0; //last calculated normal force magnitude
 
@@ -15,15 +13,14 @@ namespace Hexapod_Simulator.SimObject
         {
             this.Radius = radius;
             this.Density = density;
-            this.IsDrawn = true;
             this.Position = startingPos;
 
             this._normalForce = this.Mass * 9.81; //give an initial estimate assuming ball is on flat surface
         }
 
-        public void CalculateTimeStep(double TimeIncrement, DenseVector normalForceVector)
+        public void CalculateTimeStep(double TimeIncrement, double[] normalForceVector)
         {
-            CalcKineticSolution(normalForceVector); //calculates acceleration
+            CalcKineticSolution(new DenseVector(normalForceVector)); //calculates acceleration
 
             for (int i = 0; i < 2; i++)
             {
@@ -31,6 +28,11 @@ namespace Hexapod_Simulator.SimObject
                 Position[i] = Position[i] + Calculus.Integrate(Velocity[i], TimeIncrement);
             }
         }
+        public void UpdateGlobalCoords(double[] globalCoords)
+        {
+            return;
+        } //do nothing for this ball
+
         private void CalcKineticSolution(DenseVector normalForceVector)
         {
             double mass = this.Mass;
@@ -72,7 +74,6 @@ namespace Hexapod_Simulator.SimObject
             this._normalForce = startingValue; //solution has failed. Reset to starting. 
 
         } //iterative solution
-
         private double[] CalcAccelVector(DenseVector gravityForceVector, DenseVector normalForceVector, double normalForce, double mass)
         {
             //a = (Gravity Force + NormalForce)/mass

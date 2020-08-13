@@ -45,8 +45,8 @@
     <Reference Include="GFunctions.Winforms">
       <HintPath>..\Dependencies\GFunctions.Winforms.dll</HintPath>
     </Reference>
-    <Reference Include="MathNet.Numerics, Version=4.11.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.4.11.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    <Reference Include="MathNet.Numerics, Version=4.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.12.0\lib\net461\MathNet.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.2.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -71,14 +71,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SimObject\BallDrawable.cs" />
-    <Compile Include="SimObject\IActuator.cs" />
-    <Compile Include="SimObject\LinearActuator.cs" />
-    <Compile Include="SimObject\Ball.cs" />
-    <Compile Include="SimObject\Ball_Local_Test.cs" />
-    <Compile Include="SimObject\Ball_Test.cs" />
-    <Compile Include="SimObject\Platform.cs" />
-    <Compile Include="SimObject\RotaryActuator.cs" />
+    <Compile Include="SimObject\LinearActuatorDrawable.cs" />
+    <Compile Include="SimObject\Ball_Local_TestDrawable.cs" />
+    <Compile Include="SimObject\Ball_TestDrawable.cs" />
+    <Compile Include="SimObject\PlatformDrawable.cs" />
+    <Compile Include="SimObject\RotaryActuatorDrawable.cs" />
     <Compile Include="UserControls\Control_ServoPos.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -97,14 +94,13 @@
     <Compile Include="UserControls\Control_ManualDrag.Designer.cs">
       <DependentUpon>Control_ManualDrag.cs</DependentUpon>
     </Compile>
-    <Compile Include="SimObject\Hexapod.cs" />
+    <Compile Include="SimObject\HexapodDrawable.cs" />
     <Compile Include="Mainform.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Mainform.Designer.cs">
       <DependentUpon>Mainform.cs</DependentUpon>
     </Compile>
-    <Compile Include="Math.cs" />
     <Compile Include="UserControls\Control_RotationCenter.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -160,6 +156,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hexapod Simulator.Shared\Hexapod Simulator.Shared.csproj">
+      <Project>{3bde14ad-18c2-49f6-a732-193e22f3a560}</Project>
+      <Name>Hexapod Simulator.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

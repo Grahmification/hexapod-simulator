@@ -13,13 +13,10 @@ namespace Hexapod_Simulator.Shared
         private double[] translation = new double[] { 0, 0, 0 }; //Platform translation (X, Y, Z) [mm]
         private double[] rotation = new double[] { 0, 0, 0 }; //Platform rotation (Pitch, Roll, Yaw) [deg]
         private double[] rotationCenter = new double[] { 0, 0, 0 }; //Platform relative rotation center (x,y,z) [mm]     
-        private double[] normalVector = new double[] { 0, 0, 1 }; //unit vector of platform normal coords (x,y,z)
-
         private bool fixedRotationCenter = false; //if false, rotation center moves to follow translation
 
-        public double[][] LocalJointCoords { get; private set; } //XYZ pos [mm] of each joint, without trans/rotation 
-        public double[][] GlobalJointCoords { get; private set; } //XYZ pos [mm] of each joint
-
+        //----------- Public get + set properties ----------------------
+        public string Name { get; set; }
         public double Radius
         {
             get { return this.radius; }
@@ -38,7 +35,15 @@ namespace Hexapod_Simulator.Shared
                 CalcLocalCoords();
             }
         }
+        public bool FixedRotationCenter
+        {
+            get { return this.fixedRotationCenter; }
+            set { this.fixedRotationCenter = value; CalcGlobalCoords(); }
+        }
 
+        //----------- Public get properties ----------------------
+        public double[][] LocalJointCoords { get; private set; } //XYZ pos [mm] of each joint, without trans/rotation 
+        public double[][] GlobalJointCoords { get; private set; } //XYZ pos [mm] of each joint
         public double[] DefaultPos
         {
             get { return this.defaultPos; }
@@ -118,22 +123,13 @@ namespace Hexapod_Simulator.Shared
                 return output;
             }
         } //absolute rotation center (default offset + rotation center)
-        public double[] NormalVector
-        {
-            get { return this.normalVector; }
-            private set { this.normalVector = value; }
-        }
+        public double[] NormalVector { get; private set; } //unit vector of platform normal coords (x,y,z)
 
-        public bool FixedRotationCenter
-        {
-            get { return this.fixedRotationCenter; }
-            set { this.fixedRotationCenter = value; CalcGlobalCoords(); }
-        }
 
-        public string Name { get; set; }
- 
         public event EventHandler RedrawRequired;
         public event EventHandler PositionChanged; //rotation or translation has changed
+        public event EventHandler LocalCoordsChanged; //the local coordinates of the model have changed
+
 
         public Platform(string name, double radius, double jointAngle, double[] defaultPos = null)
         {
@@ -161,7 +157,6 @@ namespace Hexapod_Simulator.Shared
         public void TranslateAbs(double[] Pos)
         {
             this.Translation = Pos;
-            ;
         }
         public void TranslateRel(double[] Pos)
         {
@@ -239,27 +234,14 @@ namespace Hexapod_Simulator.Shared
         }
 
         //---------------- Geometry Calculation functions -----------------    
-        private double[] CalcLocalCoord(int Index, double OffsetAngle, double Radius)
-        {
-            if (Index < 0 || Index > 5)
-                throw new IndexOutOfRangeException("Index out of range when grabbing local hexapod coords.");
 
-            var output = new double[] { 0, 0, 0 };
-            double angle = Platform.CalcJointOffsetAngle(Index, OffsetAngle);
-
-            double X = Math.Cos(angle * Math.PI / 180.0) * Radius;
-            double Y = Math.Sin(angle * Math.PI / 180.0) * Radius;
-
-            output = new double[] { X, Y, 0 };
-            return output;
-        }
         private void CalcLocalCoords()
         {
-            for (int i = 0; i < 6; i++)
-            {
-                this.LocalJointCoords[i] = CalcLocalCoord(i, this.JointAngle, this.Radius);
-            }
-
+            LocalJointCoords = CalcLocalCoords(JointAngle, Radius);
+            
+            //notify parents of the change
+            LocalCoordsChanged?.Invoke(this, new EventArgs());
+    
             CalcGlobalCoords(); //will also have changed if local coords have changed                         
         } //also forces global coords to be updated
 
@@ -282,12 +264,12 @@ namespace Hexapod_Simulator.Shared
                 RedrawRequired?.Invoke(this, new EventArgs());
             }
         }
-
         private void CalcNormalVector()
         {
             double[] normal = new double[] { 0, 0, 1 }; //local vector without rotation
             this.NormalVector = GFunctions.Mathnet.KinematicMath.RotateVector(normal, this.Rotation);
         }
+
 
         public static double CalcJointOffsetAngle(int Index, double OffsetAngle)
         {
@@ -305,6 +287,29 @@ namespace Hexapod_Simulator.Shared
             angle += 120 * ((Index - Index % 2) / 2); //each time index jumps by 2, need to add 120 degree spacing
 
             return angle;
+        }
+        public static double[][] CalcLocalCoords(double offsetAngle, double radius)
+        {
+            var output = new double[6][];
+
+            for (int i = 0; i < 6; i++)
+                output[i] = CalcLocalCoord(i, offsetAngle, radius);
+
+            return output;
+        }
+        private static double[] CalcLocalCoord(int Index, double OffsetAngle, double Radius)
+        {
+            if (Index < 0 || Index > 5)
+                throw new IndexOutOfRangeException("Index out of range when grabbing local hexapod coords.");
+
+            var output = new double[] { 0, 0, 0 };
+            double angle = Platform.CalcJointOffsetAngle(Index, OffsetAngle);
+
+            double X = Math.Cos(angle * Math.PI / 180.0) * Radius;
+            double Y = Math.Sin(angle * Math.PI / 180.0) * Radius;
+
+            output = new double[] { X, Y, 0 };
+            return output;
         }
 
     }

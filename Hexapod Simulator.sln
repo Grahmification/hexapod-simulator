@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexapod Simulator", "Hexapod Simulator\Hexapod Simulator.csproj", "{70A192D1-30F4-4C2A-B452-B2B996DEBAB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexapod Simulator.Shared", "Hexapod Simulator.Shared\Hexapod Simulator.Shared.csproj", "{3BDE14AD-18C2-49F6-A732-193E22F3A560}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexapod Simulator.Shared", "Hexapod Simulator.Shared\Hexapod Simulator.Shared.csproj", "{3BDE14AD-18C2-49F6-A732-193E22F3A560}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexapod Simulator.Helix", "Hexapod Simulator.Helix\Hexapod Simulator.Helix.csproj", "{8FCD6D0D-8013-457F-A5DB-88DF6FC0971B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{3BDE14AD-18C2-49F6-A732-193E22F3A560}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BDE14AD-18C2-49F6-A732-193E22F3A560}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BDE14AD-18C2-49F6-A732-193E22F3A560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FCD6D0D-8013-457F-A5DB-88DF6FC0971B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FCD6D0D-8013-457F-A5DB-88DF6FC0971B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FCD6D0D-8013-457F-A5DB-88DF6FC0971B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FCD6D0D-8013-457F-A5DB-88DF6FC0971B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

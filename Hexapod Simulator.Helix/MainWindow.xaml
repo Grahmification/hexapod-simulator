@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Hexapod_Simulator.Helix"
         xmlns:ht="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf"
         xmlns:ViewModels="clr-namespace:Hexapod_Simulator.Helix.ViewModels" x:Class="Hexapod_Simulator.Helix.MainWindow"
-        xmlns:Models="clr-namespace:Hexapod_Simulator.Helix.Models" 
+        xmlns:Views="clr-namespace:Hexapod_Simulator.Helix.Views" 
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800">
 
@@ -47,8 +47,8 @@
                 <ht:PieSliceVisual3D></ht:PieSliceVisual3D>
                 <ht:SphereVisual3D Radius="0.5"></ht:SphereVisual3D>
                 <ht:LinesVisual3D Thickness="20"></ht:LinesVisual3D>
-                <Models:PlatformVisual3D2 Fill="IndianRed"></Models:PlatformVisual3D2>
-                <Models:PlatformVisual3D3 x:Name="Platform1"></Models:PlatformVisual3D3>
+                <Views:PlatformVisual3D x:Name="Platform1"></Views:PlatformVisual3D>
+                <Views:HexapodVisual3D x:Name="Hexa1"></Views:HexapodVisual3D>
             </ht:HelixViewport3D>
         </Grid>
 

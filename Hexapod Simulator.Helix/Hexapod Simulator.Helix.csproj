@@ -72,23 +72,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\HexapodVisual3D.cs" />
-    <Compile Include="Models\PlatformVisual3D3.cs" />
-    <Compile Include="Models\PlatformVisual3D2.cs" />
-    <Compile Include="Models\PlatformVisual3D.cs" />
-    <Compile Include="Models\Old\PlatformVisual3D3.cs" />
-    <Compile Include="Models\Old\PlatformVisual3D2.cs" />
-    <Compile Include="Models\Old\PlatformVisual3D.cs" />
-    <Compile Include="Models\Old\PlatformVisual3DModel.cs" />
+    <Compile Include="Views\HexapodVisual3D.cs" />
+    <Compile Include="Views\PlatformVisual3D.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\DoubleToStringValueConverter.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModels\OLD\HexapodVM.cs" />
-    <Compile Include="ViewModels\PlatformVM2.cs" />
     <Compile Include="ViewModels\PlatformVM.cs" />
-    <Compile Include="ViewModels\OLD\PlatformVM3.cs" />
-    <Compile Include="ViewModels\OLD\PlatformVM.cs" />
-    <Compile Include="ViewModels\OLD\HexapodVM2.cs" />
     <Compile Include="ViewModels\HexapodVM.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Page Include="UserControls\HexaManualControl.xaml">

@@ -4,19 +4,19 @@ using System.Windows.Media;
 using System.Windows;
 using Hexapod_Simulator.Shared;
 
-namespace Hexapod_Simulator.Helix.Models
+namespace Hexapod_Simulator.Helix.Views
 {
-    public class PlatformVisual3D3 : ModelVisual3D
+    public class PlatformVisual3D : ModelVisual3D
     {
         /// <summary>
         /// Identifies the <see cref="Radius"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register("Radius", typeof(double), typeof(PlatformVisual3D3), new UIPropertyMetadata(5.0, GeometryChanged));
+        public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register("Radius", typeof(double), typeof(PlatformVisual3D), new UIPropertyMetadata(5.0, GeometryChanged));
 
         /// <summary>
         /// Identifies the <see cref="JointAngle"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty JointAngleProperty = DependencyProperty.Register("JointAngle", typeof(double), typeof(PlatformVisual3D3), new UIPropertyMetadata(30.0, GeometryChanged));
+        public static readonly DependencyProperty JointAngleProperty = DependencyProperty.Register("JointAngle", typeof(double), typeof(PlatformVisual3D), new UIPropertyMetadata(30.0, GeometryChanged));
 
         /// <summary>
         /// Identifies the <see cref="JointColor"/> dependency property.
@@ -24,8 +24,8 @@ namespace Hexapod_Simulator.Helix.Models
         public static readonly DependencyProperty JointColorProperty = DependencyProperty.Register(
             "JointColor",
             typeof(Color),
-            typeof(PlatformVisual3D3),
-            new UIPropertyMetadata(Colors.Blue));
+            typeof(PlatformVisual3D),
+            new UIPropertyMetadata(Colors.Blue, GeometryChanged));
 
         /// <summary>
         /// Identifies the <see cref="LinkColor"/> dependency property.
@@ -33,8 +33,8 @@ namespace Hexapod_Simulator.Helix.Models
         public static readonly DependencyProperty LinkColorProperty = DependencyProperty.Register(
             "LinkColor",
             typeof(Color),
-            typeof(PlatformVisual3D3),
-            new UIPropertyMetadata(Colors.AliceBlue));
+            typeof(PlatformVisual3D),
+            new UIPropertyMetadata(Colors.AliceBlue, GeometryChanged));
 
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Hexapod_Simulator.Helix.Models
         /// <summary>
         /// default constructor
         /// </summary>
-        public PlatformVisual3D3() : base()
+        public PlatformVisual3D() : base()
         {
             OnGeometryChanged();
         }
@@ -96,7 +96,7 @@ namespace Hexapod_Simulator.Helix.Models
         /// <param name="e">The args.</param>
         protected static void GeometryChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((PlatformVisual3D3)d).OnGeometryChanged();
+            ((PlatformVisual3D)d).OnGeometryChanged();
         }
 
 
@@ -107,7 +107,7 @@ namespace Hexapod_Simulator.Helix.Models
         {
             //calculate the local joint coordinates
             LocalJointCoords = Platform.CalcLocalCoords(JointAngle, Radius);
-
+            
             this.Children.Clear();
 
             //iterate through and add each link
@@ -127,17 +127,20 @@ namespace Hexapod_Simulator.Helix.Models
                 joint.Fill = new SolidColorBrush(this.JointColor);
                 joint.EndEdit();
                 this.Children.Add(joint);
-
+                
                 //-------------- Create each connection link ---------------
                 var link = new PipeVisual3D();
                 link.BeginEdit();
                 link.Point1 = new Point3D(p0[0], p0[1], p0[2]);
                 link.Point2 = new Point3D(p1[0], p1[1], p1[2]);
                 link.Diameter = 0.5;
-                link.ThetaDiv = 10;
                 link.Fill = new SolidColorBrush(this.LinkColor);
                 link.EndEdit();
                 this.Children.Add(link);
+
+                //-------------- Create Coordinate System ---------------
+                var coords = new CoordinateSystemVisual3D();
+                this.Children.Add(coords);
             }
         }
 

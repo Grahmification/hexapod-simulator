@@ -1,5 +1,4 @@
-﻿using Hexapod_Simulator.Helix.Models;
-using Hexapod_Simulator.Shared;
+﻿using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {
@@ -10,18 +9,20 @@ namespace Hexapod_Simulator.Helix.ViewModels
 
         public Hexapod HexapodModel { get; private set; }
 
-        //this object should never be in the viewmodel - not following MVVM
-        public HexapodVisual3D HexapodVisual { get; private set; }
-
-        public HexapodVM() { }
-        public HexapodVM(Hexapod hexapodModel)
+        public HexapodVM() 
         {
-            HexapodModel = hexapodModel;
-            HexapodVisual = new HexapodVisual3D(hexapodModel);
+            HexapodModel = new Hexapod(10, 10, 5, 30, 30);
 
             BasePlatform = new PlatformVM((Platform)HexapodModel.Base);
             TopPlatform = new PlatformVM((Platform)HexapodModel.Top);
-     
-        } 
+        }
+        public HexapodVM(Hexapod hexapodModel)
+        {
+            HexapodModel = hexapodModel;
+
+            BasePlatform = new PlatformVM((Platform)HexapodModel.Base);
+            TopPlatform = new PlatformVM((Platform)HexapodModel.Top);
+        }
+
     }
 }

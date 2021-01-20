@@ -13,7 +13,7 @@
     </UserControl.Resources>
 
     <UserControl.DataContext>
-        <ViewModels:PlatformVM2/>
+        <ViewModels:PlatformVM/>
     </UserControl.DataContext>
 
     <Border BorderBrush="Black" BorderThickness="1">

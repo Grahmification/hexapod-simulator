@@ -72,7 +72,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\ActuatorVM.cs" />
     <Compile Include="Views\HexapodVisual3D.cs" />
+    <Compile Include="Views\LinearActuatorVisual3D.cs" />
     <Compile Include="Views\PlatformVisual3D.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\DoubleToStringValueConverter.cs" />

@@ -98,6 +98,8 @@ namespace Hexapod_Simulator.Shared
 
             if (Solver.SolutionValid == false)
                 calcArmEndCoords();//need to re-calculate to get geometry back to starting position
+
+            RedrawRequired?.Invoke(this, new EventArgs());
         } //iterative solution
         protected double computeError(double iterationValue)
         {

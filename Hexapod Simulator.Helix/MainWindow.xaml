@@ -49,6 +49,7 @@
                 <ht:LinesVisual3D Thickness="20"></ht:LinesVisual3D>
                 <Views:PlatformVisual3D x:Name="Platform1"></Views:PlatformVisual3D>
                 <Views:HexapodVisual3D x:Name="Hexa1"></Views:HexapodVisual3D>
+                
             </ht:HelixViewport3D>
         </Grid>
 

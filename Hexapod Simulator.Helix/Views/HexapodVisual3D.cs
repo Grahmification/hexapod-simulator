@@ -28,6 +28,15 @@ namespace Hexapod_Simulator.Helix.Views
             new UIPropertyMetadata(null, GeometryChanged));
 
         /// <summary>
+        /// Identifies the <see cref="Actuators"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ActuatorsProperty = DependencyProperty.Register(
+            "Actuators",
+            typeof(LinearActuatorVisual3D[]),
+            typeof(HexapodVisual3D),
+            new UIPropertyMetadata(null, GeometryChanged));
+
+        /// <summary>
         /// The lower platform of the hexapod
         /// </summary>
         public PlatformVisual3D BasePlatform
@@ -45,18 +54,15 @@ namespace Hexapod_Simulator.Helix.Views
             set { SetValue(TopPlatformProperty, value); }
         }
 
-
-
-
         /// <summary>
-        /// The base platform object
+        /// The upper platform of the hexapod
         /// </summary>
-        private PlatformVisual3D basePlatform = new PlatformVisual3D();
+        public LinearActuatorVisual3D[] Actuators
+        {
+            get { return (LinearActuatorVisual3D[])GetValue(ActuatorsProperty); }
+            set { SetValue(ActuatorsProperty, value); }
+        }
 
-        /// <summary>
-        /// The base platform object
-        /// </summary>
-        private PlatformVisual3D topPlatform = new PlatformVisual3D();
 
         /// <summary>
         /// default constructor
@@ -65,11 +71,18 @@ namespace Hexapod_Simulator.Helix.Views
         {
             TopPlatform = new PlatformVisual3D();
             BasePlatform = new PlatformVisual3D();
-            
 
-            BasePlatform.Radius = 12;
+            BasePlatform.Radius = 10;
+
+            TopPlatform.Transform = new TranslateTransform3D(0, 0, 10);
             TopPlatform.JointColor = Colors.Pink;
+            TopPlatform.Radius = 5;
 
+            Actuators = new LinearActuatorVisual3D[6];
+
+            for(int i = 0; i < 6; i++)
+                Actuators[i] = new LinearActuatorVisual3D();
+                
             OnGeometryChanged();
         }
 
@@ -91,20 +104,16 @@ namespace Hexapod_Simulator.Helix.Views
         {
             this.Children.Clear();
 
-            var trans = new TranslateTransform3D(0, 0, 15);
-            topPlatform.JointColor = Colors.Green;
-            topPlatform.Radius = 4;
-            topPlatform.Transform = trans;
-
-            basePlatform.JointColor = Colors.Green;
-            basePlatform.Radius = 10;
-
             if(!(TopPlatform is null))
                 this.Children.Add(TopPlatform);
 
             if(!(BasePlatform is null))
                 this.Children.Add(BasePlatform);
-        
+
+            if (!(Actuators is null))
+                foreach (LinearActuatorVisual3D actuator in Actuators)
+                    if (!(actuator is null))
+                        this.Children.Add(actuator);
         }
 
 

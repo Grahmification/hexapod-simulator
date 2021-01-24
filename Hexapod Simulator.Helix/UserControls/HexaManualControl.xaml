@@ -1,16 +1,12 @@
-﻿<UserControl
+﻿<UserControl x:Class="Hexapod_Simulator.Helix.UserControls.HexaManualControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Hexapod_Simulator.Helix"        
+             xmlns:local="clr-namespace:Hexapod_Simulator.Helix.UserControls"        
              xmlns:ViewModels="clr-namespace:Hexapod_Simulator.Helix.ViewModels" 
-             xmlns:ValueConverters="clr-namespace:Hexapod_Simulator.Helix.ValueConverters" x:Class="Hexapod_Simulator.Helix.HexaPositionControl"
+             xmlns:ValueConverters="clr-namespace:Hexapod_Simulator.Helix.ValueConverters"
              mc:Ignorable="d" Height="300" Width="300">
-
-    <UserControl.Resources>
-        <ValueConverters:DoubleToStringValueConverter x:Key="DoubleToStringValueConverter"/>
-    </UserControl.Resources>
 
     <UserControl.DataContext>
         <ViewModels:PlatformVM/>
@@ -36,75 +32,15 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="X" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                    <Slider x:Name="SliderX" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Maximum="10" LargeChange="5" Value="{Binding XTranslation}" Minimum="-10"/>
-                    <Label Grid.Row="2" Content="{Binding XTranslation}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                </Grid>
-
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="Y" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                    <Slider x:Name="SliderY"  Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Maximum="10" LargeChange="5" Value="{Binding YTranslation}" Minimum="-10"/>
-                    <Label Grid.Row="2" Content="{Binding YTranslation}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                </Grid>
-
-                <Grid Grid.Column="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="Z" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                    <Slider x:Name="SliderZ"  Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Maximum="10" LargeChange="5" Value="{Binding ZTranslation}" Minimum="-10"/>
-                    <Label Grid.Row="2" Content="{Binding ZTranslation}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                </Grid>
-
-                <Grid Grid.Column="4">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="P" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                    <Slider x:Name="SliderP"  Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Maximum="10" LargeChange="5" Value="{Binding PitchRotation}" Minimum="-10"/>
-                    <Label Grid.Row="2" Content="{Binding PitchRotation}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                </Grid>
-
-                <Grid Grid.Column="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="R" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                    <Slider x:Name="SliderR"  Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Maximum="10" LargeChange="5" Value="{Binding RollRotation}" Minimum="-10"/>
-                    <Label Grid.Row="2" Content="{Binding RollRotation}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                </Grid>
-
-                <Grid Grid.Column="6">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="Y" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                    <Slider x:Name="SliderYaw"  Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Maximum="10" LargeChange="5" Value="{Binding YawRotation}" Minimum="-10"/>
-                    <Label Grid.Row="2" Content="{Binding YawRotation}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
-                </Grid>
-
-
+                <Slider Grid.Column="0" Style="{StaticResource PositionSlider}" Value="{Binding XTranslation}" Tag="X"/>
+                <Slider Grid.Column="1" Style="{StaticResource PositionSlider}" Value="{Binding YTranslation}" Tag="Y"/>
+                <Slider Grid.Column="2" Style="{StaticResource PositionSlider}" Value="{Binding ZTranslation}" Tag="Z"/>
+                <Slider Grid.Column="4" Style="{StaticResource PositionSlider}" Value="{Binding PitchRotation}" Tag="P"/>
+                <Slider Grid.Column="5" Style="{StaticResource PositionSlider}" Value="{Binding RollRotation}" Tag="R"/>
+                <Slider Grid.Column="6" Style="{StaticResource PositionSlider}" Value="{Binding YawRotation}" Tag="Y"/>
             </Grid>
 
 

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Hexapod_Simulator.Helix"
         xmlns:ht="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf"
         xmlns:ViewModels="clr-namespace:Hexapod_Simulator.Helix.ViewModels" x:Class="Hexapod_Simulator.Helix.MainWindow"
-        xmlns:Views="clr-namespace:Hexapod_Simulator.Helix.Views" 
+        xmlns:Views="clr-namespace:Hexapod_Simulator.Helix.Views"
+        xmlns:UserControls="clr-namespace:Hexapod_Simulator.Helix.UserControls" 
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800">
 
@@ -36,8 +37,9 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <local:HexaPositionControl x:Name="ManualPositionControl" Margin="5" Width="200" Height="200"/>
-                <local:HexaPositionControl Margin="5" Width="200" Height="200"/>
+                <UserControls:HexaManualControl x:Name="ManualPositionControl" Margin="5" Width="200" Height="200"/>
+                <UserControls:HexaManualControl x:Name="ManualPositionControl2" Margin="5" Width="200" Height="200"/>
+                <UserControls:ActuatorPositionsControl x:Name="ActuatorPositionView" Margin="5" Width="200" Height="200"/>
             </StackPanel>
 
             <ht:HelixViewport3D x:Name="MainViewPort" Grid.Column="1" ShowCoordinateSystem="True">

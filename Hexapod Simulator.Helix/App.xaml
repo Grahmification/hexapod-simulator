@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Hexapod_Simulator.Helix"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Order is important -->
+                <ResourceDictionary Source="Styles/Sliders.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="Hexapod_Simulator.Helix.UserControls.ActuatorPositionsControl" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hexapod_Simulator.Helix.UserControls"
+             xmlns:ViewModels="clr-namespace:Hexapod_Simulator.Helix.ViewModels" 
+             xmlns:ValueConverters="clr-namespace:Hexapod_Simulator.Helix.ValueConverters" 
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="200">
+
+    <UserControl.Resources>
+        <ValueConverters:ActuatorTypeToUnitStringValueConverter x:Key="ActuatorTypeToUnitStringValueConverter"/>
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <ViewModels:HexapodVM/>
+    </UserControl.DataContext>
+
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid Background="DarkGray">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Content="Actuator Positions" FontWeight="Bold" FontSize="12" VerticalAlignment="Center"/>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <local:ActuatorPositionControl Grid.Row="0" DataContext="{Binding Actuators[0]}"/>
+                <local:ActuatorPositionControl Grid.Row="1" DataContext="{Binding Actuators[1]}"/>
+                <local:ActuatorPositionControl Grid.Row="2" DataContext="{Binding Actuators[2]}"/>
+                <local:ActuatorPositionControl Grid.Row="3" DataContext="{Binding Actuators[3]}"/>
+                <local:ActuatorPositionControl Grid.Row="4" DataContext="{Binding Actuators[4]}"/>
+                <local:ActuatorPositionControl Grid.Row="5" DataContext="{Binding Actuators[5]}"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

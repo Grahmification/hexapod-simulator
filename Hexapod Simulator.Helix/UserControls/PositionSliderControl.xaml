@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Hexapod_Simulator.Helix.UserControls.PositionSliderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hexapod_Simulator.Helix.UserControls"
+             xmlns:ViewModels="clr-namespace:Hexapod_Simulator.Helix.ViewModels" 
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="50">
+
+    <UserControl.DataContext>
+        <ViewModels:PlatformVM/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="X" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
+        <Slider x:Name="Slider" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Maximum="10" LargeChange="5" Value="0" Minimum="-10"/>
+        <Label x:Name="PositioLabel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12"/>
+    </Grid>
+</UserControl>

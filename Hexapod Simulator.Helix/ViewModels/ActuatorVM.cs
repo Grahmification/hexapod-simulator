@@ -39,6 +39,16 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         public double TravelPosition { get { return ActuatorModel.TravelPosition; } }
 
+        /// <summary>
+        /// The actuator number in the hexapod
+        /// </summary>
+        public int ActuatorNumber { get; private set; } = 0;
+
+        /// <summary>
+        /// What type of actuator the model is
+        /// </summary>
+        public ActuatorTypes ActuatorType { get { return ActuatorModel.ActuatorType; } }
+
 
         /// <summary>
         /// The model class for the VM - can be either a linear or rotary actuator
@@ -46,8 +56,9 @@ namespace Hexapod_Simulator.Helix.ViewModels
         private IActuator ActuatorModel { get; set; }
 
 
-        public ActuatorVM(IActuator actuatorModel)
+        public ActuatorVM(IActuator actuatorModel, int actuatorNumber)
         {
+            ActuatorNumber = actuatorNumber;
             initializeModel(actuatorModel);
         }
         public ActuatorVM()

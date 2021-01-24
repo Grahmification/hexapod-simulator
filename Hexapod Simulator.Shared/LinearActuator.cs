@@ -120,6 +120,5 @@ namespace Hexapod_Simulator.Shared
 
             this._armEndPosition = coords;
         }
-
     }
 }

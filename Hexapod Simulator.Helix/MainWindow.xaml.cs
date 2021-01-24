@@ -119,6 +119,8 @@ namespace Hexapod_Simulator.Helix
             var hexa = new HexapodVM(hexaModel);
 
             ManualPositionControl.DataContext = hexa.TopPlatform;
+            ActuatorPositionView.DataContext = hexa;
+
 
             Binding TransformBinding = new Binding("Transform");
             TransformBinding.Source = hexa.TopPlatform;        
@@ -135,6 +137,12 @@ namespace Hexapod_Simulator.Helix
             Binding TopJointAngleBinding = new Binding("JointAngle");
             TopJointAngleBinding.Source = hexa.TopPlatform;
             BindingOperations.SetBinding(Hexa1.TopPlatform, PlatformVisual3D.JointAngleProperty, TopJointAngleBinding);
+
+
+            ManualPositionControl2.DataContext = hexa.BasePlatform;
+            Binding TransformBinding2 = new Binding("Transform");
+            TransformBinding2.Source = hexa.BasePlatform;
+            BindingOperations.SetBinding(Hexa1.BasePlatform, ModelVisual3D.TransformProperty, TransformBinding2);
 
             //Look into observableCollections ---- there is probably a better way to handle this binding process
             for (int i = 0; i < 6; i++)
@@ -153,6 +161,7 @@ namespace Hexapod_Simulator.Helix
 
                 Binding SolutionValidBinding = new Binding("SolutionValid");
                 SolutionValidBinding.Source = hexa.Actuators[i];
+                //SolutionValidBinding.Converter = new ValueConverters.ActuatorSolnStateTo3DVisualColorValueConverter();
                 BindingOperations.SetBinding(Hexa1.Actuators[i], LinearActuatorVisual3D.SolutionValidProperty, SolutionValidBinding);
             }
         }

@@ -48,39 +48,115 @@ namespace Hexapod_Simulator.Helix.ViewModels
             get { return PlatformModel.JointAngle; }
             set { PlatformModel.JointAngle = value; }
         }
+        public string Name { get { return PlatformModel.Name; } }
+
         public Transform3D Transform { get { return CreateTransform(PlatformModel.Position, PlatformModel.Rotation, PlatformModel.AbsRotationCenter); } }
+
+
+        /// <summary>
+        /// Holds a temporary value of the <see cref="Radius"/> until the updateconfig command is executed
+        /// </summary>
+        public double RadiusTemp { get; set; } = 10;
+
+        /// <summary>
+        /// Holds a temporary value of the <see cref="JointAngle"/> until the updateconfig command is executed
+        /// </summary>
+        public double JointAngleTemp { get; set; } = 30;
+
+        /// <summary>
+        /// Holds a temporary value of the <see cref="Platform.DefaultPos"/> until the updateconfig command is executed
+        /// </summary>
+        public double[] DefaultPositionTemp { get; set; } = new double[] { 0, 0, 0 };
+
+        /// <summary>
+        /// Holds a temporary value of the <see cref="Platform.RotationCenter"/> until the updateconfig command is executed
+        /// </summary>
+        public double[] RotationCenterTemp { get; set; } = new double[] { 0, 0, 0 };
+
+        /// <summary>
+        /// Holds a temporary value of the <see cref="Platform.FixedRotationCenter"/> until the updateconfig command is executed
+        /// </summary>
+        public bool FixedRotationCenterTemp { get; set; } = false;
+
 
 
         public Platform PlatformModel { get; private set; }
 
 
         /// <summary>
-        /// Allows ResetPosition to be bound to the UI
+        /// RelayCommand for <see cref="ResetPosition"/>
         /// </summary>
-        public ICommand ResetPositionCommand { get; set; } 
+        public ICommand ResetPositionCommand { get; set; }
+
+        /// <summary>
+        /// RelayCommand for <see cref="UpdateConfig"/>
+        /// </summary>
+        public ICommand UpdateConfigCommand { get; set; }
+
+        /// <summary>
+        /// RelayCommand for <see cref="UpdateRotationCenter"/>
+        /// </summary>
+        public ICommand UpdateRotationCenterCommand { get; set; }
 
         public PlatformVM(Platform platformModel)
+        {
+            InitializeModel(platformModel);
+        }
+        public PlatformVM()
+        {
+            InitializeModel(new Platform("Temp", 10, 30));
+        }
+        
+        /// <summary>
+        /// Sets up the model within the class
+        /// </summary>
+        /// <param name="platformModel"></param>
+        private void InitializeModel(Platform platformModel)
         {
             PlatformModel = platformModel;
             PlatformModel.RedrawRequired += onRedrawRequired;
             PlatformModel.LocalCoordsChanged += onLocalCoordsChanged;
 
             ResetPositionCommand = new RelayCommand(ResetPosition);
-        }
-        public PlatformVM()
-        {
-            PlatformModel = new Platform("Temp", 10, 30);
-            ResetPositionCommand = new RelayCommand(ResetPosition);
+            UpdateConfigCommand = new RelayCommand(UpdateConfig);
+            UpdateRotationCenterCommand = new RelayCommand(UpdateRotationCenter);
+
+            //set all these so they are updated to the initial value of the model
+            RadiusTemp = PlatformModel.Radius;
+            JointAngleTemp = PlatformModel.JointAngle;
+            DefaultPositionTemp = PlatformModel.DefaultPos;
+            RotationCenterTemp = PlatformModel.RotationCenter;
+            FixedRotationCenterTemp = PlatformModel.FixedRotationCenter;
+
+            //this is the only time the name will change
+            OnPropertyChanged("Name");
         }
 
+        /// <summary>
+        /// Resets the platform translation/rotation
+        /// </summary>
         private void ResetPosition()
         {
             XTranslation = YTranslation = ZTranslation = 0;
             PitchRotation = RollRotation = YawRotation = 0;
-
-            //PlatformModel.TranslateAbs(new double[] { 0, 0, 0 });
         }
-        
+
+        /// <summary>
+        /// Updates the platform configuation geometry to the temporary values
+        /// </summary>
+        private void UpdateConfig()
+        {
+            PlatformModel.UpdateConfig(RadiusTemp, JointAngleTemp, DefaultPositionTemp);
+        }
+
+        /// <summary>
+        /// Updates the platform rotation center to the temporary values
+        /// </summary>
+        private void UpdateRotationCenter()
+        {
+            PlatformModel.UpdateRotationCenter(RotationCenterTemp, FixedRotationCenterTemp);
+        }
+
         private void onRedrawRequired(object sender, EventArgs e)
         {
             OnPropertyChanged("Transform");

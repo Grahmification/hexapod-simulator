@@ -35,30 +35,21 @@ namespace Hexapod_Simulator.Helix.Views
             new UIPropertyMetadata(new double[] { 0, 0, 5 }, GeometryChanged));
 
         /// <summary>
-        /// Identifies the <see cref="SolutionValid"/> dependency property.
+        /// Identifies the <see cref="ArmColorProperty"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty SolutionValidProperty = DependencyProperty.Register(
-            "SolutionValid",
-            typeof(bool),
-            typeof(LinearActuatorVisual3D),
-            new UIPropertyMetadata(true, GeometryChanged));
-
-        /// <summary>
-        /// Identifies the <see cref="Color"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            "Color",
+        public static readonly DependencyProperty ArmColorProperty = DependencyProperty.Register(
+            "ArmColor",
             typeof(Color),
-            typeof(PlatformVisual3D),
+            typeof(LinearActuatorVisual3D),
             new UIPropertyMetadata(Colors.Yellow, GeometryChanged));
 
         /// <summary>
-        /// Identifies the <see cref="SolutionInvalidColor"/> dependency property.
+        /// Identifies the <see cref="LinkColorProperty"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty SolutionInvalidColorProperty = DependencyProperty.Register(
-            "SolutionInvalidColorColor",
+        public static readonly DependencyProperty LinkColorProperty = DependencyProperty.Register(
+            "LinkColor",
             typeof(Color),
-            typeof(PlatformVisual3D),
+            typeof(LinearActuatorVisual3D),
             new UIPropertyMetadata(Colors.Red, GeometryChanged));
 
 
@@ -90,33 +81,23 @@ namespace Hexapod_Simulator.Helix.Views
         }
 
         /// <summary>
-        /// Indicates if the axis position is allowed or not. 
-        /// </summary>
-        public bool SolutionValid
-        {
-            get { return (bool)GetValue(SolutionValidProperty); }
-            set { SetValue(SolutionValidProperty, value); }
-        }
-
-
-        /// <summary>
-        /// Actuator color when the solution is valid. 
+        /// The arm color.
         /// </summary>
         /// <value>The color.</value>
-        public Color Color
+        public Color ArmColor
         {
-            get { return (Color)this.GetValue(ColorProperty); }
-            set { this.SetValue(ColorProperty, value); }
+            get { return (Color)this.GetValue(ArmColorProperty); }
+            set { this.SetValue(ArmColorProperty, value); }
         }
 
         /// <summary>
-        /// Actuator color when the solution is invalid. 
+        /// The link color.
         /// </summary>
         /// <value>The color.</value>
-        public Color SolutionInvalidColor
+        public Color LinkColor
         {
-            get { return (Color)this.GetValue(SolutionInvalidColorProperty); }
-            set { this.SetValue(SolutionInvalidColorProperty, value); }
+            get { return (Color)this.GetValue(LinkColorProperty); }
+            set { this.SetValue(LinkColorProperty, value); }
         }
 
         /// <summary>
@@ -151,7 +132,7 @@ namespace Hexapod_Simulator.Helix.Views
             arm.Point1 = new Point3D(ArmEndPosition[0], ArmEndPosition[1], ArmEndPosition[2]);
             arm.Point2 = new Point3D(Position[0], Position[1], Position[2]);
             arm.Diameter = 1;
-            SetColor(arm);
+            arm.Fill = new SolidColorBrush(ArmColor);
             arm.EndEdit();
             this.Children.Add(arm);
 
@@ -161,26 +142,11 @@ namespace Hexapod_Simulator.Helix.Views
             link.Point1 = new Point3D(ArmEndPosition[0], ArmEndPosition[1], ArmEndPosition[2]);
             link.Point2 = new Point3D(LinkEndPosition[0], LinkEndPosition[1], LinkEndPosition[2]);
             link.Diameter = 0.5;
-            SetColor(link);
+            link.Fill = new SolidColorBrush(LinkColor);
             link.EndEdit();
             this.Children.Add(link);
 
        
         }
-
-        /// <summary>
-        /// Sets the visual color based on whether the solution is valid
-        /// </summary>
-        /// <param name="visual">The visual to set the color</param>
-        private void SetColor(MeshElement3D visual)
-        {
-            if(SolutionValid)
-                visual.Fill = new SolidColorBrush(this.Color);
-            else
-                visual.Fill = new SolidColorBrush(this.SolutionInvalidColor);
-            
-        }
-
-
     }
 }

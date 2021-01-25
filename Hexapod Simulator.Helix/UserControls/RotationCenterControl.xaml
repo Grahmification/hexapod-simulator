@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="Hexapod_Simulator.Helix.UserControls.RotationCenterControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hexapod_Simulator.Helix.UserControls"        
+             xmlns:ViewModels="clr-namespace:Hexapod_Simulator.Helix.ViewModels" 
+             xmlns:ValueConverters="clr-namespace:Hexapod_Simulator.Helix.ValueConverters"
+             mc:Ignorable="d" Height="180" Width="200">
+
+    <UserControl.DataContext>
+        <ViewModels:PlatformVM/>
+    </UserControl.DataContext>
+
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid Background="DarkGray">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Grid.Row="0" Text="{Binding Name, StringFormat={}Rotation Center: {0}}" FontWeight="Bold" FontSize="12" VerticalAlignment="Center" Margin="5"/>
+
+            <CheckBox Grid.Row="1" Margin="5" FlowDirection="LeftToRight" HorizontalAlignment="Center" IsChecked="{Binding FixedRotationCenterTemp}">
+                <TextBlock Text="Fixed Rotation Center" />
+            </CheckBox>
+
+            <TextBlock Grid.Row="2" Margin="5" VerticalAlignment="Center" Text="Relative Position:"/>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Margin="50,5,5,5" VerticalAlignment="Center" Text="X [mm]:"/>
+                <TextBox Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="{Binding RotationCenterTemp[0], StringFormat=\{0:N1\}}"/>
+            </Grid>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Margin="50,5,5,5" VerticalAlignment="Center" Text="Y [mm]:"/>
+                <TextBox Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="{Binding RotationCenterTemp[1], StringFormat=\{0:N1\}}"/>
+            </Grid>
+
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Margin="50,5,5,5" VerticalAlignment="Center" Text="Z [mm]:"/>
+                <TextBox Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="{Binding RotationCenterTemp[2], StringFormat=\{0:N1\}}"/>
+            </Grid>
+
+            <Button Grid.Row="7" Content="Apply" Width="80" HorizontalAlignment="Center" Margin="5" Command="{Binding UpdateRotationCenterCommand}"/>
+        </Grid>
+    </Border>
+
+</UserControl>

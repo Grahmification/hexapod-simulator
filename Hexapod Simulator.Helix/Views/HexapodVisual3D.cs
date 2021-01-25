@@ -73,7 +73,7 @@ namespace Hexapod_Simulator.Helix.Views
             BasePlatform = new PlatformVisual3D();
 
             BasePlatform.Radius = 10;
-
+            
             TopPlatform.Transform = new TranslateTransform3D(0, 0, 10);
             TopPlatform.JointColor = Colors.Pink;
             TopPlatform.Radius = 5;

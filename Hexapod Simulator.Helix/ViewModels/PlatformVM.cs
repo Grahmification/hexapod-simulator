@@ -38,6 +38,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
             set { PlatformModel.RotateAbs(new double[] { PitchRotation, RollRotation, value }); }
         }
 
+        public double[] AbsRotationCenter { get { return PlatformModel.AbsRotationCenter; } }
         public double Radius
         {
             get { return PlatformModel.Radius; }
@@ -50,7 +51,15 @@ namespace Hexapod_Simulator.Helix.ViewModels
         }
         public string Name { get { return PlatformModel.Name; } }
 
+        /// <summary>
+        /// The absolute transformation of the platform
+        /// </summary>
         public Transform3D Transform { get { return CreateTransform(PlatformModel.Position, PlatformModel.Rotation, PlatformModel.AbsRotationCenter); } }
+
+        /// <summary>
+        /// The absolute transformation of the platform rotation center
+        /// </summary>
+        public Transform3D RotationCenterTransform { get { return CreateTransform(PlatformModel.AbsRotationCenter, PlatformModel.Rotation, PlatformModel.AbsRotationCenter); } }
 
 
         /// <summary>
@@ -160,7 +169,9 @@ namespace Hexapod_Simulator.Helix.ViewModels
         private void onRedrawRequired(object sender, EventArgs e)
         {
             OnPropertyChanged("Transform");
+            OnPropertyChanged("RotationCenterTransform");
             OnPropertyChanged("LocalJointCoords");
+            OnPropertyChanged("AbsRotationCenter");
         }
         private void onLocalCoordsChanged(object sender, EventArgs e)
         {

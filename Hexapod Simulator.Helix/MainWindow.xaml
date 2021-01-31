@@ -54,7 +54,7 @@
             <ht:HelixViewport3D x:Name="MainViewPort" Grid.Column="1" ShowCoordinateSystem="True">
                 <ht:SunLight/>
                 <ht:GridLinesVisual3D/>
-                <ht:CoordinateSystemVisual3D x:Name="Coords1" Transform="{Binding Position}"/>
+                <ht:CoordinateSystemVisual3D x:Name="Coords1" ArrowLengths="2" Transform="{Binding TopPlatform.RotationCenterTransform}"/>
                 <ht:PieSliceVisual3D></ht:PieSliceVisual3D>
                 <ht:SphereVisual3D Radius="0.2"></ht:SphereVisual3D>
                 
@@ -63,6 +63,7 @@
                                             Transform="{Binding TopPlatform.Transform}"
                                             Radius="{Binding TopPlatform.Radius}"
                                             JointAngle="{Binding TopPlatform.JointAngle}"
+                                            RotationCenterTransform="{Binding TopPlatform.RotationCenterTransform}"
                                             />
                 </Views:HexapodVisual3D>
 

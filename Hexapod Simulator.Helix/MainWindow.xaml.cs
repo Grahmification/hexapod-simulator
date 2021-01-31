@@ -33,7 +33,7 @@ namespace Hexapod_Simulator.Helix
 
         private void Initialize2()
         {
-            var hexaModel = new Hexapod(30, 30, 10, 30, 5);
+            var hexaModel = new Hexapod(15, 12, 8, 30, 5);
             var hexa = new HexapodVM(hexaModel);
 
             this.DataContext = hexa;

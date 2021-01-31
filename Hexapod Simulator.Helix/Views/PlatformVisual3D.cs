@@ -3,6 +3,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using System.Windows;
 using Hexapod_Simulator.Shared;
+using System.Threading;
 
 namespace Hexapod_Simulator.Helix.Views
 {
@@ -17,6 +18,11 @@ namespace Hexapod_Simulator.Helix.Views
         /// Identifies the <see cref="JointAngle"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty JointAngleProperty = DependencyProperty.Register("JointAngle", typeof(double), typeof(PlatformVisual3D), new UIPropertyMetadata(30.0, GeometryChanged));
+
+        /// <summary>
+        /// Identifies the <see cref="RotationCenterTransform"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty RotationCenterTransformProperty = DependencyProperty.Register("RotationCenterTransform", typeof(Transform3D), typeof(PlatformVisual3D), new UIPropertyMetadata(new TranslateTransform3D(0,0,0), GeometryChanged));
 
         /// <summary>
         /// Identifies the <see cref="JointColor"/> dependency property.
@@ -53,6 +59,15 @@ namespace Hexapod_Simulator.Helix.Views
         {
             get { return (double)GetValue(JointAngleProperty); }
             set { SetValue(JointAngleProperty, value); }
+        }
+
+        /// <summary>
+        /// The rotation center transformation
+        /// </summary>
+        public Transform3D RotationCenterTransform
+        {
+            get { return (Transform3D)GetValue(RotationCenterTransformProperty); }
+            set { SetValue(RotationCenterTransformProperty, value); }
         }
 
         /// <summary>
@@ -140,6 +155,15 @@ namespace Hexapod_Simulator.Helix.Views
 
                 //-------------- Create Coordinate System ---------------
                 var coords = new CoordinateSystemVisual3D();
+                coords.ArrowLengths = 3;
+                
+                //Need to create an absolute transform without the transformation of the platform added.
+                //The inverse of the platform transform must be added last for this to work correctly. 
+                var absXform = new Transform3DGroup();
+                absXform.Children.Add(RotationCenterTransform);
+                absXform.Children.Add((Transform3D)Transform.Inverse);            
+                coords.Transform = absXform;
+
                 this.Children.Add(coords);
             }
         }

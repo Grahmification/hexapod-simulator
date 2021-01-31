@@ -44,7 +44,10 @@ namespace Hexapod_Simulator.Helix.ViewModels
 
             for (int i = 0; i < 6; i++)
             {
+                HexapodModel.Actuators[i].LinkLength = 10;
+                
                 Actuators[i] = new ActuatorVM(HexapodModel.Actuators[i], i+1);
+
                 
             }
         }

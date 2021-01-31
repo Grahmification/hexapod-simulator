@@ -78,6 +78,9 @@
     <Compile Include="UserControls\ActuatorPositionsControl.xaml.cs">
       <DependentUpon>ActuatorPositionsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ActuatorsConfigControl.xaml.cs">
+      <DependentUpon>ActuatorsConfigControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\RotationCenterControl.xaml.cs">
       <DependentUpon>RotationCenterControl.xaml</DependentUpon>
     </Compile>
@@ -109,6 +112,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ActuatorPositionsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ActuatorsConfigControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

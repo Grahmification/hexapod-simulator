@@ -59,22 +59,22 @@ namespace Hexapod_Simulator.Helix.ViewModels
         public ActuatorVM(IActuator actuatorModel, int actuatorNumber)
         {
             ActuatorNumber = actuatorNumber;
-            initializeModel(actuatorModel);
+            UpdateModel(actuatorModel);
         }
         public ActuatorVM()
         {
-            initializeModel(new LinearActuator(10, 5, new double[] { 0, 0, 0 }, new double[] { 5, 5, 5 }));          
+            UpdateModel(new LinearActuator(10, 5, new double[] { 0, 0, 0 }, new double[] { 5, 5, 5 }));          
         }
-
 
         /// <summary>
         /// Properly initializes the model within this class
         /// </summary>
         /// <param name="actuatorModel">The actuator model to set for the VM</param>
-        private void initializeModel(IActuator actuatorModel)
+        public void UpdateModel(IActuator actuatorModel)
         {
             ActuatorModel = actuatorModel;
             ActuatorModel.RedrawRequired += onRedrawRequired;
+            onRedrawRequired(this, new EventArgs());
         }
 
         /// <summary>

@@ -30,24 +30,33 @@ namespace Hexapod_Simulator.Shared
 
             switch (AType)
             {
-                case ActuatorTypes.Linear:                   
-                    for (int i = 0; i < 6; i++)
-                    {
-                        Actuators[i] = InitializeLinearActuator(Base.GlobalJointCoords[i], Top.GlobalJointCoords[i]);
-                    }
+                case ActuatorTypes.Linear:
+                    InitializeLinearActuators(20, 40);
                     break;
 
                 case ActuatorTypes.Rotary:
-                    for (int i = 0; i < 6; i++)
-                    {
-                        Actuators[i] = InitializeRotaryActuator(Base.GlobalJointCoords[i], Top.GlobalJointCoords[i], i, Base.JointAngle);
-                    }
+                    InitializeRotaryActuators(10, 40);
                     break;
 
                 default:
                     break;
             }
         }
+        public void InitializeRotaryActuators(double armRadius, double linkLength)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                Actuators[i] = InitializeRotaryActuator(Base.GlobalJointCoords[i], Top.GlobalJointCoords[i], i, Base.JointAngle, armRadius, linkLength);
+            }
+        }
+        public void InitializeLinearActuators(double maxTravel, double linkLength)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                Actuators[i] = InitializeLinearActuator(Base.GlobalJointCoords[i], Top.GlobalJointCoords[i], maxTravel, linkLength);
+            }
+        }
+
 
         protected virtual IPlatform InitializeBase(double BaseRad, double BaseAngle)
         {
@@ -57,15 +66,17 @@ namespace Hexapod_Simulator.Shared
         {
             return new Platform("Top", TopRad, TopAngle, new double[] { 0, 0, defaultHeight });
         }
-        protected virtual IActuator InitializeLinearActuator(double[] position, double[] linkEndPosition)
+        protected virtual IActuator InitializeLinearActuator(double[] position, double[] linkEndPosition, double maxTravel, double linkLength)
         {
-            return new LinearActuator(20, 40, position, linkEndPosition);
+            return new LinearActuator(maxTravel, linkLength, position, linkEndPosition);
         }
-        protected virtual IActuator InitializeRotaryActuator(double[] position, double[] linkEndPosition, int index, double jointAngle)
+        protected virtual IActuator InitializeRotaryActuator(double[] position, double[] linkEndPosition, int index, double jointAngle, double armRadius, double linkLength)
         {
             double motorAngle = RotaryActuator.calcMotorOffsetAngle(index, 0, Platform.CalcJointOffsetAngle(index, jointAngle));
-            return new RotaryActuator(10, motorAngle, 40, position, linkEndPosition);
+            return new RotaryActuator(armRadius, motorAngle, linkLength, position, linkEndPosition);
         }
+
+
 
         private void PlatformCoordsChanged(object sender, EventArgs e)
         {

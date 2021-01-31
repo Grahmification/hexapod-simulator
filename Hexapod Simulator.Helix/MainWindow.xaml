@@ -44,10 +44,11 @@
                 </TabItem>
                 <TabItem Header="Configuration">
                     <StackPanel>
-                        <UserControls:PlatformConfigControl x:Name="PlatformConfigControl1" DataContext="{Binding TopPlatform}" Margin="5" Width="200" Height="200"/>
-                        <UserControls:PlatformConfigControl x:Name="PlatformConfigControl2" DataContext="{Binding BasePlatform}" Margin="5" Width="200" Height="200"/>
+                        <UserControls:PlatformConfigControl x:Name="PlatformConfigControl1" DataContext="{Binding TopPlatform}" Margin="5" Width="200"/>
+                        <UserControls:PlatformConfigControl x:Name="PlatformConfigControl2" DataContext="{Binding BasePlatform}" Margin="5" Width="200"/>
                         <UserControls:RotationCenterControl x:Name="RotationCenterControl1" DataContext="{Binding TopPlatform}" Margin="5" Width="200"/>
-                </StackPanel>
+                        <UserControls:ActuatorsConfigControl x:Name="ActuatorsConfigControl1" DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}}" Margin="5" Width="200"/>
+                    </StackPanel>
                 </TabItem>
             </TabControl>
   

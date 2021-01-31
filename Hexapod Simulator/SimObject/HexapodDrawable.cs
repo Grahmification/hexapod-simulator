@@ -19,19 +19,9 @@ namespace Hexapod_Simulator.SimObject
 
             var tmpTop = (PlatformDrawable)Top;
             tmpTop.Draw();
-
-            //Base.Draw();
-            //Top.Draw();
-
-            for (int i = 0; i < 6; i++)
-            {
-                //GLObjects.Line(Color.Blue, Base.GlobalJointCoords[i], Top.GlobalJointCoords[i]);
-            }
-          
+      
             foreach (IGLDrawable Motor in Actuators)
-            {
                 Motor.Draw();
-            }
         }
 
         protected override IPlatform InitializeBase(double BaseRad, double BaseAngle)
@@ -42,14 +32,14 @@ namespace Hexapod_Simulator.SimObject
         {
             return new PlatformDrawable("Top", TopRad, TopAngle, new double[] { 0, 0, defaultHeight });
         }
-        protected override IActuator InitializeLinearActuator(double[] position, double[] linkEndPosition)
+        protected override IActuator InitializeLinearActuator(double[] position, double[] linkEndPosition, double maxTravel, double linkLength)
         {
-            return new LinearActuatorDrawable(20, 40, position, linkEndPosition);
+            return new LinearActuatorDrawable(maxTravel, linkLength, position, linkEndPosition);
         }
-        protected override IActuator InitializeRotaryActuator(double[] position, double[] linkEndPosition, int index, double jointAngle)
+        protected override IActuator InitializeRotaryActuator(double[] position, double[] linkEndPosition, int index, double jointAngle, double armRadius, double linkLength)
         {
             double motorAngle = RotaryActuator.calcMotorOffsetAngle(index, 0, Platform.CalcJointOffsetAngle(index, jointAngle));
-            return new RotaryActuatorDrawable(10, motorAngle, 40, position, linkEndPosition);
+            return new RotaryActuatorDrawable(armRadius, motorAngle, linkLength, position, linkEndPosition);
         }
     }
 

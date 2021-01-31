@@ -6,6 +6,8 @@ namespace Hexapod_Simulator.Shared
 {
     public interface IBall
     {
+        event EventHandler RedrawRequired;
+
         double[] Angle { get; } //PRY rotation about centerpoint [deg]
         double[] Position { get; } //XYZ position of centerpoint [m]
         double[] Velocity { get; } //XYZ velocity of centerpoint [m/s]

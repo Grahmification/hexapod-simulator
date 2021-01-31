@@ -7,12 +7,17 @@
         xmlns:ht="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf"
         xmlns:ViewModels="clr-namespace:Hexapod_Simulator.Helix.ViewModels" 
         xmlns:Views="clr-namespace:Hexapod_Simulator.Helix.Views"
-        xmlns:UserControls="clr-namespace:Hexapod_Simulator.Helix.UserControls" 
+        xmlns:UserControls="clr-namespace:Hexapod_Simulator.Helix.UserControls"
+        xmlns:ValueConverters="clr-namespace:Hexapod_Simulator.Helix.ValueConverters" 
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800">
 
+    <Window.Resources>
+        <ValueConverters:SimulationRunStateToToggleTextConverter x:Key="SimulationRunStateToToggleTextConverter"/>
+    </Window.Resources>
+    
     <Window.DataContext>
-        <ViewModels:HexapodVM/>
+        <ViewModels:MainVM/>
     </Window.DataContext>
 
     <Grid>
@@ -22,10 +27,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray">
-            <Button Content="Test" Margin="5"/>
-            <Button Content="Test" Margin="5"/>
-            <Button Content="Test" Margin="5"/>
+        <StackPanel Grid.Row="0"  Orientation="Horizontal" Background="LightGray">
+            <Button Command="{Binding ToggleSimulationCommand}" Content="{Binding SimulationRunning, Converter={StaticResource SimulationRunStateToToggleTextConverter}}" Margin="2" />
+            <Button Content="Servo Active" Margin="2"/>
+            <Border Width="1" Margin="2" Background="#8888"/>
+            <TextBlock Margin="2" VerticalAlignment="Center" Text="Interval [ms]:"/>
+            <TextBox Margin="2" Width="50" Text="{Binding SimulationInterval, StringFormat=\{0:N0\}}"/>
         </StackPanel>
 
         <Grid Grid.Row="1">
@@ -37,17 +44,17 @@
             <TabControl Grid.Column="0" TabStripPlacement="Top">
                 <TabItem Header="Move">
                     <StackPanel>
-                    <UserControls:HexaManualControl x:Name="ManualPositionControl" DataContext="{Binding TopPlatform}" Margin="5" Width="200" Height="200"/>
-                    <UserControls:HexaManualControl x:Name="ManualPositionControl2" DataContext="{Binding BasePlatform}" Margin="5" Width="200" Height="200"/>
-                        <UserControls:ActuatorPositionsControl x:Name="ActuatorPositionView" DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}}" Margin="5" Width="200" Height="200"/>
+                    <UserControls:HexaManualControl x:Name="ManualPositionControl" DataContext="{Binding Hexapod.TopPlatform}" Margin="5" Width="200" Height="200"/>
+                        <UserControls:HexaManualControl x:Name="ManualPositionControl2" DataContext="{Binding Hexapod.BasePlatform}" Margin="5" Width="200" Height="200"/>
+                        <UserControls:ActuatorPositionsControl x:Name="ActuatorPositionView" DataContext="{Binding Hexapod}" Margin="5" Width="200" Height="200"/>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Configuration">
                     <StackPanel>
-                        <UserControls:PlatformConfigControl x:Name="PlatformConfigControl1" DataContext="{Binding TopPlatform}" Margin="5" Width="200"/>
-                        <UserControls:PlatformConfigControl x:Name="PlatformConfigControl2" DataContext="{Binding BasePlatform}" Margin="5" Width="200"/>
-                        <UserControls:RotationCenterControl x:Name="RotationCenterControl1" DataContext="{Binding TopPlatform}" Margin="5" Width="200"/>
-                        <UserControls:ActuatorsConfigControl x:Name="ActuatorsConfigControl1" DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}}" Margin="5" Width="200"/>
+                        <UserControls:PlatformConfigControl x:Name="PlatformConfigControl1" DataContext="{Binding Hexapod.TopPlatform}" Margin="5" Width="200"/>
+                        <UserControls:PlatformConfigControl x:Name="PlatformConfigControl2" DataContext="{Binding Hexapod.BasePlatform}" Margin="5" Width="200"/>
+                        <UserControls:RotationCenterControl x:Name="RotationCenterControl1" DataContext="{Binding Hexapod.TopPlatform}" Margin="5" Width="200"/>
+                        <UserControls:ActuatorsConfigControl x:Name="ActuatorsConfigControl1" DataContext="{Binding Hexapod}" Margin="5" Width="200"/>
                     </StackPanel>
                 </TabItem>
             </TabControl>
@@ -55,22 +62,23 @@
             <ht:HelixViewport3D x:Name="MainViewPort" Grid.Column="1" ShowCoordinateSystem="True">
                 <ht:SunLight/>
                 <ht:GridLinesVisual3D/>
-                <ht:CoordinateSystemVisual3D x:Name="Coords1" ArrowLengths="2" Transform="{Binding TopPlatform.RotationCenterTransform}"/>
+                <ht:CoordinateSystemVisual3D x:Name="Coords1" ArrowLengths="2" Transform="{Binding Hexapod.TopPlatform.RotationCenterTransform}"/>
                 <ht:PieSliceVisual3D></ht:PieSliceVisual3D>
                 <ht:SphereVisual3D Radius="0.2"></ht:SphereVisual3D>
-                
+                <ht:SphereVisual3D x:Name="Ball1" Radius="{Binding Ball.Radius}" Fill="HotPink" Transform="{Binding Ball.Transform}"/>
+
                 <Views:HexapodVisual3D x:Name="Hexa1" TopPlatform="{Binding ElementName=TopPlatForm3D}" BasePlatform="{Binding ElementName=BasePlatForm3D}">
                     <Views:PlatformVisual3D x:Name="TopPlatForm3D" 
-                                            Transform="{Binding TopPlatform.Transform}"
-                                            Radius="{Binding TopPlatform.Radius}"
-                                            JointAngle="{Binding TopPlatform.JointAngle}"
-                                            RotationCenterTransform="{Binding TopPlatform.RotationCenterTransform}"
+                                            Transform="{Binding Hexapod.TopPlatform.Transform}"
+                                            Radius="{Binding Hexapod.TopPlatform.Radius}"
+                                            JointAngle="{Binding Hexapod.TopPlatform.JointAngle}"
+                                            RotationCenterTransform="{Binding Hexapod.TopPlatform.RotationCenterTransform}"
                                             />
                     <Views:PlatformVisual3D x:Name="BasePlatForm3D" 
-                                            Transform="{Binding BasePlatform.Transform}"
-                                            Radius="{Binding BasePlatform.Radius}"
-                                            JointAngle="{Binding BasePlatform.JointAngle}"
-                                            RotationCenterTransform="{Binding BasePlatform.RotationCenterTransform}"
+                                            Transform="{Binding Hexapod.BasePlatform.Transform}"
+                                            Radius="{Binding Hexapod.BasePlatform.Radius}"
+                                            JointAngle="{Binding Hexapod.BasePlatform.JointAngle}"
+                                            RotationCenterTransform="{Binding Hexapod.BasePlatform.RotationCenterTransform}"
                                             />
                 </Views:HexapodVisual3D>
 
@@ -78,7 +86,7 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Background="LightGray">
-            <Label Content="FPS: 0"/>
+            <TextBlock Margin="5,2,5,2" VerticalAlignment="Center" Text="{Binding SimulationFPS, StringFormat={}FPS: {0}}"/>
         </StackPanel>
 
     </Grid>

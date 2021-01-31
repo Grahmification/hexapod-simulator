@@ -7,6 +7,9 @@ namespace Hexapod_Simulator.Shared
 {
     public class Ball_Local_Test : Ball, IBall
     {
+        public event EventHandler RedrawRequired;
+
+
         private double[] _globalPosition = new double[] { 0, 0, 0 };
         private double _normalForce = 0; //last calculated normal force magnitude
 
@@ -17,6 +20,8 @@ namespace Hexapod_Simulator.Shared
             this.Position = startingPos;
 
             this._normalForce = this.Mass * 9.81; //give an initial estimate assuming ball is on flat surface
+
+            RedrawRequired?.Invoke(this, new EventArgs());
         } //only calculates local coords
 
  
@@ -29,6 +34,8 @@ namespace Hexapod_Simulator.Shared
                 Velocity[i] = Velocity[i] + Calculus.Integrate(Acceleration[i], TimeIncrement);
                 Position[i] = Position[i] + Calculus.Integrate(Velocity[i], TimeIncrement);
             }
+
+            RedrawRequired?.Invoke(this, new EventArgs());
         }
         public void UpdateGlobalCoords(double[] globalCoords)
         {

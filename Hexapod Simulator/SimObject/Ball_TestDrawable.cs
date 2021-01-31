@@ -9,8 +9,6 @@ namespace Hexapod_Simulator.SimObject
     {
         public bool IsDrawn { get; set; }
 
-        public event EventHandler RedrawRequired;
-
         public Ball_TestDrawable(double radius, double density, double[] startingPos) : base(radius, density, startingPos)
         {
             this.IsDrawn = true;

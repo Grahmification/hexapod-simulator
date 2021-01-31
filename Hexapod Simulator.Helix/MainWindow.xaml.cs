@@ -37,27 +37,7 @@ namespace Hexapod_Simulator.Helix
             var hexa = new HexapodVM(hexaModel);
 
             this.DataContext = hexa;
-
-            Binding TransformBinding = new Binding("Transform");
-            TransformBinding.Source = hexa.TopPlatform;        
-            //BindingOperations.SetBinding(Hexa1.TopPlatform, ModelVisual3D.TransformProperty, TransformBinding);
-
-            Binding BaseRadiusBinding = new Binding("Radius");
-            BaseRadiusBinding.Source = hexa.BasePlatform;
-            BindingOperations.SetBinding(Hexa1.BasePlatform, PlatformVisual3D.RadiusProperty, BaseRadiusBinding);
-
-            Binding TopRadiusBinding = new Binding("Radius");
-            TopRadiusBinding.Source = hexa.TopPlatform;
-            //BindingOperations.SetBinding(Hexa1.TopPlatform, PlatformVisual3D.RadiusProperty, TopRadiusBinding);
-
-            Binding TopJointAngleBinding = new Binding("JointAngle");
-            TopJointAngleBinding.Source = hexa.TopPlatform;
-            //BindingOperations.SetBinding(Hexa1.TopPlatform, PlatformVisual3D.JointAngleProperty, TopJointAngleBinding);
-
-            Binding TransformBinding2 = new Binding("Transform");
-            TransformBinding2.Source = hexa.BasePlatform;
-            BindingOperations.SetBinding(Hexa1.BasePlatform, ModelVisual3D.TransformProperty, TransformBinding2);
-
+        
             //Look into observableCollections ---- there is probably a better way to handle this binding process
             for (int i = 0; i < 6; i++)
             {
@@ -79,6 +59,29 @@ namespace Hexapod_Simulator.Helix
                 BindingOperations.SetBinding(Hexa1.Actuators[i], LinearActuatorVisual3D.ArmColorProperty, SolutionValidBinding);
                 BindingOperations.SetBinding(Hexa1.Actuators[i], LinearActuatorVisual3D.LinkColorProperty, SolutionValidBinding);
             }
+        }
+
+        private void InitializePlatformBindings()
+        {
+            Binding TransformBinding = new Binding("Transform");
+            //TransformBinding.Source = hexa.TopPlatform;
+            //BindingOperations.SetBinding(Hexa1.TopPlatform, ModelVisual3D.TransformProperty, TransformBinding);
+
+            Binding BaseRadiusBinding = new Binding("Radius");
+            //BaseRadiusBinding.Source = hexa.BasePlatform;
+            //BindingOperations.SetBinding(Hexa1.BasePlatform, PlatformVisual3D.RadiusProperty, BaseRadiusBinding);
+
+            Binding TopRadiusBinding = new Binding("Radius");
+            //TopRadiusBinding.Source = hexa.TopPlatform;
+            //BindingOperations.SetBinding(Hexa1.TopPlatform, PlatformVisual3D.RadiusProperty, TopRadiusBinding);
+
+            Binding TopJointAngleBinding = new Binding("JointAngle");
+            //TopJointAngleBinding.Source = hexa.TopPlatform;
+            //BindingOperations.SetBinding(Hexa1.TopPlatform, PlatformVisual3D.JointAngleProperty, TopJointAngleBinding);
+
+            Binding TransformBinding2 = new Binding("Transform");
+            //TransformBinding2.Source = hexa.BasePlatform;
+            //BindingOperations.SetBinding(Hexa1.BasePlatform, ModelVisual3D.TransformProperty, TransformBinding2);
         }
     }
 }

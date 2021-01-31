@@ -58,12 +58,18 @@
                 <ht:PieSliceVisual3D></ht:PieSliceVisual3D>
                 <ht:SphereVisual3D Radius="0.2"></ht:SphereVisual3D>
                 
-                <Views:HexapodVisual3D x:Name="Hexa1">
+                <Views:HexapodVisual3D x:Name="Hexa1" TopPlatform="{Binding ElementName=TopPlatForm3D}" BasePlatform="{Binding ElementName=BasePlatForm3D}">
                     <Views:PlatformVisual3D x:Name="TopPlatForm3D" 
                                             Transform="{Binding TopPlatform.Transform}"
                                             Radius="{Binding TopPlatform.Radius}"
                                             JointAngle="{Binding TopPlatform.JointAngle}"
                                             RotationCenterTransform="{Binding TopPlatform.RotationCenterTransform}"
+                                            />
+                    <Views:PlatformVisual3D x:Name="BasePlatForm3D" 
+                                            Transform="{Binding BasePlatform.Transform}"
+                                            Radius="{Binding BasePlatform.Radius}"
+                                            JointAngle="{Binding BasePlatform.JointAngle}"
+                                            RotationCenterTransform="{Binding BasePlatform.RotationCenterTransform}"
                                             />
                 </Views:HexapodVisual3D>
 

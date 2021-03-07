@@ -40,10 +40,13 @@ namespace Hexapod_Simulator.Shared
             get { return this.fixedRotationCenter; }
             set { this.fixedRotationCenter = value; CalcGlobalCoords(); }
         }
+        public TranslationModes TranslationMode { get; set; } = TranslationModes.Instant;
 
         //----------- Public get properties ----------------------
         public double[][] LocalJointCoords { get; private set; } //XYZ pos [mm] of each joint, without trans/rotation 
         public double[][] GlobalJointCoords { get; private set; } //XYZ pos [mm] of each joint
+        public double[] TranslationTarget { get; private set; } = new double[] { 0, 0, 0 }; //the platform target translation (X, Y, Z) [mm]
+        public double[] RotationTarget { get; private set; } = new double[] { 0, 0, 0 }; //the platform target rotation (Pitch, Roll, Yaw) [deg]
         public double[] DefaultPos
         {
             get { return this.defaultPos; }
@@ -61,7 +64,7 @@ namespace Hexapod_Simulator.Shared
                 this.translation = value;
                 CalcGlobalCoords();
             }
-        }
+        } //actual platform translation (may be different than target if mode isn't instant)
         public double[] Rotation
         {
             get { return this.rotation; }
@@ -70,7 +73,7 @@ namespace Hexapod_Simulator.Shared
                 this.rotation = value;
                 CalcGlobalCoords();
             }
-        }
+        } //actual platform rotation (may be different than target if mode isn't instant)
         public double[] RotationCenter
         {
             get
@@ -156,7 +159,10 @@ namespace Hexapod_Simulator.Shared
 
         public void TranslateAbs(double[] Pos)
         {
-            this.Translation = Pos;
+            TranslationTarget = Pos;
+
+            if (TranslationMode == TranslationModes.Instant)
+                Translation = TranslationTarget;           
         }
         public void TranslateRel(double[] Pos)
         {
@@ -167,11 +173,17 @@ namespace Hexapod_Simulator.Shared
                 newPos[i] = this.Translation[i] + Pos[i];
             }
 
-            this.Translation = newPos;
+            TranslationTarget = newPos;
+
+            if (TranslationMode == TranslationModes.Instant)
+                Translation = TranslationTarget;
         }
         public void RotateAbs(double[] Rot)
         {
-            this.Rotation = Rot;
+            RotationTarget = Rot;
+
+            if (TranslationMode == TranslationModes.Instant)
+                Rotation = RotationTarget;
         }
         public void UpdateConfig(double radius, double jointAngle, double[] defaultPos)
         {
@@ -192,39 +204,28 @@ namespace Hexapod_Simulator.Shared
 
         } //allows whole rotation center to be updated without many re-calculations
 
-        //---------------------------- Servo Stuff ---------------------------------
-
-        private double[] translationTarget = new double[] { 0, 0, 0 };
-        private double[] rotationTarget = new double[] { 0, 0, 0 };
+        //---------------------------- Servo Translation Stuff ---------------------------------
         private List<PIDController> posControllers = new List<PIDController>();
         private List<PIDController> rotControllers = new List<PIDController>();
 
-        public void RotateAbsServo(double[] Rot)
-        {
-            rotationTarget = Rot;
-        }
-        public void TranslateAbsServo(double[] Pos)
-        {
-            translationTarget = Pos;
-        }
         public void CalculateTimeStep(double TimeStep)
         {
             var output = new double[] { 0, 0, 0 };
 
             //--------------------- Position ------------------------------
 
-            for (int i = 0; i < translationTarget.Length; i++)
+            for (int i = 0; i < TranslationTarget.Length; i++)
             {
-                output[i] = posControllers[i].CalcOutput(translationTarget[i] - this.Translation[i], TimeStep);
+                output[i] = posControllers[i].CalcOutput(TranslationTarget[i] - this.Translation[i], TimeStep);
             }
             this.translation = output;
 
             //--------------------- Rotation ------------------------------
             var output2 = new double[] { 0, 0, 0 };
 
-            for (int i = 0; i < rotationTarget.Length; i++)
+            for (int i = 0; i < RotationTarget.Length; i++)
             {
-                output2[i] = rotControllers[i].CalcOutput(rotationTarget[i] - this.Rotation[i], TimeStep);
+                output2[i] = rotControllers[i].CalcOutput(RotationTarget[i] - this.Rotation[i], TimeStep);
             }
             this.rotation = output2;
 

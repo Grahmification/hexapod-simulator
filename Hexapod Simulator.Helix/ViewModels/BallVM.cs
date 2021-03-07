@@ -22,7 +22,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// the model class for this VM
         /// </summary>
-        private IBall BallModel { get; set; } 
+        public IBall BallModel { get; private set; } 
 
         /// <summary>
         /// default constructor

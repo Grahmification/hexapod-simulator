@@ -106,25 +106,11 @@ namespace Hexapod_Simulator
 
         private void ManualDragControlPosChange(object sender, EventArgs e)
         {
-            if (Sim.Running)
-            {
-                Hexa.Top.TranslateAbsServo(control_ManualDrag_main.Position);
-            }
-            else
-            {
-                Hexa.Top.TranslateAbs(control_ManualDrag_main.Position);
-            }         
+            Hexa.Top.TranslateAbs(control_ManualDrag_main.Position);
         }
         private void ManualDragControlRotChange(object sender, EventArgs e)
         {          
-            if (Sim.Running)
-            {
-                Hexa.Top.RotateAbsServo(control_ManualDrag_main.Rotation);
-            }
-            else
-            {
-                Hexa.Top.RotateAbs(control_ManualDrag_main.Rotation);
-            }          
+            Hexa.Top.RotateAbs(control_ManualDrag_main.Rotation);      
         }
 
         //-------------- Ball Balancing Simulation ------------------
@@ -138,11 +124,14 @@ namespace Hexapod_Simulator
                 Sim.Stop();
                 Btn.Text = "Start Simulation";
 
+                Hexa.Top.TranslationMode = TranslationModes.Instant;
             }
             else
             {
                 Sim.Start(Convert.ToDouble(toolStripTextBox_simInterval.Text));
                 Btn.Text = "Stop Simulation";
+
+                Hexa.Top.TranslationMode = TranslationModes.Servo;
             }
         }
         private void toolStripButton_servoActive_CheckStateChanged(object sender, EventArgs e)
@@ -160,7 +149,7 @@ namespace Hexapod_Simulator
             BTest.UpdateGlobalCoords(Hexa.Top.CalcGlobalCoord(BTest.Position));
 
             if(servoActive)
-                Hexa.Top.RotateAbsServo(new double[] { XController.CalcOutput(BTest.Position[0], e.TimeIncrement), YController.CalcOutput(BTest.Position[1], e.TimeIncrement), 0 });
+                Hexa.Top.RotateAbs(new double[] { XController.CalcOutput(BTest.Position[0], e.TimeIncrement), YController.CalcOutput(BTest.Position[1], e.TimeIncrement), 0 });
 
             //------------ Draw Screen -------------------------
             

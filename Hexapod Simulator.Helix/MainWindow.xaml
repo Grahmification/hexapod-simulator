@@ -29,7 +29,7 @@
 
         <StackPanel Grid.Row="0"  Orientation="Horizontal" Background="LightGray">
             <Button Command="{Binding ToggleSimulationCommand}" Content="{Binding SimulationRunning, Converter={StaticResource SimulationRunStateToToggleTextConverter}}" Margin="2" />
-            <Button Content="Servo Active" Margin="2"/>
+            <ToggleButton Content="Servo Active" IsChecked="{Binding ServoActive, Mode=TwoWay}" Margin="2"/>
             <Border Width="1" Margin="2" Background="#8888"/>
             <TextBlock Margin="2" VerticalAlignment="Center" Text="Interval [ms]:"/>
             <TextBox Margin="2" Width="50" Text="{Binding SimulationInterval, StringFormat=\{0:N0\}}"/>

@@ -9,32 +9,32 @@ namespace Hexapod_Simulator.Helix.ViewModels
     {
         public double XTranslation
         {
-            get { return PlatformModel.Translation[0]; }
+            get { return PlatformModel.TranslationTarget[0]; }
             set { PlatformModel.TranslateAbs(new double[] { value, YTranslation, ZTranslation }); }
         }
         public double YTranslation
         {
-            get { return PlatformModel.Translation[1]; }
-            set { PlatformModel.TranslateAbs(new double[] { XTranslation, value , ZTranslation }); }
+            get { return PlatformModel.TranslationTarget[1]; }
+            set { PlatformModel.TranslateAbs(new double[] { XTranslation, value, ZTranslation }); }
         }
         public double ZTranslation 
-        { 
-            get { return PlatformModel.Translation[2]; } 
-            set { PlatformModel.TranslateAbs(new double[] { XTranslation, YTranslation, value }); } 
+        {
+            get { return PlatformModel.TranslationTarget[2]; }
+            set { PlatformModel.TranslateAbs(new double[] { XTranslation, YTranslation, value }); }
         }
         public double PitchRotation
         {
-            get { return PlatformModel.Rotation[0]; }
+            get { return PlatformModel.RotationTarget[0]; }
             set { PlatformModel.RotateAbs(new double[] { value, RollRotation, YawRotation }); }
         }
         public double RollRotation
         {
-            get { return PlatformModel.Rotation[1]; }
+            get { return PlatformModel.RotationTarget[1]; }
             set { PlatformModel.RotateAbs(new double[] { PitchRotation, value, YawRotation }); }
         }
         public double YawRotation
         {
-            get { return PlatformModel.Rotation[2]; }
+            get { return PlatformModel.RotationTarget[2]; }
             set { PlatformModel.RotateAbs(new double[] { PitchRotation, RollRotation, value }); }
         }
 
@@ -87,8 +87,6 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         public bool FixedRotationCenterTemp { get; set; } = false;
 
-
-
         public Platform PlatformModel { get; private set; }
 
 
@@ -114,6 +112,13 @@ namespace Hexapod_Simulator.Helix.ViewModels
         public PlatformVM()
         {
             InitializeModel(new Platform("Temp", 10, 30));
+        }
+        public void SetSimulationState(bool SimulationRunning)
+        {
+            if (SimulationRunning)
+                PlatformModel.TranslationMode = TranslationModes.Servo;
+            else
+                PlatformModel.TranslationMode = TranslationModes.Instant;
         }
         
         /// <summary>

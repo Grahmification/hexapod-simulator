@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Hexapod_Simulator.Helix.UserControls.PlatformPositionControl" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hexapod_Simulator.Helix.UserControls"
+             xmlns:ViewModels="clr-namespace:Hexapod_Simulator.Helix.ViewModels" 
+             xmlns:ValueConverters="clr-namespace:Hexapod_Simulator.Helix.ValueConverters" 
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="200">
+
+    <UserControl.DataContext>
+        <ViewModels:PlatformVM/>
+    </UserControl.DataContext>
+
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid Background="DarkGray">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{Binding Name, StringFormat={}Current Position: {0}}" FontWeight="Bold" FontSize="12" VerticalAlignment="Center" Margin="5"/>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.4*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBox Grid.Row="0" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Position[0], StringFormat=\{0:N3\}}" Tag="X [mm]:"/>
+                <TextBox Grid.Row="1" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Position[1], StringFormat=\{0:N3\}}" Tag="Y [mm]:"/>
+                <TextBox Grid.Row="2" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Position[2], StringFormat=\{0:N3\}}" Tag="Z [mm]:"/>
+
+                <TextBox Grid.Row="4" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Rotation[0], StringFormat=\{0:N3\}}" Tag="Pitch [deg]:"/>
+                <TextBox Grid.Row="5" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Rotation[1], StringFormat=\{0:N3\}}" Tag="Roll [deg]:"/>
+                <TextBox Grid.Row="6" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Rotation[2], StringFormat=\{0:N3\}}" Tag="Yaw [deg]:"/>
+                
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

@@ -38,6 +38,9 @@ namespace Hexapod_Simulator.Helix.ViewModels
             set { PlatformModel.RotateAbs(new double[] { PitchRotation, RollRotation, value }); }
         }
 
+
+        public double[] Position { get { return PlatformModel.Position;  } }
+        public double[] Rotation { get { return PlatformModel.Rotation; } }
         public double[] AbsRotationCenter { get { return PlatformModel.AbsRotationCenter; } }
         public double Radius
         {
@@ -180,6 +183,8 @@ namespace Hexapod_Simulator.Helix.ViewModels
             OnPropertyChanged("RotationCenterTransform");
             OnPropertyChanged("LocalJointCoords");
             OnPropertyChanged("AbsRotationCenter");
+            OnPropertyChanged("Position");
+            OnPropertyChanged("Rotation");
         }
         private void onLocalCoordsChanged(object sender, EventArgs e)
         {

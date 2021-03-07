@@ -79,6 +79,9 @@
     <Compile Include="UserControls\ActuatorPositionControl.xaml.cs">
       <DependentUpon>ActuatorPositionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PlatformPositionControl.xaml.cs">
+      <DependentUpon>PlatformPositionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ActuatorPositionsControl.xaml.cs">
       <DependentUpon>ActuatorPositionsControl.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,10 @@
     <Compile Include="ViewModels\PlatformVM.cs" />
     <Compile Include="ViewModels\HexapodVM.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
+    <Page Include="Styles\TextBoxes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Sliders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +124,10 @@
     <Page Include="UserControls\ActuatorPositionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PlatformPositionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\ActuatorPositionsControl.xaml">
       <SubType>Designer</SubType>

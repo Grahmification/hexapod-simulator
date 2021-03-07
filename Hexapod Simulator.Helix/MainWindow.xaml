@@ -45,8 +45,8 @@
             <TabControl Grid.Column="0" TabStripPlacement="Top">
                 <TabItem Header="Move">
                     <StackPanel>
-                    <UserControls:HexaManualControl x:Name="ManualPositionControl" DataContext="{Binding Hexapod.TopPlatform}" Margin="5" Width="200" Height="200"/>
-                        <UserControls:HexaManualControl x:Name="ManualPositionControl2" DataContext="{Binding Hexapod.BasePlatform}" Margin="5" Width="200" Height="200"/>
+                        <UserControls:HexaManualControl x:Name="ManualPositionControl" DataContext="{Binding Hexapod.TopPlatform}" Margin="5" Width="200" Height="200"/>
+                        <UserControls:PlatformPositionControl x:Name="PlatformPositionControlTop" DataContext="{Binding Hexapod.TopPlatform}" Margin="5" Width="200" Height="200"/>
                         <UserControls:ActuatorPositionsControl x:Name="ActuatorPositionView" DataContext="{Binding Hexapod}" Margin="5" Width="200" Height="200"/>
                     </StackPanel>
                 </TabItem>

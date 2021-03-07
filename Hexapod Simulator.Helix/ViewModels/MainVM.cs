@@ -119,13 +119,10 @@ namespace Hexapod_Simulator.Helix.ViewModels
             if(Hexapod is null)
                 Hexapod = new HexapodVM(new Hexapod(15, 12, 8, 30, 5));
             else
-            {
                 Hexapod.TopPlatform.ResetPositionCommand.Execute(null);
-            }
-                
-
+             
             //setup ball
-            Ball = new BallVM(new Ball_Local_Test(0.005, 9800, new double[] { 0, 0, 0 }));
+            Ball = new BallVM(new Ball_Local_Test(0.0025, 9800, new double[] { 0, 0, 0 }));
 
             //setup simulation model
             SimModel = new TimeSimulation();

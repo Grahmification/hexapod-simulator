@@ -48,9 +48,6 @@
     <Reference Include="HelixToolkit.Wpf, Version=2.12.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
       <HintPath>..\packages\HelixToolkit.Wpf.2.12.0\lib\net45\HelixToolkit.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="MathNet.Numerics, Version=4.12.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.4.12.0\lib\net461\MathNet.Numerics.dll</HintPath>
-    </Reference>
     <Reference Include="PropertyChanged, Version=3.2.8.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.3.2.8\lib\net40\PropertyChanged.dll</HintPath>
     </Reference>

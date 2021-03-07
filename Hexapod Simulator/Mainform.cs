@@ -146,7 +146,11 @@ namespace Hexapod_Simulator
             
             BTest.CalculateTimeStep(e.TimeIncrement, Hexa.Top.NormalVector);
             Hexa.Top.CalculateTimeStep(e.TimeIncrement);
-            BTest.UpdateGlobalCoords(Hexa.Top.CalcGlobalCoord(BTest.Position));
+
+            //Update the Z coordinate of the ball based on it's XY position and the platform's tilt 
+            var coords = BTest.Position;
+            coords[2] = BTest.Radius; //Z offset relative to the platform should be the ball's radius
+            BTest.UpdateGlobalCoords(Hexa.Top.CalcGlobalCoord(coords));
 
             if(servoActive)
                 Hexa.Top.RotateAbs(new double[] { XController.CalcOutput(BTest.Position[0], e.TimeIncrement), YController.CalcOutput(BTest.Position[1], e.TimeIncrement), 0 });

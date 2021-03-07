@@ -28,6 +28,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0"  Orientation="Horizontal" Background="LightGray">
+            <Button Command="{Binding ResetSimulationCommand}" Content="Reset Simulation" Margin="2" />
             <Button Command="{Binding ToggleSimulationCommand}" Content="{Binding SimulationRunning, Converter={StaticResource SimulationRunStateToToggleTextConverter}}" Margin="2" />
             <ToggleButton Content="Servo Active" IsChecked="{Binding ServoActive, Mode=TwoWay}" Margin="2"/>
             <Border Width="1" Margin="2" Background="#8888"/>

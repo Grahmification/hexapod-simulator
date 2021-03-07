@@ -151,8 +151,11 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         private void ResetPosition()
         {
+            //These commands are redundant, but update them anyway to update any controls bound to the values
             XTranslation = YTranslation = ZTranslation = 0;
             PitchRotation = RollRotation = YawRotation = 0;
+
+            PlatformModel.ResetPosition();
         }
 
         /// <summary>

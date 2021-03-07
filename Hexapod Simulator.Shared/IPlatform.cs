@@ -32,6 +32,7 @@ namespace Hexapod_Simulator.Shared
         void RotateAbs(double[] Rot);
         void UpdateConfig(double radius, double jointAngle, double[] defaultPos);
         void UpdateRotationCenter(double[] Position, bool FixedPosition);
+        void ResetPosition();
 
         //---------------------------- Servo Translation Stuff ---------------------------------
 

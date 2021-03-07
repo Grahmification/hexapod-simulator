@@ -145,18 +145,9 @@ namespace Hexapod_Simulator.Shared
             this.UpdateConfig(radius, jointAngle, defaultPos); //will cause local/global coords to calculate
 
             //------------ Setup servo controllers -------------------------
-
-            for (int i = 0; i < 3; i++)
-            {
-                PIDController posController = new PIDController(-1, 0.5, 3, 0);
-                posControllers.Add(posController);
-
-                PIDController rotController = new PIDController(-1, 0.5, 3, 0);
-                rotControllers.Add(rotController);
-            }
+            InitializeServoControllers();
+           
         }
-
-
         public void TranslateAbs(double[] Pos)
         {
             TranslationTarget = Pos;
@@ -203,6 +194,17 @@ namespace Hexapod_Simulator.Shared
             this.RotationCenter = Position; //will also re-calculate coords
 
         } //allows whole rotation center to be updated without many re-calculations
+        public void ResetPosition()
+        {
+            TranslationTarget = new double[] { 0, 0, 0 };
+            RotationTarget = new double[] { 0, 0, 0 };
+
+            Translation = new double[] { 0, 0, 0 };
+            Rotation = new double[] { 0, 0, 0 };
+
+            //Reset the servo controllers in case the integral is wound up. 
+            InitializeServoControllers();
+        } //hard resets the translation and rotation
 
         //---------------------------- Servo Translation Stuff ---------------------------------
         private List<PIDController> posControllers = new List<PIDController>();
@@ -233,9 +235,22 @@ namespace Hexapod_Simulator.Shared
 
             CalcGlobalCoords();
         }
+        private void InitializeServoControllers()
+        {
+            posControllers = new List<PIDController>();
+            rotControllers = new List<PIDController>();
+
+            for (int i = 0; i < 3; i++)
+            {
+                PIDController posController = new PIDController(-1, 0.5, 3, 0);
+                posControllers.Add(posController);
+
+                PIDController rotController = new PIDController(-1, 0.5, 3, 0);
+                rotControllers.Add(rotController);
+            }
+        }
 
         //---------------- Geometry Calculation functions -----------------    
-
         private void CalcLocalCoords()
         {
             LocalJointCoords = CalcLocalCoords(JointAngle, Radius);
@@ -245,7 +260,6 @@ namespace Hexapod_Simulator.Shared
     
             CalcGlobalCoords(); //will also have changed if local coords have changed                         
         } //also forces global coords to be updated
-
         public double[] CalcGlobalCoord(double[] localcoord)
         {
             return KinematicMath.CalcGlobalCoord2(localcoord, this.Translation, this.DefaultPos, this.Rotation, this.RotationCenter);
@@ -270,7 +284,6 @@ namespace Hexapod_Simulator.Shared
             double[] normal = new double[] { 0, 0, 1 }; //local vector without rotation
             this.NormalVector = GFunctions.Mathnet.KinematicMath.RotateVector(normal, this.Rotation);
         }
-
 
         public static double CalcJointOffsetAngle(int Index, double OffsetAngle)
         {

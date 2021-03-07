@@ -48,12 +48,12 @@ namespace Hexapod_Simulator.Helix.ViewModels
         private TimeSimulation SimModel = new TimeSimulation();
 
         /// <summary>
-        /// PID Controller Tracking Monitoring the X Position of the <see cref="BallModel"/>
+        /// PID Controller Tracking Monitoring the X Position of the <see cref="Ball"/>
         /// </summary>
         private PIDController XController = new PIDController(3, 1, 1, -0.5, 30);
 
         /// <summary>
-        /// PID Controller Tracking Monitoring the Y Position of the <see cref="BallModel"/>
+        /// PID Controller Tracking Monitoring the Y Position of the <see cref="Ball"/>
         /// </summary>
         public PIDController YController = new PIDController(-3, 1, 1, -0.5, 30);
 
@@ -64,10 +64,31 @@ namespace Hexapod_Simulator.Helix.ViewModels
         public ICommand ToggleSimulationCommand { get; set; }
 
         /// <summary>
+        /// RelayCommand for <see cref="ResetSimulation"/>
+        /// </summary>
+        public ICommand ResetSimulationCommand { get; set; }
+
+        /// <summary>
         /// Default constructor
         /// </summary>
         public MainVM()
         {
+            InitializeModels();
+
+            //Setup all relay commands
+            ToggleSimulationCommand = new RelayCommand(ToggleSimulation);
+            ResetSimulationCommand = new RelayCommand(ResetSimulation);
+        }
+
+        /// <summary>
+        /// Resets the simulation to starting values
+        /// </summary>
+        public void ResetSimulation()
+        {
+            //if the simulation is running, stop it first
+            if (SimulationRunning)
+                ToggleSimulation();
+
             InitializeModels();
         }
 
@@ -94,33 +115,26 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         private void InitializeModels()
         {
-            //setup hexapod
-            Hexapod = new HexapodVM(new Hexapod(15, 12, 8, 30, 5));
+            //setup hexapod - if it already exists just reset the position so we save the configuration
+            if(Hexapod is null)
+                Hexapod = new HexapodVM(new Hexapod(15, 12, 8, 30, 5));
+            else
+            {
+                Hexapod.TopPlatform.ResetPositionCommand.Execute(null);
+            }
+                
 
             //setup ball
             Ball = new BallVM(new Ball_Local_Test(0.005, 9800, new double[] { 0, 0, 0 }));
-            
+
             //setup simulation model
+            SimModel = new TimeSimulation();
             SimModel.SimulationDoWorkRequest += this.SimulationTimeStepDoWork;
             SimModel.RunFreqUpdated += this.SimulationFrequencyReported;
 
-            //Setup all relay commands
-            ToggleSimulationCommand = new RelayCommand(ToggleSimulation);
-
-            Hexapod.TopPlatform.PlatformModel.PositionChanged += TopPosChanged;
-        }
-
-        /// <summary>
-        /// Fires whenever the position of the top platform changes
-        /// </summary>
-        /// <param name="sender">The platform model object</param>
-        /// <param name="e">default eventArgs</param>
-        private void TopPosChanged(object sender, EventArgs e)
-        {
-            IPlatform plat = (IPlatform)sender;
-
-            XController.SetTarget(plat.Position[0]);
-            YController.SetTarget(plat.Position[1]);
+            //Setup PID Controllers
+            XController = new PIDController(3, 1, 1, -0.5, 30);
+            YController = new PIDController(-3, 1, 1, -0.5, 30);
         }
 
         /// <summary>
@@ -131,11 +145,23 @@ namespace Hexapod_Simulator.Helix.ViewModels
         private void SimulationTimeStepDoWork(object sender, TimeSimulationStepEventArgs e)
         {
             //------------ Do Calculations -------------------------
-       
-            Ball.BallModel.CalculateTimeStep(e.TimeIncrement, Hexapod.TopPlatform.PlatformModel.NormalVector);
-            Hexapod.TopPlatform.PlatformModel.CalculateTimeStep(e.TimeIncrement);
-            //Ball.BallModel.UpdateGlobalCoords(Hexapod.TopPlatform.PlatformModel.CalcGlobalCoord(Ball.BallModel.Position));
 
+            //Calculate the ball XY accel/velocity/position
+            Ball.BallModel.CalculateTimeStep(e.TimeIncrement, Hexapod.TopPlatform.PlatformModel.NormalVector);
+
+            //Calculate the latest position of the top platform      
+            Hexapod.TopPlatform.PlatformModel.CalculateTimeStep(e.TimeIncrement);
+
+            //Update the ball servo target positions to the center of the platform
+            XController.SetTarget(Hexapod.TopPlatform.PlatformModel.Position[0]);
+            YController.SetTarget(Hexapod.TopPlatform.PlatformModel.Position[1]);
+
+            //Update the Z coordinate of the ball based on it's XY position and the platform's tilt 
+            var coords = Ball.BallModel.Position;
+            coords[2] = Ball.Radius; //Z offset relative to the platform should be the ball's radius
+            Ball.BallModel.UpdateGlobalCoords(Hexapod.TopPlatform.PlatformModel.CalcGlobalCoord(coords));
+
+            //If the servo is active, rotate the platform to try and center the ball
             if (ServoActive)
                 Hexapod.TopPlatform.PlatformModel.RotateAbs(new double[] { XController.CalcOutput(Ball.BallModel.Position[0], e.TimeIncrement), YController.CalcOutput(Ball.BallModel.Position[1], e.TimeIncrement), 0 });
 

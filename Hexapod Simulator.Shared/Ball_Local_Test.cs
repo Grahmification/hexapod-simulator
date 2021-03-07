@@ -5,12 +5,13 @@ using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace Hexapod_Simulator.Shared
 {
+    /// <summary>
+    /// A ball class where the position property is treated as local coordinates
+    /// </summary>
     public class Ball_Local_Test : Ball, IBall
     {
         public event EventHandler RedrawRequired;
 
-
-        private double[] _globalPosition = new double[] { 0, 0, 0 };
         private double _normalForce = 0; //last calculated normal force magnitude
 
         public Ball_Local_Test(double radius, double density, double[] startingPos)
@@ -39,7 +40,8 @@ namespace Hexapod_Simulator.Shared
         }
         public void UpdateGlobalCoords(double[] globalCoords)
         {
-            this._globalPosition = globalCoords;
+            //update Z only for now, assume the ball has 0 friction in the X/Y directions
+            Position[2] = globalCoords[2];
         }
 
 

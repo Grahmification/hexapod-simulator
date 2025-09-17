@@ -1,8 +1,7 @@
-﻿using Hexapod_Simulator.Shared;
+﻿using System.Windows.Input;
+using Hexapod_Simulator.Shared;
 using GFunctions.Timing;
 using GFunctions.Mathematics;
-using System.Windows.Input;
-using System;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {

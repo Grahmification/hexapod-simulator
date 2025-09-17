@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using GFunctions.Mathematics;
+﻿using GFunctions.Mathematics;
 using GFunctions.Timing;
 using GFunctions.OpenTK;
 using Hexapod_Simulator.SimObject;

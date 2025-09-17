@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Hexapod_Simulator.Shared
+﻿namespace Hexapod_Simulator.Shared
 {
     public class Trajectory
     {        

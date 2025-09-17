@@ -1,5 +1,4 @@
 ﻿using Hexapod_Simulator.Shared;
-using System;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {

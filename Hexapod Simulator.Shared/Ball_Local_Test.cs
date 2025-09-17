@@ -1,5 +1,4 @@
-﻿using System;
-using GFunctions.Mathematics;
+﻿using GFunctions.Mathematics;
 using MathNet.Numerics.LinearAlgebra.Double;
 
 

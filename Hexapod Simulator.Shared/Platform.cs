@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GFunctions.Mathematics;
+﻿using GFunctions.Mathematics;
 using GFunctions.Mathnet;
 
 namespace Hexapod_Simulator.Shared

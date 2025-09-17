@@ -1,6 +1,5 @@
 ﻿using GFunctions.Mathematics;
 using GFunctions.Mathnet;
-using System;
 
 namespace Hexapod_Simulator.Shared
 {

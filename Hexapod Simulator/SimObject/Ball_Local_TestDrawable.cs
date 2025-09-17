@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using Hexapod_Simulator.Shared;
+﻿using Hexapod_Simulator.Shared;
 using GFunctions.OpenTK;
 
 namespace Hexapod_Simulator.SimObject

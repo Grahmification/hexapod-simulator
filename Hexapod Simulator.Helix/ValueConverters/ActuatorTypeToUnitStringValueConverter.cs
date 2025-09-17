@@ -1,7 +1,6 @@
-﻿using Hexapod_Simulator.Shared;
-using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Data;
+using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.Helix.ValueConverters
 {

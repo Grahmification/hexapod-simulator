@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Hexapod_Simulator.Shared
+﻿namespace Hexapod_Simulator.Shared
 {
     public interface IActuator
     {

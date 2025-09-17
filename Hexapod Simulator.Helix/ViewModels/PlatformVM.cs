@@ -1,7 +1,6 @@
-﻿using Hexapod_Simulator.Shared;
-using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows.Media.Media3D;
+using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {

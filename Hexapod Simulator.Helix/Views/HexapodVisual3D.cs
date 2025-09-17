@@ -1,7 +1,4 @@
-﻿using HelixToolkit.Wpf;
-using Hexapod_Simulator.Shared;
-using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 

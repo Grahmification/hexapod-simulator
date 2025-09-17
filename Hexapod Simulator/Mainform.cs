@@ -153,7 +153,7 @@ namespace Hexapod_Simulator
             BTest.UpdateGlobalCoords(Hexa.Top.CalcGlobalCoord(coords));
 
             if(servoActive)
-                Hexa.Top.RotateAbs(new double[] { XController.CalcOutput(BTest.Position[0], e.TimeIncrement), YController.CalcOutput(BTest.Position[1], e.TimeIncrement), 0 });
+                Hexa.Top.RotateAbs(new double[] { XController.CalculateOutput(BTest.Position[0], e.TimeIncrement), YController.CalculateOutput(BTest.Position[1], e.TimeIncrement), 0 });
 
             //------------ Draw Screen -------------------------
             

@@ -218,7 +218,7 @@ namespace Hexapod_Simulator.Shared
 
             for (int i = 0; i < TranslationTarget.Length; i++)
             {
-                output[i] = posControllers[i].CalcOutput(TranslationTarget[i] - this.Translation[i], TimeStep);
+                output[i] = posControllers[i].CalculateOutput(TranslationTarget[i] - this.Translation[i], TimeStep);
             }
             this.translation = output;
 
@@ -227,7 +227,7 @@ namespace Hexapod_Simulator.Shared
 
             for (int i = 0; i < RotationTarget.Length; i++)
             {
-                output2[i] = rotControllers[i].CalcOutput(RotationTarget[i] - this.Rotation[i], TimeStep);
+                output2[i] = rotControllers[i].CalculateOutput(RotationTarget[i] - this.Rotation[i], TimeStep);
             }
             this.rotation = output2;
 

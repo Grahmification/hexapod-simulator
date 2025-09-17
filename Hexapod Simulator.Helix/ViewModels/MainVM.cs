@@ -160,7 +160,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
 
             //If the servo is active, rotate the platform to try and center the ball
             if (ServoActive)
-                Hexapod.TopPlatform.PlatformModel.RotateAbs(new double[] { XController.CalcOutput(Ball.BallModel.Position[0], e.TimeIncrement), YController.CalcOutput(Ball.BallModel.Position[1], e.TimeIncrement), 0 });
+                Hexapod.TopPlatform.PlatformModel.RotateAbs(new double[] { XController.CalculateOutput(Ball.BallModel.Position[0], e.TimeIncrement), YController.CalculateOutput(Ball.BallModel.Position[1], e.TimeIncrement), 0 });
 
             //------------ Cleanup -------------------------
             e.WorkDoneCallback.Set(); //allow simulation to proceed

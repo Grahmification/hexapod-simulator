@@ -1,0 +1,415 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GFunctions.Winforms</name>
+    </assembly>
+    <members>
+        <member name="T:GFunctions.Winforms.Dialogs.FormattedMessageBox">
+            <summary>
+            Class providing a global entry point for displaying message boxes
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Dialogs.FormattedMessageBox.DisplayMessage(System.String,System.String)">
+            <summary>
+            Displays a user message in a <see cref="T:System.Windows.Forms.MessageBox"/>
+            </summary>
+            <param name="message">The user message</param>
+            <param name="header">Optional header for the messagebox</param>
+            <returns>Result from the message box button</returns>
+        </member>
+        <member name="M:GFunctions.Winforms.Dialogs.FormattedMessageBox.DisplayError(System.String)">
+            <summary>
+            Displays an error message to the user in a <see cref="T:System.Windows.Forms.MessageBox"/>
+            </summary>
+            <param name="message">The error message</param>
+            <returns>Result from the message box button</returns>
+        </member>
+        <member name="T:GFunctions.Winforms.Dialogs.IODialogHelpers">
+            <summary>
+            Class providing a global entry point for displaying dialog boxes to save and load files/folders
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Dialogs.IODialogHelpers.GetFileTypeFilter(GFunctions.Winforms.Dialogs.IOFileTypes[])">
+            <summary>
+            Gets the filter string for a <see cref="T:System.Windows.Forms.SaveFileDialog"/> or <see cref="T:System.Windows.Forms.OpenFileDialog"/>
+            </summary>
+            <param name="fileTypes">An array of filetypes for which to include in the filter string. If null returns the default all files filter.</param>
+            <returns>The formatted filter string for the dialog. All files plus any extra specified</returns>
+        </member>
+        <member name="M:GFunctions.Winforms.Dialogs.IODialogHelpers.DisplayFolderBrowserDialog(System.Windows.Forms.FolderBrowserDialog)">
+            <summary>
+            Displays a folder browser dialog for selecting a folder. Returns blank string on error. 
+            </summary>
+            <param name="folderDlg">Optional override for the default dialog formatting</param>
+            <returns>The selected folder path or a blank string on error</returns>
+        </member>
+        <member name="M:GFunctions.Winforms.Dialogs.IODialogHelpers.DisplaySaveFileDialog(System.Windows.Forms.SaveFileDialog)">
+            <summary>
+            Displays a <see cref="T:System.Windows.Forms.SaveFileDialog"/> for selecting a save file. Returns blank string on error. 
+            </summary>
+            <param name="saveDlg">Optional override for the default dialog formatting</param>
+            <returns>The selected file path or a blank string on error</returns>
+        </member>
+        <member name="M:GFunctions.Winforms.Dialogs.IODialogHelpers.DisplaySaveFileDialog(GFunctions.Winforms.Dialogs.IOFileTypes[],System.String)">
+            <summary>
+            Displays a <see cref="T:System.Windows.Forms.SaveFileDialog"/> for selecting a save file. Returns blank string on error. 
+            </summary>
+            <param name="fileFilters">Optional file type filters</param>
+            <param name="fileNameSuggestion">Optional default starting filename</param>
+            <returns>The selected file path or a blank string on error</returns>
+        </member>
+        <member name="M:GFunctions.Winforms.Dialogs.IODialogHelpers.DisplayOpenFileDialog(System.Windows.Forms.OpenFileDialog)">
+            <summary>
+            Displays a <see cref="T:System.Windows.Forms.OpenFileDialog"/> for selecting a file to open. Returns blank string on error. 
+            </summary>
+            <param name="openDlg">Optional override for the default dialog formatting</param>
+            <returns>The selected file path or a blank string on error</returns>
+        </member>
+        <member name="M:GFunctions.Winforms.Dialogs.IODialogHelpers.DisplayOpenFileDialog(GFunctions.Winforms.Dialogs.IOFileTypes[],System.String)">
+            <summary>
+            Displays a <see cref="T:System.Windows.Forms.OpenFileDialog"/> for selecting a file to open. Returns blank string on error. 
+            </summary>
+            <param name="fileFilters">Optional file type filters</param>
+            <param name="fileNameSuggestion">Optional default starting filename</param>
+            <returns>The selected file path or a blank string on error</returns>
+        </member>
+        <member name="T:GFunctions.Winforms.Dialogs.IOFileTypes">
+            <summary>
+            Types of files we might want to save or load
+            </summary>
+        </member>
+        <member name="F:GFunctions.Winforms.Dialogs.IOFileTypes.CSV">
+            <summary>
+            .csv file
+            </summary>
+        </member>
+        <member name="F:GFunctions.Winforms.Dialogs.IOFileTypes.Sqlite">
+            <summary>
+            .sqlite file
+            </summary>
+        </member>
+        <member name="F:GFunctions.Winforms.Dialogs.IOFileTypes.ImagePNG">
+            <summary>
+            .png image file
+            </summary>
+        </member>
+        <member name="T:GFunctions.Winforms.Input.NumericalInputTextBox">
+            <summary>
+            A textbox that nicely allows inputting numerical values, and provides error checking for non-number values
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Input.NumericalInputTextBox.Value">
+            <summary>
+            Value of the textbox
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Input.NumericalInputTextBox.TextValid">
+            <summary>
+            True of the text is a valid number
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Input.NumericalInputTextBox.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="T:GFunctions.Winforms.Input.NumericDisplayModel">
+            <summary>
+            A data model providing conversion between a bindable text value and a double value
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Input.NumericDisplayModel.DecimalPlaces">
+            <summary>
+            The amount of decimal places to display (-1 = all)
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Input.NumericDisplayModel.ValueString">
+            <summary>
+            The value in text form - used for binding
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Input.NumericDisplayModel.Value">
+            <summary>
+            The numeric value
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Input.NumericDisplayModel.ValueValid">
+            <summary>
+            True if the textbox value is a valid double
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Input.NumericDisplayModel.ConversionRatio">
+            <summary>
+            The conversion ratio for the <see cref="P:GFunctions.Winforms.Input.NumericDisplayModel.Value"/>. Gets multiplied to the input
+            </summary>
+        </member>
+        <member name="E:GFunctions.Winforms.Input.NumericDisplayModel.PropertyChanged">
+            <summary>
+            Fires when a property of the model has changed
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Input.NumericDisplayModel.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Input.NumericDisplayModel.StringToNullDouble(System.String)">
+            <summary>
+            Converts a string to double, or null if invalid input
+            </summary>
+            <param name="input">The input string</param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.Winforms.Input.NumericDisplayModel.NullDoubleToString(System.Nullable{System.Double},System.Int32)">
+            <summary>
+            Safely converts a nullable double to formatted string
+            </summary>
+            <param name="input">The value to convert</param>
+            <param name="decimals">The decimal places in the string</param>
+            <returns></returns>
+        </member>
+        <member name="T:GFunctions.Winforms.Input.NumericDisplayTextBox">
+            <summary>
+            A textbox that nicely displays numeric output values with error display
+            </summary>
+        </member>
+        <member name="F:GFunctions.Winforms.Input.NumericDisplayTextBox.defaultBackColor">
+            <summary>
+            Stores the default color when the control gets initialized
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Input.NumericDisplayTextBox.Model">
+            <summary>
+            The data model for this textbox
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Input.NumericDisplayTextBox.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Input.NumericDisplayTextBox.SetErrorStatus(System.Boolean)">
+            <summary>
+            Turns the control red if an error occurred
+            </summary>
+            <param name="error">True if an error occurred</param>
+        </member>
+        <member name="F:GFunctions.Winforms.Input.NumericDisplayTextBox.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Input.NumericDisplayTextBox.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:GFunctions.Winforms.Input.NumericDisplayTextBox.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:GFunctions.Winforms.Process.IProcessView">
+            <summary>
+            Views that allow starting and stopping long running processes
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Process.IProcessView.ToggleButtonText">
+            <summary>
+            The model for this view
+            </summary>
+        </member>
+        <member name="E:GFunctions.Winforms.Process.IProcessView.StartRequest">
+            <summary>
+            Fired when the user interacts with the view to read a setting
+            </summary>
+        </member>
+        <member name="E:GFunctions.Winforms.Process.IProcessView.StopRequest">
+            <summary>
+            Fired when the user interacts with the view to read a setting
+            </summary>
+        </member>
+        <member name="E:GFunctions.Winforms.Process.IProcessView.ToggleRequest">
+            <summary>
+            Fired when the user interacts with the view to read a setting
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.IProcessView.AllowUse(System.Boolean)">
+            <summary>
+            Allows or disables user interaction with the view
+            </summary>
+            <param name="enabled">True if the user is allowed to interact</param>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.IProcessView.SetStatus(System.String)">
+            <summary>
+            Sets the status text of the view
+            </summary>
+            <param name="status">The status text to display</param>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.IProcessView.SetProgress(System.Int32)">
+            <summary>
+            Sets the progress of the view
+            </summary>
+            <param name="percentProgress">Percentage progress from 0 to 100</param>
+        </member>
+        <member name="T:GFunctions.Winforms.Process.ProcessController`1">
+            <summary>
+            A controller for a <see cref="T:GFunctions.Winforms.Process.IProcessView"/>
+            </summary>
+            <typeparam name="T">Parameter type to pass into the process when starting</typeparam>
+        </member>
+        <member name="T:GFunctions.Winforms.Process.ProcessController`1.DoWorkMethod">
+            <summary>
+            Definition for a function that can be used as a background process
+            </summary>
+            <param name="processArgs">Arguments to the background process</param>
+            <param name="progress">For reporting progress to the foreground thread</param>
+            <param name="cToken">For processes cancellation</param>
+            <returns></returns>
+        </member>
+        <member name="T:GFunctions.Winforms.Process.ProcessController`1.ProgressMethod">
+            <summary>
+            Definition for a function that can be called when a progress update occurs
+            </summary>
+            <param name="progArgs">Information about the progress state</param>
+        </member>
+        <member name="P:GFunctions.Winforms.Process.ProcessController`1.View">
+            <summary>
+            The views being controlled by this controller.
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Process.ProcessController`1.ProcessArgument">
+            <summary>
+            Argument to pass to the background process when it starts
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Process.ProcessController`1.WorkMethods">
+            <summary>
+            Methods to run in the background thread
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Process.ProcessController`1.CleanupMethods">
+            <summary>
+            Methods to run after the workmethods complete - successfully or due to an error/cancelled
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Process.ProcessController`1.ProgressMethods">
+            <summary>
+            Methods to run when a background progres update occurs
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessController`1.#ctor(GFunctions.Winforms.Process.IProcessView,GFunctions.IO.ExceptionLogger)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="view">View to control the process</param>
+            <param name="logger">Exception logger for the background process</param>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessController`1.DoCleanup(`0,System.IProgress{GFunctions.Process.ProcessProgressArgs},System.Threading.CancellationToken)">
+            <summary>
+            Called in the background process after all workmethods finish - successfully or due to an error/cancelled
+            </summary>
+            <param name="processArgs">Arguments to the background process</param>
+            <param name="progress">For reporting progress to the foreground thread</param>
+            <param name="cToken">For processes cancellation</param>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessController`1.DoWork(`0,System.IProgress{GFunctions.Process.ProcessProgressArgs},System.Threading.CancellationToken)">
+            <summary>
+            Called in the background process
+            </summary>
+            <param name="processArgs">Arguments to the background process</param>
+            <param name="progress">For reporting progress to the foreground thread</param>
+            <param name="cToken">For processes cancellation</param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessController`1.OnProgress(GFunctions.Process.ProcessProgressArgs)">
+            <summary>
+            Called when progress is updated from the background process
+            </summary>
+            <param name="progArgs">Information about the progress state</param>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessController`1.ReleaseView">
+            <summary>
+            Cancels any long running processes associated with the connected view
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessController`1.AllowViewUse(System.Boolean)">
+            <summary>
+            Enables or disables use of the connected view
+            </summary>
+            <param name="enabled">True to enable the view</param>
+        </member>
+        <member name="T:GFunctions.Winforms.Process.ProcessToggleView">
+            <summary>
+            A view for starting and stopping a background process, while displaying progress
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessToggleView.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:GFunctions.Winforms.Process.ProcessToggleView.ToggleButtonText">
+            <summary>
+            The toggle button display text
+            </summary>
+        </member>
+        <member name="E:GFunctions.Winforms.Process.ProcessToggleView.StartRequest">
+            <summary>
+            Fires when the view requests the process start
+            </summary>
+        </member>
+        <member name="E:GFunctions.Winforms.Process.ProcessToggleView.StopRequest">
+            <summary>
+            Fires when the view requests the process stop
+            </summary>
+        </member>
+        <member name="E:GFunctions.Winforms.Process.ProcessToggleView.ToggleRequest">
+            <summary>
+            Fires when the view requests the process toggle start/stop
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessToggleView.AllowUse(System.Boolean)">
+            <summary>
+            Enables or disabled view input
+            </summary>
+            <param name="enabled">True to enable</param>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessToggleView.SetProgress(System.Int32)">
+            <summary>
+            Sets the view progress status
+            </summary>
+            <param name="percentProgress">Progres from 0 to 100</param>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessToggleView.SetStatus(System.String)">
+            <summary>
+            Sets the view status
+            </summary>
+            <param name="status">String describing process status</param>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessToggleView.RemoveWarnings">
+            <summary>
+            Prevents the compiler from showing warnings for unused events
+            </summary>
+        </member>
+        <member name="F:GFunctions.Winforms.Process.ProcessToggleView.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessToggleView.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:GFunctions.Winforms.Process.ProcessToggleView.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+    </members>
+</doc>

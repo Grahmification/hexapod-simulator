@@ -21,12 +21,14 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// the model class for this VM
         /// </summary>
-        public IBall BallModel { get; private set; } 
+        public IBall BallModel { get; private set; }
 
         /// <summary>
         /// default constructor
         /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public BallVM()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             InitializeModel(new Ball_Local_Test(0.005, 9800, new double[] { 0, 0, 0 }));
         }
@@ -34,7 +36,9 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// Allows setting a predefined ball model
         /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public BallVM(IBall ballModel)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             InitializeModel(ballModel);
         }
@@ -54,7 +58,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         /// <param name="sender">the sender</param>
         /// <param name="e">Event args</param>
-        private void onRedrawRequired(object sender, EventArgs e)
+        private void onRedrawRequired(object? sender, EventArgs e)
         {
             OnPropertyChanged("Transform");
         }

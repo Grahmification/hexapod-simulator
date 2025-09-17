@@ -54,13 +54,17 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         private IActuator ActuatorModel { get; set; }
 
-
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public ActuatorVM(IActuator actuatorModel, int actuatorNumber)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             ActuatorNumber = actuatorNumber;
             UpdateModel(actuatorModel);
         }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public ActuatorVM()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             UpdateModel(new LinearActuator(10, 5, new double[] { 0, 0, 0 }, new double[] { 5, 5, 5 }));          
         }
@@ -81,7 +85,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">Event arguments</param>
-        private void onRedrawRequired(object sender, EventArgs e)
+        private void onRedrawRequired(object? sender, EventArgs e)
         {
             OnPropertyChanged("ArmEndPosition");
             OnPropertyChanged("LinkEndPosition");

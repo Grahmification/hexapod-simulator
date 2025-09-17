@@ -6,7 +6,7 @@ namespace Hexapod_Simulator.Shared
 {
     public class Ball_Test : Ball, IBall
     {
-        public event EventHandler RedrawRequired;
+        public event EventHandler? RedrawRequired;
 
         private double _normalForce = 0; //last calculated normal force magnitude
 

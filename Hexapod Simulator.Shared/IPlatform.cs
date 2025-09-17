@@ -22,8 +22,8 @@
 
         string Name { get; set;  }
 
-        event EventHandler RedrawRequired;
-        event EventHandler PositionChanged; //rotation or translation has changed
+        event EventHandler? RedrawRequired;
+        event EventHandler? PositionChanged; //rotation or translation has changed
 
         void TranslateAbs(double[] Pos);
         void TranslateRel(double[] Pos);

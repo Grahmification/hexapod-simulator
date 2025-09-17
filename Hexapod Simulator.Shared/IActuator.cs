@@ -15,7 +15,7 @@
         bool SolutionValid { get; }
         ActuatorTypes ActuatorType { get; }
 
-        event EventHandler RedrawRequired;
+        event EventHandler? RedrawRequired;
     }
     public enum ActuatorTypes
     {

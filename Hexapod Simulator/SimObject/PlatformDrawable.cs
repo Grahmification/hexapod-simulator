@@ -7,7 +7,7 @@ namespace Hexapod_Simulator.SimObject
     {
         public bool IsDrawn { get; set; }
 
-        public PlatformDrawable(string name, double radius, double jointAngle, double[] defaultPos = null) : base(name, radius, jointAngle, defaultPos)
+        public PlatformDrawable(string name, double radius, double jointAngle, double[]? defaultPos = null) : base(name, radius, jointAngle, defaultPos)
         {
             this.IsDrawn = true;
         }

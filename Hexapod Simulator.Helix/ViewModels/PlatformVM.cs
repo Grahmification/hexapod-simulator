@@ -95,23 +95,28 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// RelayCommand for <see cref="ResetPosition"/>
         /// </summary>
-        public ICommand ResetPositionCommand { get; set; }
+        public ICommand? ResetPositionCommand { get; set; }
 
         /// <summary>
         /// RelayCommand for <see cref="UpdateConfig"/>
         /// </summary>
-        public ICommand UpdateConfigCommand { get; set; }
+        public ICommand? UpdateConfigCommand { get; set; }
 
         /// <summary>
         /// RelayCommand for <see cref="UpdateRotationCenter"/>
         /// </summary>
-        public ICommand UpdateRotationCenterCommand { get; set; }
+        public ICommand? UpdateRotationCenterCommand { get; set; }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public PlatformVM(Platform platformModel)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             InitializeModel(platformModel);
         }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public PlatformVM()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             InitializeModel(new Platform("Temp", 10, 30));
         }
@@ -176,7 +181,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
             PlatformModel.UpdateRotationCenter(RotationCenterTemp, FixedRotationCenterTemp);
         }
 
-        private void onRedrawRequired(object sender, EventArgs e)
+        private void onRedrawRequired(object? sender, EventArgs e)
         {
             OnPropertyChanged("Transform");
             OnPropertyChanged("RotationCenterTransform");
@@ -185,7 +190,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
             OnPropertyChanged("Position");
             OnPropertyChanged("Rotation");
         }
-        private void onLocalCoordsChanged(object sender, EventArgs e)
+        private void onLocalCoordsChanged(object? sender, EventArgs e)
         {
             OnPropertyChanged("Radius");
             OnPropertyChanged("JointAngle");

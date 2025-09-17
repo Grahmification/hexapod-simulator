@@ -48,7 +48,7 @@ namespace Hexapod_Simulator.UserControls
             lbl.Text = Convert.ToString(value);
         }
 
-        private void Control_CurrentPos_Load(object sender, EventArgs e)
+        private void Control_CurrentPos_Load(object? sender, EventArgs e)
         {
 
         }

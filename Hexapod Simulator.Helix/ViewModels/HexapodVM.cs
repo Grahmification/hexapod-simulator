@@ -44,13 +44,18 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         private Hexapod HexapodModel { get; set; }
 
-        public HexapodVM() 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public HexapodVM()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             HexapodModel = new Hexapod(10, 10, 5, 30, 30);
             
             InitializeVMs();           
         }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public HexapodVM(Hexapod hexapodModel)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             HexapodModel = hexapodModel;     
             InitializeVMs();
@@ -83,7 +88,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
             UpdateActuators();      
         }
 
-        private void onPlatFormGeometryChanged(object sender, EventArgs e)
+        private void onPlatFormGeometryChanged(object? sender, EventArgs e)
         {
             for(int i = 0; i < 6; i++)
             {

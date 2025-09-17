@@ -10,7 +10,7 @@ namespace Hexapod_Simulator.UserControls
     public partial class Control_RotationCenter : UserControl
     {
         private List<NumericalInputTextBox> Txts = new List<NumericalInputTextBox>();
-        private IPlatform platform;
+        private IPlatform? platform;
         
         
         public Control_RotationCenter()
@@ -36,7 +36,7 @@ namespace Hexapod_Simulator.UserControls
                     Txts.Add((NumericalInputTextBox)cont);              
             }
         }
-        private void button_apply_Click(object sender, EventArgs e)
+        private void button_apply_Click(object? sender, EventArgs e)
         {
             foreach (NumericalInputTextBox txt in Txts) //make sure all textboxes are valid
             {
@@ -46,7 +46,7 @@ namespace Hexapod_Simulator.UserControls
      
             double[] Position = new double[] { numericalInputTextBox_posX.Value, numericalInputTextBox_posY.Value, numericalInputTextBox_posZ.Value };
 
-            platform.UpdateRotationCenter(Position, checkBox_fixedCenter.Checked);
+            platform?.UpdateRotationCenter(Position, checkBox_fixedCenter.Checked);
         }
 
      

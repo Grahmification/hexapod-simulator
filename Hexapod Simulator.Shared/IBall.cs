@@ -2,7 +2,7 @@
 {
     public interface IBall
     {
-        event EventHandler RedrawRequired;
+        event EventHandler? RedrawRequired;
 
         double[] Angle { get; } //PRY rotation about centerpoint [deg]
         double[] Position { get; } //XYZ position of centerpoint [m]

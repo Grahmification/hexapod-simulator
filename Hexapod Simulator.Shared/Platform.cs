@@ -124,15 +124,15 @@ namespace Hexapod_Simulator.Shared
                 return output;
             }
         } //absolute rotation center (default offset + rotation center)
-        public double[] NormalVector { get; private set; } //unit vector of platform normal coords (x,y,z)
+        public double[] NormalVector { get; private set; } = [0, 0, 1]; //unit vector of platform normal coords (x,y,z)
 
 
-        public event EventHandler RedrawRequired;
-        public event EventHandler PositionChanged; //rotation or translation has changed
-        public event EventHandler LocalCoordsChanged; //the local coordinates of the model have changed
+        public event EventHandler? RedrawRequired;
+        public event EventHandler? PositionChanged; //rotation or translation has changed
+        public event EventHandler? LocalCoordsChanged; //the local coordinates of the model have changed
 
 
-        public Platform(string name, double radius, double jointAngle, double[] defaultPos = null)
+        public Platform(string name, double radius, double jointAngle, double[]? defaultPos = null)
         {
             //------------- Initialize Everything ------------------------
 
@@ -174,7 +174,7 @@ namespace Hexapod_Simulator.Shared
             if (TranslationMode == TranslationModes.Instant)
                 Rotation = RotationTarget;
         }
-        public void UpdateConfig(double radius, double jointAngle, double[] defaultPos)
+        public void UpdateConfig(double radius, double jointAngle, double[]? defaultPos)
         {
             this.radius = radius;
             this.jointAngle = jointAngle;

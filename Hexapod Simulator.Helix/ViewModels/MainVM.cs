@@ -60,17 +60,19 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// RelayCommand for <see cref="ToggleSimulation"/>
         /// </summary>
-        public ICommand ToggleSimulationCommand { get; set; }
+        public ICommand? ToggleSimulationCommand { get; set; }
 
         /// <summary>
         /// RelayCommand for <see cref="ResetSimulation"/>
         /// </summary>
-        public ICommand ResetSimulationCommand { get; set; }
+        public ICommand? ResetSimulationCommand { get; set; }
 
         /// <summary>
         /// Default constructor
         /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public MainVM()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             InitializeModels();
 
@@ -118,7 +120,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
             if(Hexapod is null)
                 Hexapod = new HexapodVM(new Hexapod(15, 12, 8, 30, 5));
             else
-                Hexapod.TopPlatform.ResetPositionCommand.Execute(null);
+                Hexapod?.TopPlatform?.ResetPositionCommand?.Execute(null);
              
             //setup ball
             Ball = new BallVM(new Ball_Local_Test(0.0025, 9800, new double[] { 0, 0, 0 }));
@@ -138,7 +140,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         /// <param name="sender">The simulation model object</param>
         /// <param name="e">Simulation eventArgs</param>
-        private void SimulationTimeStepDoWork(object sender, TimeSimulationStepEventArgs e)
+        private void SimulationTimeStepDoWork(object? sender, TimeSimulationStepEventArgs e)
         {
             //------------ Do Calculations -------------------------
 
@@ -170,7 +172,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SimulationFrequencyReported(object sender, int e)
+        private void SimulationFrequencyReported(object? sender, int e)
         {
             SimulationFPS = e;
         }

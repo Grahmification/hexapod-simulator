@@ -77,7 +77,7 @@ namespace Hexapod_Simulator.Shared
 
         public virtual ActuatorTypes ActuatorType { get { return ActuatorTypes.Linear; } }
 
-        public event EventHandler RedrawRequired; //not called by anything currently, but could be
+        public event EventHandler? RedrawRequired; //not called by anything currently, but could be
 
         public LinearActuator(double maxTravel, double linkLength, double[] position, double[] linkEndPosition)
         {

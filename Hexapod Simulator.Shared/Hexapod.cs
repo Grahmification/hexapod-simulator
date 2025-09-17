@@ -2,12 +2,12 @@
 {
     public class Hexapod
     {
-        public IActuator[] Actuators { get; private set; }
+        public IActuator[] Actuators { get; private set; } = [];
         public IPlatform Base { get; protected set; }
         public IPlatform Top { get; protected set; }
 
-        public event EventHandler RedrawRequired;
-        public event EventHandler ServosCalculated;
+        public event EventHandler? RedrawRequired;
+        public event EventHandler? ServosCalculated;
 
         public Hexapod(double defaultHeight, double BaseRad, double TopRad, double BaseAngle, double TopAngle)
         {
@@ -76,28 +76,31 @@
 
 
 
-        private void PlatformCoordsChanged(object sender, EventArgs e)
+        private void PlatformCoordsChanged(object? sender, EventArgs e)
         {
-            IPlatform plat = (IPlatform)sender;
-
-            if (plat == this.Top)
+            if (sender is not null)
             {
-                for (int i = 0; i < Actuators.Length; i++)
-                {
-                    Actuators[i].LinkEndPosition = Top.GlobalJointCoords[i];
-                }
-            }
-            if (plat == this.Base)
-            {
-                for (int i = 0; i < Actuators.Length; i++)
-                {
-                    Actuators[i].Position = Base.GlobalJointCoords[i];
-                }
-            }
+                IPlatform plat = (IPlatform)sender;
 
-            ServosCalculated?.Invoke(this, new EventArgs());
+                if (plat == this.Top)
+                {
+                    for (int i = 0; i < Actuators.Length; i++)
+                    {
+                        Actuators[i].LinkEndPosition = Top.GlobalJointCoords[i];
+                    }
+                }
+                if (plat == this.Base)
+                {
+                    for (int i = 0; i < Actuators.Length; i++)
+                    {
+                        Actuators[i].Position = Base.GlobalJointCoords[i];
+                    }
+                }
+
+                ServosCalculated?.Invoke(this, new EventArgs());
+            }
         }
-        private void RaiseSubRedraws(object sender, EventArgs e)
+        private void RaiseSubRedraws(object? sender, EventArgs e)
         {
             RedrawRequired?.Invoke(this, new EventArgs());
         }

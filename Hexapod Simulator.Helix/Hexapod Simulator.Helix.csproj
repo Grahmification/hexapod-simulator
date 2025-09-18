@@ -7,7 +7,11 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>Resources\app_256px.ico</ApplicationIcon>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Resources\app_256px.ico" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fody" Version="6.9.3">
       <PrivateAssets>all</PrivateAssets>
@@ -24,5 +28,10 @@
     <Reference Include="GFunctions">
       <HintPath>..\Dependencies\GFunctions.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\app_256px.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 </Project>

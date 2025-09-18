@@ -5,7 +5,7 @@
     /// </summary>
     public enum TranslationModes
     {
-        Instant, 
+        Instant,
         Servo
     }
 }

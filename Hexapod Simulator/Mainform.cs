@@ -26,8 +26,8 @@ namespace Hexapod_Simulator
         {
             InitializeComponent();
 
-            //BTest = new Ball_Test(0.1, 9800, Hexa.Top.Position);
-            BTest = new Ball_Local_TestDrawable(0.1, 9800, new double[] { 0, 0, 0 });
+            //BTest = new BallModelDrawable(0.1, 9800, Hexa.Top.Position);
+            BTest = new BallModelLocalDrawable(0.1, 9800, new double[] { 0, 0, 0 });
         }
 
         private void Mainform_Load(object? sender, EventArgs e)

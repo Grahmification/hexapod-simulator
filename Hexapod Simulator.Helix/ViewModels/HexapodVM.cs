@@ -50,14 +50,14 @@ namespace Hexapod_Simulator.Helix.ViewModels
         {
             HexapodModel = new Hexapod(10, 10, 5, 30, 30);
             
-            InitializeVMs();           
+            InitializeVMs();
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public HexapodVM(Hexapod hexapodModel)
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            HexapodModel = hexapodModel;     
+            HexapodModel = hexapodModel;
             InitializeVMs();
         }
 
@@ -71,8 +71,8 @@ namespace Hexapod_Simulator.Helix.ViewModels
             BasePlatform = new PlatformVM((Platform)HexapodModel.Base);
             TopPlatform = new PlatformVM((Platform)HexapodModel.Top);
 
-            BasePlatform.PlatformModel.RedrawRequired += onPlatFormGeometryChanged;
-            TopPlatform.PlatformModel.RedrawRequired += onPlatFormGeometryChanged;
+            BasePlatform.PlatformModel.RedrawRequired += OnPlatFormGeometryChanged;
+            TopPlatform.PlatformModel.RedrawRequired += OnPlatFormGeometryChanged;
 
             UpdateActuatorsCommand = new RelayCommand(UpdateActuators);
 
@@ -81,14 +81,14 @@ namespace Hexapod_Simulator.Helix.ViewModels
             Actuators = new ActuatorVM[6];
 
             //initialize the actuators in each vm
-            for (int i = 0; i < 6; i++)              
+            for (int i = 0; i < 6; i++)
                 Actuators[i] = new ActuatorVM(HexapodModel.Actuators[i], i+1);
 
             //update the actuators to the default configuration
-            UpdateActuators();      
+            UpdateActuators();
         }
 
-        private void onPlatFormGeometryChanged(object? sender, EventArgs e)
+        private void OnPlatFormGeometryChanged(object? sender, EventArgs e)
         {
             for(int i = 0; i < 6; i++)
             {

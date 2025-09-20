@@ -21,7 +21,7 @@ on:
   push:
     tags: [ 'v*.*.*' ] # e.g. v1.0.0
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 permissions:
   contents: write   # Gives the secrets.GITHUB_TOKEN write access, needed for publishing

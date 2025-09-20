@@ -9,7 +9,7 @@ name: .NET CI
 on:
   push:
     branches-ignore:
-      - main   # don't run on main
+      - master   # don't run on main
     tags-ignore:
       - '**'   # ignore all tags
 

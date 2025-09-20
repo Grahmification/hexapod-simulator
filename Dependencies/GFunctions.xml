@@ -1,0 +1,387 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GFunctions</name>
+    </assembly>
+    <members>
+        <member name="T:GFunctions.IO.Config">
+            <summary>
+            A class for saving and loading program settings to a file
+            </summary>
+        </member>
+        <member name="T:GFunctions.IO.IExceptionLogger">
+            <summary>
+            Generic definition of an exception logging class
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.IExceptionLogger.Log(System.Exception)">
+            <summary>
+            Log the exception
+            </summary>
+            <param name="ex">Exception to log</param>
+        </member>
+        <member name="T:GFunctions.IO.ExceptionLogger">
+            <summary>
+            Class for easily logging exceptions
+            </summary>
+            <param name="ApplicationPath">The root path of the application</param>
+        </member>
+        <member name="M:GFunctions.IO.ExceptionLogger.#ctor(System.String)">
+            <summary>
+            Class for easily logging exceptions
+            </summary>
+            <param name="ApplicationPath">The root path of the application</param>
+        </member>
+        <member name="M:GFunctions.IO.ExceptionLogger.Log(System.Exception)">
+            <summary>
+            Log the exception
+            </summary>
+            <param name="ex">Exception to log</param>
+        </member>
+        <member name="T:GFunctions.IO.IOHelpers">
+            <summary>
+            Helper functions for creating, reading and writing files
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.IOHelpers.DateStamp(System.Nullable{System.DateTime})">
+            <summary>
+            Gets a date stamp string yy-mm-dd
+            </summary>
+            <param name="nowDateOverride">Override for the current date</param>
+            <returns>The formatted date stamp string</returns>
+        </member>
+        <member name="M:GFunctions.IO.IOHelpers.TimeStamp(System.Nullable{System.DateTime})">
+            <summary>
+            Gets a time stamp string xxhyymzzs
+            </summary>
+            <param name="nowDateOverride">Override for the current time</param>
+            <returns>The formatted time stamp string</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:GFunctions.IO.IOHelpers.DateTimeStamp(System.Nullable{System.DateTime})" -->
+        <member name="M:GFunctions.IO.IOHelpers.CreateExportFolder(System.String,System.String)">
+            <summary>
+            Checks if a folder exists and creates a new one if not
+            </summary>
+            <param name="basePath">The path where to create the folder</param>
+            <param name="folderName">The name of the folder</param>
+            <returns>The created or existing folder's information</returns>
+        </member>
+        <member name="T:GFunctions.IO.Logger">
+            <summary>
+            A general purpose class for logging data to a text file
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.Logger.FileExtention">
+            <summary>
+            The extention of the log file
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.Logger.FolderPath">
+            <summary>
+            The folder path which the logger is creating files at
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.Logger.FilePath">
+            <summary>
+            The file path which is being logged to
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.Logger.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initialize the logger
+            </summary>
+            <param name="applicationPath">The application root path</param>
+            <param name="fileName">The name to use for log files</param>
+            <param name="folderName">The folder to store log files</param>
+        </member>
+        <member name="M:GFunctions.IO.Logger.WriteTextLine(System.String)">
+            <summary>
+            Writes a line of text to the log file
+            </summary>
+            <param name="text">The text to write</param>
+        </member>
+        <member name="M:GFunctions.IO.Logger.WriteBlankLine">
+            <summary>
+            Writes a blank line to the log file
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.Logger.WriteTextDatedBlock(System.String)">
+            <summary>
+            Writes a block to the log file, with a timestamp
+            </summary>
+            <param name="text">The text to include inside the block</param>
+        </member>
+        <member name="M:GFunctions.IO.Paths.BuildFullFilePath(System.String,System.String)">
+            <summary>
+            Returns the filename, or optionally with the folder as a full path if specifed
+            </summary>
+            <param name="fileName">The filename</param>
+            <param name="folderPath">The optional folder path</param>
+            <returns>The filename, or full path with folder</returns>
+        </member>
+        <member name="T:GFunctions.IO.XMLSerializer`1">
+            <summary>
+            Allows easily reading and writing data to an xml file
+            </summary>
+            <typeparam name="T">The class to read or write from the file</typeparam>
+        </member>
+        <member name="M:GFunctions.IO.XMLSerializer`1.Load(System.String,System.String)">
+            <summary>
+            Load a class from a file
+            </summary>
+            <param name="fileName">The file name to load</param>
+            <param name="folderPath">An optional folder path</param>
+            <returns>The instance of the class in the file, or an empty version of the class</returns>
+        </member>
+        <member name="M:GFunctions.IO.XMLSerializer`1.Save(System.String,System.String,`0)">
+            <summary>
+            Saves a class to an xml file
+            </summary>
+            <param name="folderPath">An optional folder path</param>
+            <param name="fileName">The file name to save</param>
+            <param name="saveClass">The class data to save</param>
+        </member>
+        <member name="T:GFunctions.Mathematics.Calculus">
+            <summary>
+            Various calculus functions
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathematics.Calculus.Integrate(System.Double,System.Double,System.Double)">
+            <summary>
+            Integrate the given area with a trapezoidal zone
+            </summary>
+            <param name="X0">Value at T=0</param>
+            <param name="X1">Value at T=timeStep</param>
+            <param name="timeStep">Delta t</param>
+            <returns>The area inside the zone</returns>
+        </member>
+        <member name="M:GFunctions.Mathematics.Calculus.Integrate(System.Double,System.Double)">
+            <summary>
+            Integrates the given area with a rectangular zone
+            </summary>
+            <param name="X0">Value at T=0</param>
+            <param name="timeStep">Delta t</param>
+            <returns>The area inside the zone</returns>
+        </member>
+        <member name="M:GFunctions.Mathematics.Calculus.Derivative(System.Double,System.Double,System.Double)">
+            <summary>
+            Takes the numerical derivative
+            </summary>
+            <param name="X0">Value at T=0</param>
+            <param name="X1">Value at T=timeStep</param>
+            <param name="timeStep">Delta t</param>
+            <returns>The first order derivative</returns>
+        </member>
+        <member name="T:GFunctions.Mathematics.IterativeSolver">
+            <summary>
+            Uses gradient descent to find an optimal value that minimizes error a function
+            </summary>
+        </member>
+        <member name="T:GFunctions.Mathematics.IterativeSolver.DoubleFunction">
+            <summary>
+            Template for the function used to calculate the error
+            </summary>
+            <param name="param1">Generic input parameter</param>
+            <returns>The error</returns>
+        </member>
+        <member name="P:GFunctions.Mathematics.IterativeSolver.SolutionValid">
+            <summary>
+            Whether a valid solution was found
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathematics.IterativeSolver.#ctor(System.Double,System.Double,System.Double,GFunctions.Mathematics.IterativeSolver.DoubleFunction,System.Double,System.Double)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="stepSize">The step at each iteration</param>
+            <param name="maxSteps">The max steps before a solution fails</param>
+            <param name="errorTolerance">The error tolerance for successful solution</param>
+            <param name="errorFunc">Function which will calculate the error</param>
+            <param name="maxValue">Solution will fail if this value is exceeded</param>
+            <param name="minValue">Solution will fail if this value is exceeded</param>
+        </member>
+        <member name="M:GFunctions.Mathematics.IterativeSolver.Solve(System.Double)">
+            <summary>
+            Find the value that results in the minimum error
+            </summary>
+            <param name="startingValue">The value to start iterating at</param>
+            <returns>The optimal value, or original if a valid solution wasn't found</returns>
+        </member>
+        <member name="T:GFunctions.Mathematics.PIDController">
+            <summary>
+            Model of a PID controller
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.PIDController.SatLimit">
+            <summary>
+            Limits max/min output value of controller, 0 = no limit
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.PIDController.TargetIsolatedDerivative">
+            <summary>
+            If True, d is calculated from output change, not error change (isolating it from setpoint changes)
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathematics.PIDController.SetTarget(System.Double)">
+            <summary>
+            Sets the target input for the controller
+            </summary>
+            <param name="target">The value to target</param>
+        </member>
+        <member name="M:GFunctions.Mathematics.PIDController.CalculateOutput(System.Double,System.Double)">
+            <summary>
+            Computes one cycle of the controller, calculating the output value
+            </summary>
+            <param name="processVar">The feedback value from the system, used to calculate error</param>
+            <param name="timeStep">The delta t value</param>
+            <returns>The controller output</returns>
+        </member>
+        <member name="P:GFunctions.Process.ProcessControllerBase`1.Running">
+            <summary>
+            Returns true if the process is running
+            </summary>
+        </member>
+        <member name="P:GFunctions.Process.ProcessControllerBase`1.CurrentProgress">
+            <summary>
+            The current progress of the process from 0 to 1
+            </summary>
+        </member>
+        <member name="E:GFunctions.Process.ProcessControllerBase`1.ProgressUpdated">
+            <summary>
+            Fires whenever the progress gets updated (thread safe)
+            </summary>
+        </member>
+        <member name="F:GFunctions.Process.ProcessControllerBase`1.tSource">
+            <summary>
+            Token source for stopping the running process
+            </summary>
+        </member>
+        <member name="F:GFunctions.Process.ProcessControllerBase`1.exLogger">
+            <summary>
+            Exception logger for the controller
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ProcessControllerBase`1.#ctor(GFunctions.IO.ExceptionLogger)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="logger">Exception logger for the class</param>
+        </member>
+        <member name="M:GFunctions.Process.ProcessControllerBase`1.Start(`0)">
+            <summary>
+            Starts the process
+            </summary>
+            <param name="ProcessArgs">Arguments to be passed into the process</param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.Process.ProcessControllerBase`1.Stop">
+            <summary>
+            Cancels the process
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ProcessControllerBase`1.Toggle(`0)">
+            <summary>
+            Toggles the process run state
+            </summary>
+            <param name="ProcessArgs">Arguments to be passed into the process</param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.Process.ProcessControllerBase`1.DoWork(`0,System.IProgress{GFunctions.Process.ProcessProgressArgs},System.Threading.CancellationToken)">
+            <summary>
+            Gets called by the primary background work process
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ProcessControllerBase`1.DoCleanup(`0,System.IProgress{GFunctions.Process.ProcessProgressArgs},System.Threading.CancellationToken)">
+            <summary>
+            Gets called by the primary background work process in the finally block
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ProcessControllerBase`1.OnProgress(GFunctions.Process.ProcessProgressArgs)">
+            <summary>
+            Gets called whenever progress is updated by the background process
+            </summary>
+            <param name="progArgs">Information about the progress</param>
+        </member>
+        <member name="M:GFunctions.Process.ProcessControllerBase`1._DoWork(`0,System.IProgress{GFunctions.Process.ProcessProgressArgs},System.Threading.CancellationToken)">
+            <summary>
+            Primary method for doing work in the background
+            </summary>
+            <param name="ProcessArgs">Misc arguments to be passed into the process</param>
+            <param name="Progress">Progress reporter for the process</param>
+            <param name="cToken">Cancellation token for the process</param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.Process.ProcessControllerBase`1._onProgress(GFunctions.Process.ProcessProgressArgs)">
+            <summary>
+            Private helper which gets called by process progressReporter
+            </summary>
+            <param name="progArgs"></param>
+        </member>
+        <member name="T:GFunctions.Process.ProcessProgressArgs">
+            <summary>
+            Allows more detailed information to be passed through a progress reporter
+            </summary>
+        </member>
+        <member name="P:GFunctions.Process.ProcessProgressArgs.Status">
+            <summary>
+            Status of the process
+            </summary>
+        </member>
+        <member name="P:GFunctions.Process.ProcessProgressArgs.StatusString">
+            <summary>
+            Gets a string associated with the current process status
+            </summary>
+        </member>
+        <member name="F:GFunctions.Process.ProcessProgressArgs.StatusStringArgs">
+            <summary>
+            Optional extra progress argument
+            </summary>
+        </member>
+        <member name="P:GFunctions.Process.ProcessProgressArgs.Progress">
+            <summary>
+            Progress from 0 to 1
+            </summary>
+        </member>
+        <member name="P:GFunctions.Process.ProcessProgressArgs.PercentProgress">
+            <summary>
+            Progress in percentage for a ProgressBar
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ProcessProgressArgs.#ctor(System.Double,GFunctions.Process.ProcessStatus,System.String)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="progress">The progress from 0 to 1</param>
+            <param name="status">Current status of the process</param>
+            <param name="statusStringArgs">Optional extra arguments</param>
+        </member>
+        <member name="M:GFunctions.Process.ProcessProgressArgs.ForLoopProgress(System.Int32,System.Int32)">
+            <summary>
+            Calculates progress from 0 to 1 for a 0 starting for loop
+            </summary>
+            <param name="currentIteration">Current loop iteration, starting from 0</param>
+            <param name="maxIterations">The max loop iteration</param>
+            <returns>The progress from 0 to 1</returns>
+        </member>
+        <member name="T:GFunctions.Process.ProcessStatus">
+            <summary>
+            Tags to describe the running state of a process
+            </summary>
+        </member>
+        <member name="T:GFunctions.Timing.StopWatchPrecision">
+            <summary>
+            A stopwatch that operations much more accurately than the default <see cref="T:System.Diagnostics.Stopwatch"/> becuase it uses ticks.
+            </summary>
+        </member>
+        <member name="M:GFunctions.Timing.StopWatchPrecision.StartNew">
+            <summary>
+            Start the stopwatch at T=0
+            </summary>
+        </member>
+        <member name="M:GFunctions.Timing.StopWatchPrecision.Stop">
+            <summary>
+            Stop of the stopwatch
+            </summary>
+        </member>
+    </members>
+</doc>

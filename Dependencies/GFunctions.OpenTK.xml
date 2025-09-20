@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GFunctions.OpenTK</name>
+    </assembly>
+    <members>
+        <member name="T:GFunctions.OpenTK.GLControlDraggable">
+            <summary>
+            Extends a <see cref="T:OpenTK.GLControl.GLControl"/> with mouse drag (rotation, panning) and zoom functionality
+            Note: This class requires OpenGL 2.1 or earlier to work. Ensure the GLControl APIVerion = 2.1.0.0 and Profile = Any
+            </summary>
+        </member>
+        <member name="P:GFunctions.OpenTK.GLControlDraggable.SubControl">
+            <summary>
+            The control managed by this class
+            </summary>
+        </member>
+        <member name="F:GFunctions.OpenTK.GLControlDraggable.DrawnObjects">
+            <summary>
+            All objects that will be drawn by the GLControl
+            </summary>
+        </member>
+        <member name="P:GFunctions.OpenTK.GLControlDraggable.DragButton">
+            <summary>
+            The mousebutton used for dragging/rotating the view
+            </summary>
+        </member>
+        <member name="P:GFunctions.OpenTK.GLControlDraggable.TranslateKey">
+            <summary>
+            The key that when held, switches the control to panning instead of rotation
+            </summary>
+        </member>
+        <member name="E:GFunctions.OpenTK.GLControlDraggable.ViewUpdated">
+            <summary>
+            Raised when the GLControl has been updated
+            </summary>
+        </member>
+        <member name="M:GFunctions.OpenTK.GLControlDraggable.#ctor(OpenTK.GLControl.GLControl)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="control">The control to manage</param>
+        </member>
+        <member name="M:GFunctions.OpenTK.GLControlDraggable.Dispose">
+            <summary>
+            Disposes this object and the underlying control
+            </summary>
+        </member>
+        <member name="M:GFunctions.OpenTK.GLControlDraggable.Refresh">
+            <summary>
+            Used for re-drawing screen when orientation hasn't changed (new object added, etc)
+            </summary>
+        </member>
+        <member name="M:GFunctions.OpenTK.GLControlDraggable.MouseIsOverControl(OpenTK.GLControl.GLControl)">
+            <summary>
+            Returns whether the mouse is inside the control
+            </summary>
+            <param name="control">The control to check</param>
+            <returns>True if the mouse is inside the control</returns>
+        </member>
+        <member name="T:GFunctions.OpenTK.GLControlViewUpdatedEventArgs">
+            <summary>
+            Arguments for when a <see cref="T:GFunctions.OpenTK.GLControlDraggable"/> view is updated
+            </summary>
+            <param name="translation">Translation of the view [X,Y,Z]</param>
+            <param name="rotation">Rotation of the view [Z,X]</param>
+            <param name="zoom">Zoom of the view</param>
+        </member>
+        <member name="M:GFunctions.OpenTK.GLControlViewUpdatedEventArgs.#ctor(System.Double[],System.Double[],System.Double)">
+            <summary>
+            Arguments for when a <see cref="T:GFunctions.OpenTK.GLControlDraggable"/> view is updated
+            </summary>
+            <param name="translation">Translation of the view [X,Y,Z]</param>
+            <param name="rotation">Rotation of the view [Z,X]</param>
+            <param name="zoom">Zoom of the view</param>
+        </member>
+        <member name="P:GFunctions.OpenTK.GLControlViewUpdatedEventArgs.Translation">
+            <summary>
+            Translation of the view [X,Y,Z]
+            </summary>
+        </member>
+        <member name="P:GFunctions.OpenTK.GLControlViewUpdatedEventArgs.Rotation">
+            <summary>
+            Rotation of the view [Z,X]
+            </summary>
+        </member>
+        <member name="P:GFunctions.OpenTK.GLControlViewUpdatedEventArgs.Zoom">
+            <summary>
+            Zoom of the view
+            </summary>
+        </member>
+        <member name="T:GFunctions.OpenTK.GLObjects">
+            <summary>
+            Various objects that can be drawn with OpenTK
+            </summary>
+        </member>
+        <member name="M:GFunctions.OpenTK.GLObjects.Cube(System.Drawing.Color,System.Double[],System.Double)">
+            <summary>
+            Draw a cube
+            </summary>
+            <param name="Clr">Color of the cube</param>
+            <param name="Pos">Center position of the cube [x,y,z]</param>
+            <param name="width">Width of the cube</param>
+        </member>
+        <member name="M:GFunctions.OpenTK.GLObjects.Line(System.Drawing.Color,System.Double[],System.Double[],System.Double)">
+            <summary>
+            Draw a line
+            </summary>
+            <param name="Clr">Color of the line</param>
+            <param name="End1">Coordinates of end 1 [x,y,z]</param>
+            <param name="End2">Coordinates of end 2 [x,y,z]</param>
+            <param name="thickness">Line thickness (default 1)</param>
+        </member>
+        <member name="M:GFunctions.OpenTK.GLObjects.Arrow(System.Drawing.Color,System.Double[],System.Double[],System.Double)">
+            <summary>
+            Draw an arrow
+            </summary>
+            <param name="Clr">Color of the arrow</param>
+            <param name="Pos">Starting position of the arrow tail [x,y,z]</param>
+            <param name="Dir">Direction vector of the arrow [x,y,z]</param>
+            <param name="Length">Length of the arrow</param>
+        </member>
+        <member name="T:GFunctions.OpenTK.IGLDrawable">
+            <summary>
+            Generic definition of an object that can be drawn with a <see cref="T:GFunctions.OpenTK.GLControlDraggable"/>
+            </summary>
+        </member>
+        <member name="P:GFunctions.OpenTK.IGLDrawable.IsDrawn">
+            <summary>
+            If true, the object will be drawn, false and the object will not be drawn
+            </summary>
+        </member>
+        <member name="M:GFunctions.OpenTK.IGLDrawable.Draw">
+            <summary>
+            Draws the object
+            </summary>
+        </member>
+        <member name="E:GFunctions.OpenTK.IGLDrawable.RedrawRequired">
+            <summary>
+            Fires if the object requires redrawing
+            </summary>
+        </member>
+    </members>
+</doc>

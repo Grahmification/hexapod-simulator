@@ -10,7 +10,7 @@
         xmlns:UserControls="clr-namespace:Hexapod_Simulator.Helix.UserControls"
         xmlns:ValueConverters="clr-namespace:Hexapod_Simulator.Helix.ValueConverters" 
         mc:Ignorable="d"
-        Title="Hexapod Simulator" Height="500" Width="800">
+        Title="Hexapod Simulator" Height="500" Width="800" Icon="Resources/app_256px.ico">
 
     <Window.Resources>
         <ValueConverters:SimulationRunStateToToggleTextConverter x:Key="SimulationRunStateToToggleTextConverter"/>

@@ -3,44 +3,58 @@ using GFunctions.Mathnet;
 
 namespace Hexapod_Simulator.Shared
 {
+    /// <summary>
+    /// An actuator to lift the hexapod consisting of an arm fixed to a rotary joint
+    /// </summary>
     public class RotaryActuator : LinearActuator, IActuator
     {
-        private double _armLength = 1; //arm length [mm], base class constructor will fail if default = 0
-        private double _armAngle = 0; //arm angle with respect to vertical [deg]
+        private readonly double _armLength = 1; //arm length [mm], base class constructor will fail if default = 0
+        private readonly double _armAngle = 0; //arm angle with respect to vertical [deg]
 
-        public override ActuatorTypes ActuatorType { get { return ActuatorTypes.Rotary; } }
+        /// <summary>
+        /// The actuator type
+        /// </summary>
+        public override ActuatorTypes ActuatorType => ActuatorTypes.Rotary;
 
         public RotaryActuator(double armRadius, double armAngle, double linkLength, double[] position, double[] linkEndPosition) : base(180, linkLength, position, linkEndPosition)
         {
-            this._armLength = armRadius;
-            this._armAngle = armAngle;
+            _armLength = armRadius;
+            _armAngle = armAngle;
 
-            this._maxTravel = 180; //done this way so everything doesn't calculate
-            this._minTravel = -180; //done this way so everything doesn't calculate
+            _maxTravel = 180; //done this way so everything doesn't calculate
+            _minTravel = -180; //done this way so everything doesn't calculate
 
-            this.Solver = new IterativeSolver(0.01, 100, 0.001, computeError, this._maxTravel, this._minTravel);
+            Solver = new IterativeSolver(0.01, 100, 0.001, ComputeError, _maxTravel, _minTravel);
 
-            calcMotorAngle();
+            CalculateMotorAngle();
         }
 
-        protected override void calcArmEndCoords()
+        /// <summary>
+        /// Calculates the end coordinates of the arm - needs to be different for rotary
+        /// </summary>
+        protected override void CalculateArmEndCoords()
         {
-            var localCoord = new double[] { this._armLength, 0, 0 };
-            var trans = this._position;
-            var trans2 = new double[] { 0, 0, 0 };
-            var rot = new double[] { this._travelPosition, 0, this._armAngle };
+            double[] localCoord = [_armLength, 0, 0];
+            double[] translation = _position;
+            double[] rotation = [TravelPosition, 0, _armAngle];
 
-
-            double[] coords = KinematicMath.CalcGlobalCoord(localCoord, trans, trans2, rot);
-            this._armEndPosition = coords;
-        } //needs to be different for rotary
-        public static double calcMotorOffsetAngle(int Index, double armAngle, double jointOffsetAngle)
+            double[] coords = KinematicMath.CalcGlobalCoord(localCoord, translation, [0, 0, 0], rotation);
+            ArmEndPosition = coords;
+        }
+        
+        /// <summary>
+        /// Calculates the offset angle of the rotary actuator arm
+        /// </summary>
+        /// <param name="index">The hexapod joint index [0-5]</param>
+        /// <param name="armAngle">The offset angle of the arm [deg]</param>
+        /// <param name="jointOffsetAngle">The offset angle of the hexapod joint</param>
+        /// <returns>The absolute angle of the arm [-180 to 180]</returns>
+        public static double CalcMotorOffsetAngle(int index, double armAngle, double jointOffsetAngle)
         {
             double angle = 0;
             angle += jointOffsetAngle;
 
-
-            if (Index % 2 == 0)
+            if (index % 2 == 0)
             { //index is even
                 angle += 90;
                 angle += armAngle;

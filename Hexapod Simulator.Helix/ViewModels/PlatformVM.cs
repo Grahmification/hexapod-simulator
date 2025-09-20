@@ -1,47 +1,49 @@
-﻿using Hexapod_Simulator.Shared;
-using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows.Media.Media3D;
+using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {
+    /// <summary>
+    /// Viewmodel for a <see cref="Platform"/>
+    /// </summary>
     public class PlatformVM : BaseViewModel
     {
         public double XTranslation
         {
             get { return PlatformModel.TranslationTarget[0]; }
-            set { PlatformModel.TranslateAbs(new double[] { value, YTranslation, ZTranslation }); }
+            set { PlatformModel.TranslateAbs([value, YTranslation, ZTranslation]); }
         }
         public double YTranslation
         {
             get { return PlatformModel.TranslationTarget[1]; }
-            set { PlatformModel.TranslateAbs(new double[] { XTranslation, value, ZTranslation }); }
+            set { PlatformModel.TranslateAbs([XTranslation, value, ZTranslation]); }
         }
         public double ZTranslation 
         {
             get { return PlatformModel.TranslationTarget[2]; }
-            set { PlatformModel.TranslateAbs(new double[] { XTranslation, YTranslation, value }); }
+            set { PlatformModel.TranslateAbs([XTranslation, YTranslation, value]); }
         }
         public double PitchRotation
         {
             get { return PlatformModel.RotationTarget[0]; }
-            set { PlatformModel.RotateAbs(new double[] { value, RollRotation, YawRotation }); }
+            set { PlatformModel.RotateAbs([value, RollRotation, YawRotation]); }
         }
         public double RollRotation
         {
             get { return PlatformModel.RotationTarget[1]; }
-            set { PlatformModel.RotateAbs(new double[] { PitchRotation, value, YawRotation }); }
+            set { PlatformModel.RotateAbs([PitchRotation, value, YawRotation]); }
         }
         public double YawRotation
         {
             get { return PlatformModel.RotationTarget[2]; }
-            set { PlatformModel.RotateAbs(new double[] { PitchRotation, RollRotation, value }); }
+            set { PlatformModel.RotateAbs([PitchRotation, RollRotation, value]); }
         }
 
 
-        public double[] Position { get { return PlatformModel.Position;  } }
-        public double[] Rotation { get { return PlatformModel.Rotation; } }
-        public double[] AbsRotationCenter { get { return PlatformModel.AbsRotationCenter; } }
+        public double[] Position => PlatformModel.Position;
+        public double[] Rotation => PlatformModel.Rotation;
+        public double[] AbsRotationCenter => PlatformModel.AbsRotationCenter;
         public double Radius
         {
             get { return PlatformModel.Radius; }
@@ -52,17 +54,17 @@ namespace Hexapod_Simulator.Helix.ViewModels
             get { return PlatformModel.JointAngle; }
             set { PlatformModel.JointAngle = value; }
         }
-        public string Name { get { return PlatformModel.Name; } }
+        public string Name => PlatformModel.Name;
 
         /// <summary>
         /// The absolute transformation of the platform
         /// </summary>
-        public Transform3D Transform { get { return CreateTransform(PlatformModel.Position, PlatformModel.Rotation, PlatformModel.AbsRotationCenter); } }
+        public Transform3D Transform => CreateTransform(PlatformModel.Position, PlatformModel.Rotation, PlatformModel.AbsRotationCenter);
 
         /// <summary>
         /// The absolute transformation of the platform rotation center
         /// </summary>
-        public Transform3D RotationCenterTransform { get { return CreateTransform(PlatformModel.AbsRotationCenter, PlatformModel.Rotation, PlatformModel.AbsRotationCenter); } }
+        public Transform3D RotationCenterTransform => CreateTransform(PlatformModel.AbsRotationCenter, PlatformModel.Rotation, PlatformModel.AbsRotationCenter);
 
 
         /// <summary>
@@ -78,12 +80,12 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// Holds a temporary value of the <see cref="Platform.DefaultPos"/> until the updateconfig command is executed
         /// </summary>
-        public double[] DefaultPositionTemp { get; set; } = new double[] { 0, 0, 0 };
+        public double[] DefaultPositionTemp { get; set; } = [0, 0, 0];
 
         /// <summary>
         /// Holds a temporary value of the <see cref="Platform.RotationCenter"/> until the updateconfig command is executed
         /// </summary>
-        public double[] RotationCenterTemp { get; set; } = new double[] { 0, 0, 0 };
+        public double[] RotationCenterTemp { get; set; } = [0, 0, 0];
 
         /// <summary>
         /// Holds a temporary value of the <see cref="Platform.FixedRotationCenter"/> until the updateconfig command is executed
@@ -96,23 +98,28 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// RelayCommand for <see cref="ResetPosition"/>
         /// </summary>
-        public ICommand ResetPositionCommand { get; set; }
+        public ICommand? ResetPositionCommand { get; set; }
 
         /// <summary>
         /// RelayCommand for <see cref="UpdateConfig"/>
         /// </summary>
-        public ICommand UpdateConfigCommand { get; set; }
+        public ICommand? UpdateConfigCommand { get; set; }
 
         /// <summary>
         /// RelayCommand for <see cref="UpdateRotationCenter"/>
         /// </summary>
-        public ICommand UpdateRotationCenterCommand { get; set; }
+        public ICommand? UpdateRotationCenterCommand { get; set; }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public PlatformVM(Platform platformModel)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             InitializeModel(platformModel);
         }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public PlatformVM()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             InitializeModel(new Platform("Temp", 10, 30));
         }
@@ -131,8 +138,8 @@ namespace Hexapod_Simulator.Helix.ViewModels
         private void InitializeModel(Platform platformModel)
         {
             PlatformModel = platformModel;
-            PlatformModel.RedrawRequired += onRedrawRequired;
-            PlatformModel.LocalCoordsChanged += onLocalCoordsChanged;
+            PlatformModel.RedrawRequired += OnRedrawRequired;
+            PlatformModel.LocalCoordsChanged += OnLocalCoordsChanged;
 
             ResetPositionCommand = new RelayCommand(ResetPosition);
             UpdateConfigCommand = new RelayCommand(UpdateConfig);
@@ -146,7 +153,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
             FixedRotationCenterTemp = PlatformModel.FixedRotationCenter;
 
             //this is the only time the name will change
-            OnPropertyChanged("Name");
+            OnPropertyChanged(nameof(Name));
         }
 
         /// <summary>
@@ -177,19 +184,18 @@ namespace Hexapod_Simulator.Helix.ViewModels
             PlatformModel.UpdateRotationCenter(RotationCenterTemp, FixedRotationCenterTemp);
         }
 
-        private void onRedrawRequired(object sender, EventArgs e)
+        private void OnRedrawRequired(object? sender, EventArgs e)
         {
-            OnPropertyChanged("Transform");
-            OnPropertyChanged("RotationCenterTransform");
-            OnPropertyChanged("LocalJointCoords");
-            OnPropertyChanged("AbsRotationCenter");
-            OnPropertyChanged("Position");
-            OnPropertyChanged("Rotation");
+            OnPropertyChanged(nameof(Transform));
+            OnPropertyChanged(nameof(RotationCenterTransform));
+            OnPropertyChanged(nameof(AbsRotationCenter));
+            OnPropertyChanged(nameof(Position));
+            OnPropertyChanged(nameof(Rotation));
         }
-        private void onLocalCoordsChanged(object sender, EventArgs e)
+        private void OnLocalCoordsChanged(object? sender, EventArgs e)
         {
-            OnPropertyChanged("Radius");
-            OnPropertyChanged("JointAngle");
+            OnPropertyChanged(nameof(Radius));
+            OnPropertyChanged(nameof(JointAngle));
         }
 
 
@@ -203,7 +209,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         private static Transform3D CreateTransform(double[] translation, double[] rotation, double[] rotationCenter)
         {
             var trans = new TranslateTransform3D(translation[0], translation[1], translation[2]);
-            var rot = new RotateTransform3D(new QuaternionRotation3D(PlatformVM.EulerToQuaternion(rotation[0], rotation[1], rotation[2])), new Point3D(rotationCenter[0], rotationCenter[1], rotationCenter[2]));
+            var rot = new RotateTransform3D(new QuaternionRotation3D(EulerToQuaternion(rotation[0], rotation[1], rotation[2])), new Point3D(rotationCenter[0], rotationCenter[1], rotationCenter[2]));
 
             var output = new Transform3DGroup();
             output.Children.Add(trans);
@@ -233,11 +239,13 @@ namespace Hexapod_Simulator.Helix.ViewModels
             double cr = Math.Cos(roll * 0.5);
             double sr = Math.Sin(roll * 0.5);
 
-            Quaternion q = new Quaternion();
-            q.W = cr * cp * cy + sr * sp * sy;
-            q.X = sr * cp * cy - cr * sp * sy;
-            q.Y = cr * sp * cy + sr * cp * sy;
-            q.Z = cr * cp * sy - sr * sp * cy;
+            Quaternion q = new()
+            {
+                W = cr * cp * cy + sr * sp * sy,
+                X = sr * cp * cy - cr * sp * sy,
+                Y = cr * sp * cy + sr * cp * sy,
+                Z = cr * cp * sy - sr * sp * cy
+            };
 
             return q;
         }

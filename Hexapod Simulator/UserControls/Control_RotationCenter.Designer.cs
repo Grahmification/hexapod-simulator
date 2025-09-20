@@ -1,4 +1,4 @@
-﻿using GFunctions.Winforms.Controls;
+﻿using GFunctions.Winforms.Input;
 
 namespace Hexapod_Simulator.UserControls
 {
@@ -37,9 +37,9 @@ namespace Hexapod_Simulator.UserControls
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button_apply = new System.Windows.Forms.Button();
-            this.numericalInputTextBox_posZ = new GFunctions.Winforms.Controls.NumericalInputTextBox();
-            this.numericalInputTextBox_posY = new GFunctions.Winforms.Controls.NumericalInputTextBox();
-            this.numericalInputTextBox_posX = new GFunctions.Winforms.Controls.NumericalInputTextBox();
+            this.numericalInputTextBox_posZ = new GFunctions.Winforms.Input.NumericalInputTextBox();
+            this.numericalInputTextBox_posY = new GFunctions.Winforms.Input.NumericalInputTextBox();
+            this.numericalInputTextBox_posX = new GFunctions.Winforms.Input.NumericalInputTextBox();
             this.checkBox_fixedCenter = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 

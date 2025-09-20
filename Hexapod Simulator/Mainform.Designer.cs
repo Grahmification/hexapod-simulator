@@ -31,269 +31,285 @@ namespace Hexapod_Simulator
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainform));
-            this.statusStrip_bottom = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel_simFreq = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStrip_top = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton_toggleSimulation = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_servoActive = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripTextBox_simInterval = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer_main = new System.Windows.Forms.SplitContainer();
-            this.tabControl_main = new System.Windows.Forms.TabControl();
-            this.tabPage_movement = new System.Windows.Forms.TabPage();
-            this.tabPage_config = new System.Windows.Forms.TabPage();
-            this.glControl_main = new OpenTK.GLControl();
-            this.control_ServoPos1 = new Hexapod_Simulator.UserControls.Control_ServoPos();
-            this.control_CurrentPos1 = new Hexapod_Simulator.UserControls.Control_CurrentPos();
-            this.control_ManualDrag_main = new Hexapod_Simulator.UserControls.Control_ManualDrag();
-            this.control_RotationCenter1 = new Hexapod_Simulator.UserControls.Control_RotationCenter();
-            this.platformConfigControl_base = new Hexapod_Simulator.UserControls.PlatformConfigControl();
-            this.platformConfigControl_top = new Hexapod_Simulator.UserControls.PlatformConfigControl();
-            this.statusStrip_bottom.SuspendLayout();
-            this.toolStrip_top.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer_main)).BeginInit();
-            this.splitContainer_main.Panel1.SuspendLayout();
-            this.splitContainer_main.Panel2.SuspendLayout();
-            this.splitContainer_main.SuspendLayout();
-            this.tabControl_main.SuspendLayout();
-            this.tabPage_movement.SuspendLayout();
-            this.tabPage_config.SuspendLayout();
-            this.SuspendLayout();
+            statusStrip_bottom = new StatusStrip();
+            toolStripStatusLabel_simFreq = new ToolStripStatusLabel();
+            toolStrip_top = new ToolStrip();
+            toolStripButton_toggleSimulation = new ToolStripButton();
+            toolStripButton_servoActive = new ToolStripButton();
+            toolStripSeparator1 = new ToolStripSeparator();
+            toolStripLabel1 = new ToolStripLabel();
+            toolStripTextBox_simInterval = new ToolStripTextBox();
+            toolStripButton1 = new ToolStripButton();
+            splitContainer_main = new SplitContainer();
+            tabControl_main = new TabControl();
+            tabPage_movement = new TabPage();
+            control_ServoPos1 = new Control_ServoPos();
+            control_CurrentPos1 = new Control_CurrentPos();
+            control_ManualDrag_main = new Control_ManualDrag();
+            tabPage_config = new TabPage();
+            control_RotationCenter1 = new Control_RotationCenter();
+            platformConfigControl_base = new PlatformConfigControl();
+            platformConfigControl_top = new PlatformConfigControl();
+            glControl_main = new OpenTK.GLControl.GLControl();
+            statusStrip_bottom.SuspendLayout();
+            toolStrip_top.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer_main).BeginInit();
+            splitContainer_main.Panel1.SuspendLayout();
+            splitContainer_main.Panel2.SuspendLayout();
+            splitContainer_main.SuspendLayout();
+            tabControl_main.SuspendLayout();
+            tabPage_movement.SuspendLayout();
+            tabPage_config.SuspendLayout();
+            SuspendLayout();
             // 
             // statusStrip_bottom
             // 
-            this.statusStrip_bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel_simFreq});
-            this.statusStrip_bottom.Location = new System.Drawing.Point(0, 720);
-            this.statusStrip_bottom.Name = "statusStrip_bottom";
-            this.statusStrip_bottom.Size = new System.Drawing.Size(1049, 22);
-            this.statusStrip_bottom.TabIndex = 0;
-            this.statusStrip_bottom.Text = "statusStrip1";
+            statusStrip_bottom.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel_simFreq });
+            statusStrip_bottom.Location = new Point(0, 834);
+            statusStrip_bottom.Name = "statusStrip_bottom";
+            statusStrip_bottom.Padding = new Padding(1, 0, 16, 0);
+            statusStrip_bottom.Size = new Size(1224, 22);
+            statusStrip_bottom.TabIndex = 0;
+            statusStrip_bottom.Text = "statusStrip1";
             // 
             // toolStripStatusLabel_simFreq
             // 
-            this.toolStripStatusLabel_simFreq.Name = "toolStripStatusLabel_simFreq";
-            this.toolStripStatusLabel_simFreq.Size = new System.Drawing.Size(38, 17);
-            this.toolStripStatusLabel_simFreq.Text = "FPS: 0";
+            toolStripStatusLabel_simFreq.Name = "toolStripStatusLabel_simFreq";
+            toolStripStatusLabel_simFreq.Size = new Size(38, 17);
+            toolStripStatusLabel_simFreq.Text = "FPS: 0";
             // 
             // toolStrip_top
             // 
-            this.toolStrip_top.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton_toggleSimulation,
-            this.toolStripButton_servoActive,
-            this.toolStripSeparator1,
-            this.toolStripLabel1,
-            this.toolStripTextBox_simInterval,
-            this.toolStripButton1});
-            this.toolStrip_top.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip_top.Name = "toolStrip_top";
-            this.toolStrip_top.Size = new System.Drawing.Size(1049, 25);
-            this.toolStrip_top.TabIndex = 1;
-            this.toolStrip_top.Text = "toolStrip1";
+            toolStrip_top.Items.AddRange(new ToolStripItem[] { toolStripButton_toggleSimulation, toolStripButton_servoActive, toolStripSeparator1, toolStripLabel1, toolStripTextBox_simInterval, toolStripButton1 });
+            toolStrip_top.Location = new Point(0, 0);
+            toolStrip_top.Name = "toolStrip_top";
+            toolStrip_top.Size = new Size(1224, 25);
+            toolStrip_top.TabIndex = 1;
+            toolStrip_top.Text = "toolStrip1";
             // 
             // toolStripButton_toggleSimulation
             // 
-            this.toolStripButton_toggleSimulation.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_toggleSimulation.Image")));
-            this.toolStripButton_toggleSimulation.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_toggleSimulation.Name = "toolStripButton_toggleSimulation";
-            this.toolStripButton_toggleSimulation.Size = new System.Drawing.Size(111, 22);
-            this.toolStripButton_toggleSimulation.Text = "Start Simulation";
-            this.toolStripButton_toggleSimulation.Click += new System.EventHandler(this.toolStripButton_toggleSimulation_Click);
+            toolStripButton_toggleSimulation.Image = (Image)resources.GetObject("toolStripButton_toggleSimulation.Image");
+            toolStripButton_toggleSimulation.ImageTransparentColor = Color.Magenta;
+            toolStripButton_toggleSimulation.Name = "toolStripButton_toggleSimulation";
+            toolStripButton_toggleSimulation.Size = new Size(111, 22);
+            toolStripButton_toggleSimulation.Text = "Start Simulation";
+            toolStripButton_toggleSimulation.Click += toolStripButton_toggleSimulation_Click;
             // 
             // toolStripButton_servoActive
             // 
-            this.toolStripButton_servoActive.CheckOnClick = true;
-            this.toolStripButton_servoActive.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton_servoActive.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_servoActive.Image")));
-            this.toolStripButton_servoActive.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_servoActive.Name = "toolStripButton_servoActive";
-            this.toolStripButton_servoActive.Size = new System.Drawing.Size(76, 22);
-            this.toolStripButton_servoActive.Text = "Servo Active";
-            this.toolStripButton_servoActive.CheckStateChanged += new System.EventHandler(this.toolStripButton_servoActive_CheckStateChanged);
+            toolStripButton_servoActive.CheckOnClick = true;
+            toolStripButton_servoActive.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButton_servoActive.Image = (Image)resources.GetObject("toolStripButton_servoActive.Image");
+            toolStripButton_servoActive.ImageTransparentColor = Color.Magenta;
+            toolStripButton_servoActive.Name = "toolStripButton_servoActive";
+            toolStripButton_servoActive.Size = new Size(76, 22);
+            toolStripButton_servoActive.Text = "Servo Active";
+            toolStripButton_servoActive.CheckStateChanged += toolStripButton_servoActive_CheckStateChanged;
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 25);
             // 
             // toolStripLabel1
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(76, 22);
-            this.toolStripLabel1.Text = "Interval [ms]:";
+            toolStripLabel1.Name = "toolStripLabel1";
+            toolStripLabel1.Size = new Size(76, 22);
+            toolStripLabel1.Text = "Interval [ms]:";
             // 
             // toolStripTextBox_simInterval
             // 
-            this.toolStripTextBox_simInterval.Name = "toolStripTextBox_simInterval";
-            this.toolStripTextBox_simInterval.Size = new System.Drawing.Size(100, 25);
-            this.toolStripTextBox_simInterval.Text = "50";
+            toolStripTextBox_simInterval.Name = "toolStripTextBox_simInterval";
+            toolStripTextBox_simInterval.Size = new Size(116, 25);
+            toolStripTextBox_simInterval.Text = "50";
             // 
             // toolStripButton1
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(78, 22);
-            this.toolStripButton1.Text = "Trajectory";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            toolStripButton1.Image = (Image)resources.GetObject("toolStripButton1.Image");
+            toolStripButton1.ImageTransparentColor = Color.Magenta;
+            toolStripButton1.Name = "toolStripButton1";
+            toolStripButton1.Size = new Size(79, 22);
+            toolStripButton1.Text = "Trajectory";
+            toolStripButton1.Click += toolStripButton1_Click;
             // 
             // splitContainer_main
             // 
-            this.splitContainer_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer_main.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer_main.Location = new System.Drawing.Point(0, 25);
-            this.splitContainer_main.Name = "splitContainer_main";
+            splitContainer_main.Dock = DockStyle.Fill;
+            splitContainer_main.FixedPanel = FixedPanel.Panel1;
+            splitContainer_main.Location = new Point(0, 25);
+            splitContainer_main.Margin = new Padding(4, 3, 4, 3);
+            splitContainer_main.Name = "splitContainer_main";
             // 
             // splitContainer_main.Panel1
             // 
-            this.splitContainer_main.Panel1.Controls.Add(this.tabControl_main);
-            this.splitContainer_main.Panel1MinSize = 260;
+            splitContainer_main.Panel1.Controls.Add(tabControl_main);
+            splitContainer_main.Panel1MinSize = 260;
             // 
             // splitContainer_main.Panel2
             // 
-            this.splitContainer_main.Panel2.Controls.Add(this.glControl_main);
-            this.splitContainer_main.Panel2MinSize = 260;
-            this.splitContainer_main.Size = new System.Drawing.Size(1049, 695);
-            this.splitContainer_main.SplitterDistance = 260;
-            this.splitContainer_main.TabIndex = 2;
+            splitContainer_main.Panel2.Controls.Add(glControl_main);
+            splitContainer_main.Panel2MinSize = 260;
+            splitContainer_main.Size = new Size(1224, 809);
+            splitContainer_main.SplitterDistance = 303;
+            splitContainer_main.SplitterWidth = 5;
+            splitContainer_main.TabIndex = 2;
             // 
             // tabControl_main
             // 
-            this.tabControl_main.Controls.Add(this.tabPage_movement);
-            this.tabControl_main.Controls.Add(this.tabPage_config);
-            this.tabControl_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl_main.Location = new System.Drawing.Point(0, 0);
-            this.tabControl_main.Name = "tabControl_main";
-            this.tabControl_main.SelectedIndex = 0;
-            this.tabControl_main.Size = new System.Drawing.Size(260, 695);
-            this.tabControl_main.TabIndex = 0;
+            tabControl_main.Controls.Add(tabPage_movement);
+            tabControl_main.Controls.Add(tabPage_config);
+            tabControl_main.Dock = DockStyle.Fill;
+            tabControl_main.Location = new Point(0, 0);
+            tabControl_main.Margin = new Padding(4, 3, 4, 3);
+            tabControl_main.Name = "tabControl_main";
+            tabControl_main.SelectedIndex = 0;
+            tabControl_main.Size = new Size(303, 809);
+            tabControl_main.TabIndex = 0;
             // 
             // tabPage_movement
             // 
-            this.tabPage_movement.Controls.Add(this.control_ServoPos1);
-            this.tabPage_movement.Controls.Add(this.control_CurrentPos1);
-            this.tabPage_movement.Controls.Add(this.control_ManualDrag_main);
-            this.tabPage_movement.Location = new System.Drawing.Point(4, 22);
-            this.tabPage_movement.Name = "tabPage_movement";
-            this.tabPage_movement.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_movement.Size = new System.Drawing.Size(252, 669);
-            this.tabPage_movement.TabIndex = 0;
-            this.tabPage_movement.Text = "Move";
-            this.tabPage_movement.UseVisualStyleBackColor = true;
-            // 
-            // tabPage_config
-            // 
-            this.tabPage_config.Controls.Add(this.control_RotationCenter1);
-            this.tabPage_config.Controls.Add(this.platformConfigControl_base);
-            this.tabPage_config.Controls.Add(this.platformConfigControl_top);
-            this.tabPage_config.Location = new System.Drawing.Point(4, 22);
-            this.tabPage_config.Name = "tabPage_config";
-            this.tabPage_config.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_config.Size = new System.Drawing.Size(252, 669);
-            this.tabPage_config.TabIndex = 1;
-            this.tabPage_config.Text = "Config";
-            this.tabPage_config.UseVisualStyleBackColor = true;
-            // 
-            // glControl_main
-            // 
-            this.glControl_main.BackColor = System.Drawing.Color.Black;
-            this.glControl_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glControl_main.Location = new System.Drawing.Point(0, 0);
-            this.glControl_main.Name = "glControl_main";
-            this.glControl_main.Size = new System.Drawing.Size(785, 695);
-            this.glControl_main.TabIndex = 0;
-            this.glControl_main.VSync = false;
+            tabPage_movement.Controls.Add(control_ServoPos1);
+            tabPage_movement.Controls.Add(control_CurrentPos1);
+            tabPage_movement.Controls.Add(control_ManualDrag_main);
+            tabPage_movement.Location = new Point(4, 24);
+            tabPage_movement.Margin = new Padding(4, 3, 4, 3);
+            tabPage_movement.Name = "tabPage_movement";
+            tabPage_movement.Padding = new Padding(4, 3, 4, 3);
+            tabPage_movement.Size = new Size(295, 781);
+            tabPage_movement.TabIndex = 0;
+            tabPage_movement.Text = "Move";
+            tabPage_movement.UseVisualStyleBackColor = true;
             // 
             // control_ServoPos1
             // 
-            this.control_ServoPos1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.control_ServoPos1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.control_ServoPos1.Location = new System.Drawing.Point(6, 420);
-            this.control_ServoPos1.Name = "control_ServoPos1";
-            this.control_ServoPos1.Size = new System.Drawing.Size(236, 171);
-            this.control_ServoPos1.TabIndex = 3;
+            control_ServoPos1.BackColor = SystemColors.ControlDark;
+            control_ServoPos1.BorderStyle = BorderStyle.Fixed3D;
+            control_ServoPos1.Location = new Point(7, 485);
+            control_ServoPos1.Margin = new Padding(5, 3, 5, 3);
+            control_ServoPos1.Name = "control_ServoPos1";
+            control_ServoPos1.Size = new Size(275, 197);
+            control_ServoPos1.TabIndex = 3;
             // 
             // control_CurrentPos1
             // 
-            this.control_CurrentPos1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.control_CurrentPos1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.control_CurrentPos1.Location = new System.Drawing.Point(10, 227);
-            this.control_CurrentPos1.Name = "control_CurrentPos1";
-            this.control_CurrentPos1.Size = new System.Drawing.Size(236, 187);
-            this.control_CurrentPos1.TabIndex = 2;
+            control_CurrentPos1.BackColor = SystemColors.ControlDark;
+            control_CurrentPos1.BorderStyle = BorderStyle.Fixed3D;
+            control_CurrentPos1.Location = new Point(12, 262);
+            control_CurrentPos1.Margin = new Padding(5, 3, 5, 3);
+            control_CurrentPos1.Name = "control_CurrentPos1";
+            control_CurrentPos1.Size = new Size(275, 215);
+            control_CurrentPos1.TabIndex = 2;
             // 
             // control_ManualDrag_main
             // 
-            this.control_ManualDrag_main.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.control_ManualDrag_main.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.control_ManualDrag_main.Location = new System.Drawing.Point(6, 6);
-            this.control_ManualDrag_main.Name = "control_ManualDrag_main";
-            this.control_ManualDrag_main.Position = new double[] {
-        0D,
-        0D,
-        0D};
-            this.control_ManualDrag_main.Rotation = new double[] {
-        0D,
-        0D,
-        0D};
-            this.control_ManualDrag_main.Size = new System.Drawing.Size(236, 215);
-            this.control_ManualDrag_main.TabIndex = 1;
+            control_ManualDrag_main.BackColor = SystemColors.ControlDark;
+            control_ManualDrag_main.BorderStyle = BorderStyle.Fixed3D;
+            control_ManualDrag_main.Location = new Point(7, 7);
+            control_ManualDrag_main.Margin = new Padding(5, 3, 5, 3);
+            control_ManualDrag_main.Name = "control_ManualDrag_main";
+            control_ManualDrag_main.Position = new double[]
+    {
+    0D,
+    0D,
+    0D
+    };
+            control_ManualDrag_main.Rotation = new double[]
+    {
+    0D,
+    0D,
+    0D
+    };
+            control_ManualDrag_main.Size = new Size(275, 247);
+            control_ManualDrag_main.TabIndex = 1;
+            // 
+            // tabPage_config
+            // 
+            tabPage_config.Controls.Add(control_RotationCenter1);
+            tabPage_config.Controls.Add(platformConfigControl_base);
+            tabPage_config.Controls.Add(platformConfigControl_top);
+            tabPage_config.Location = new Point(4, 24);
+            tabPage_config.Margin = new Padding(4, 3, 4, 3);
+            tabPage_config.Name = "tabPage_config";
+            tabPage_config.Padding = new Padding(4, 3, 4, 3);
+            tabPage_config.Size = new Size(295, 781);
+            tabPage_config.TabIndex = 1;
+            tabPage_config.Text = "Config";
+            tabPage_config.UseVisualStyleBackColor = true;
             // 
             // control_RotationCenter1
             // 
-            this.control_RotationCenter1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.control_RotationCenter1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.control_RotationCenter1.Location = new System.Drawing.Point(6, 428);
-            this.control_RotationCenter1.Name = "control_RotationCenter1";
-            this.control_RotationCenter1.Size = new System.Drawing.Size(236, 170);
-            this.control_RotationCenter1.TabIndex = 2;
+            control_RotationCenter1.BackColor = SystemColors.ControlDark;
+            control_RotationCenter1.BorderStyle = BorderStyle.Fixed3D;
+            control_RotationCenter1.Location = new Point(7, 494);
+            control_RotationCenter1.Margin = new Padding(5, 3, 5, 3);
+            control_RotationCenter1.Name = "control_RotationCenter1";
+            control_RotationCenter1.Size = new Size(275, 196);
+            control_RotationCenter1.TabIndex = 2;
             // 
             // platformConfigControl_base
             // 
-            this.platformConfigControl_base.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.platformConfigControl_base.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.platformConfigControl_base.Location = new System.Drawing.Point(6, 217);
-            this.platformConfigControl_base.Name = "platformConfigControl_base";
-            this.platformConfigControl_base.Size = new System.Drawing.Size(236, 205);
-            this.platformConfigControl_base.TabIndex = 1;
+            platformConfigControl_base.BackColor = SystemColors.ControlDark;
+            platformConfigControl_base.BorderStyle = BorderStyle.Fixed3D;
+            platformConfigControl_base.Location = new Point(7, 250);
+            platformConfigControl_base.Margin = new Padding(5, 3, 5, 3);
+            platformConfigControl_base.Name = "platformConfigControl_base";
+            platformConfigControl_base.Size = new Size(275, 236);
+            platformConfigControl_base.TabIndex = 1;
             // 
             // platformConfigControl_top
             // 
-            this.platformConfigControl_top.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.platformConfigControl_top.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.platformConfigControl_top.Location = new System.Drawing.Point(6, 6);
-            this.platformConfigControl_top.Name = "platformConfigControl_top";
-            this.platformConfigControl_top.Size = new System.Drawing.Size(236, 205);
-            this.platformConfigControl_top.TabIndex = 0;
+            platformConfigControl_top.BackColor = SystemColors.ControlDark;
+            platformConfigControl_top.BorderStyle = BorderStyle.Fixed3D;
+            platformConfigControl_top.Location = new Point(7, 7);
+            platformConfigControl_top.Margin = new Padding(5, 3, 5, 3);
+            platformConfigControl_top.Name = "platformConfigControl_top";
+            platformConfigControl_top.Size = new Size(275, 236);
+            platformConfigControl_top.TabIndex = 0;
+            // 
+            // glControl_main
+            // 
+            glControl_main.API = OpenTK.Windowing.Common.ContextAPI.OpenGL;
+            glControl_main.APIVersion = new Version(2, 1, 0, 0);
+            glControl_main.BackColor = Color.Black;
+            glControl_main.Dock = DockStyle.Fill;
+            glControl_main.Flags = OpenTK.Windowing.Common.ContextFlags.Default;
+            glControl_main.IsEventDriven = true;
+            glControl_main.Location = new Point(0, 0);
+            glControl_main.Margin = new Padding(4, 3, 4, 3);
+            glControl_main.Name = "glControl_main";
+            glControl_main.Profile = OpenTK.Windowing.Common.ContextProfile.Any;
+            glControl_main.SharedContext = null;
+            glControl_main.Size = new Size(916, 809);
+            glControl_main.TabIndex = 0;
             // 
             // Mainform
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1049, 742);
-            this.Controls.Add(this.splitContainer_main);
-            this.Controls.Add(this.toolStrip_top);
-            this.Controls.Add(this.statusStrip_bottom);
-            this.Name = "Mainform";
-            this.Text = "Hexapod Simulator";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Mainform_FormClosing);
-            this.Load += new System.EventHandler(this.Mainform_Load);
-            this.statusStrip_bottom.ResumeLayout(false);
-            this.statusStrip_bottom.PerformLayout();
-            this.toolStrip_top.ResumeLayout(false);
-            this.toolStrip_top.PerformLayout();
-            this.splitContainer_main.Panel1.ResumeLayout(false);
-            this.splitContainer_main.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer_main)).EndInit();
-            this.splitContainer_main.ResumeLayout(false);
-            this.tabControl_main.ResumeLayout(false);
-            this.tabPage_movement.ResumeLayout(false);
-            this.tabPage_config.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1224, 856);
+            Controls.Add(splitContainer_main);
+            Controls.Add(toolStrip_top);
+            Controls.Add(statusStrip_bottom);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "Mainform";
+            Text = "Hexapod Simulator";
+            FormClosing += Mainform_FormClosing;
+            Load += Mainform_Load;
+            statusStrip_bottom.ResumeLayout(false);
+            statusStrip_bottom.PerformLayout();
+            toolStrip_top.ResumeLayout(false);
+            toolStrip_top.PerformLayout();
+            splitContainer_main.Panel1.ResumeLayout(false);
+            splitContainer_main.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer_main).EndInit();
+            splitContainer_main.ResumeLayout(false);
+            tabControl_main.ResumeLayout(false);
+            tabPage_movement.ResumeLayout(false);
+            tabPage_config.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -301,7 +317,7 @@ namespace Hexapod_Simulator
         private System.Windows.Forms.StatusStrip statusStrip_bottom;
         private System.Windows.Forms.ToolStrip toolStrip_top;
         private System.Windows.Forms.SplitContainer splitContainer_main;
-        private OpenTK.GLControl glControl_main;
+        private OpenTK.GLControl.GLControl glControl_main;
         private System.Windows.Forms.TabControl tabControl_main;
         private System.Windows.Forms.TabPage tabPage_movement;
         private System.Windows.Forms.TabPage tabPage_config;

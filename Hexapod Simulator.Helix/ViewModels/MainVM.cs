@@ -1,8 +1,7 @@
-﻿using Hexapod_Simulator.Shared;
+﻿using System.Windows.Input;
+using Hexapod_Simulator.Shared;
 using GFunctions.Timing;
 using GFunctions.Mathematics;
-using System.Windows.Input;
-using System;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {
@@ -29,7 +28,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// Returns true if the simulation is running
         /// </summary>
-        public bool SimulationRunning { get { return SimModel.Running; } }
+        public bool SimulationRunning => SimModel.Running;
 
         /// <summary>
         /// The simulation frames per second
@@ -45,33 +44,35 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// The model for managing the time-based simulation
         /// </summary>
-        private TimeSimulation SimModel = new TimeSimulation();
+        private TimeSimulation SimModel = new();
 
         /// <summary>
         /// PID Controller Tracking Monitoring the X Position of the <see cref="Ball"/>
         /// </summary>
-        private PIDController XController = new PIDController(3, 1, 1, -0.5, 30);
+        private PIDController XController = new(3, 1, 1, -0.5, 30);
 
         /// <summary>
         /// PID Controller Tracking Monitoring the Y Position of the <see cref="Ball"/>
         /// </summary>
-        public PIDController YController = new PIDController(-3, 1, 1, -0.5, 30);
+        public PIDController YController = new(-3, 1, 1, -0.5, 30);
 
 
         /// <summary>
         /// RelayCommand for <see cref="ToggleSimulation"/>
         /// </summary>
-        public ICommand ToggleSimulationCommand { get; set; }
+        public ICommand? ToggleSimulationCommand { get; set; }
 
         /// <summary>
         /// RelayCommand for <see cref="ResetSimulation"/>
         /// </summary>
-        public ICommand ResetSimulationCommand { get; set; }
+        public ICommand? ResetSimulationCommand { get; set; }
 
         /// <summary>
         /// Default constructor
         /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public MainVM()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             InitializeModels();
 
@@ -99,7 +100,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         {
             if (SimulationRunning)
             {
-                SimModel.Stop();               
+                SimModel.Stop();
             }
             else
             {
@@ -107,7 +108,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
             }
 
             Hexapod.TopPlatform.SetSimulationState(SimulationRunning);
-            OnPropertyChanged("SimulationRunning");
+            OnPropertyChanged(nameof(SimulationRunning));
         }
 
         /// <summary>
@@ -119,15 +120,15 @@ namespace Hexapod_Simulator.Helix.ViewModels
             if(Hexapod is null)
                 Hexapod = new HexapodVM(new Hexapod(15, 12, 8, 30, 5));
             else
-                Hexapod.TopPlatform.ResetPositionCommand.Execute(null);
+                Hexapod?.TopPlatform?.ResetPositionCommand?.Execute(null);
              
             //setup ball
-            Ball = new BallVM(new Ball_Local_Test(0.0025, 9800, new double[] { 0, 0, 0 }));
+            Ball = new BallVM(new BallModelLocal(0.0025, 9800, [0, 0, 0]));
 
             //setup simulation model
             SimModel = new TimeSimulation();
-            SimModel.SimulationDoWorkRequest += this.SimulationTimeStepDoWork;
-            SimModel.RunFreqUpdated += this.SimulationFrequencyReported;
+            SimModel.SimulationDoWorkRequest += SimulationTimeStepDoWork;
+            SimModel.RunFreqUpdated += SimulationFrequencyReported;
 
             //Setup PID Controllers
             XController = new PIDController(3, 1, 1, -0.5, 30);
@@ -139,31 +140,31 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         /// <param name="sender">The simulation model object</param>
         /// <param name="e">Simulation eventArgs</param>
-        private void SimulationTimeStepDoWork(object sender, TimeSimulationStepEventArgs e)
+        private void SimulationTimeStepDoWork(object? sender, TimeSimulationStepEventArgs e)
         {
             //------------ Do Calculations -------------------------
 
             //Calculate the ball XY accel/velocity/position
             Ball.BallModel.CalculateTimeStep(e.TimeIncrement, Hexapod.TopPlatform.PlatformModel.NormalVector);
 
-            //Calculate the latest position of the top platform      
+            //Calculate the latest position of the top platform
             Hexapod.TopPlatform.PlatformModel.CalculateTimeStep(e.TimeIncrement);
 
             //Update the ball servo target positions to the center of the platform
             XController.SetTarget(Hexapod.TopPlatform.PlatformModel.Position[0]);
             YController.SetTarget(Hexapod.TopPlatform.PlatformModel.Position[1]);
 
-            //Update the Z coordinate of the ball based on it's XY position and the platform's tilt 
+            //Update the Z coordinate of the ball based on it's XY position and the platform's tilt
             var coords = Ball.BallModel.Position;
             coords[2] = Ball.Radius; //Z offset relative to the platform should be the ball's radius
             Ball.BallModel.UpdateGlobalCoords(Hexapod.TopPlatform.PlatformModel.CalcGlobalCoord(coords));
 
             //If the servo is active, rotate the platform to try and center the ball
             if (ServoActive)
-                Hexapod.TopPlatform.PlatformModel.RotateAbs(new double[] { XController.CalcOutput(Ball.BallModel.Position[0], e.TimeIncrement), YController.CalcOutput(Ball.BallModel.Position[1], e.TimeIncrement), 0 });
+                Hexapod.TopPlatform.PlatformModel.RotateAbs([XController.CalculateOutput(Ball.BallModel.Position[0], e.TimeIncrement), YController.CalculateOutput(Ball.BallModel.Position[1], e.TimeIncrement), 0]);
 
             //------------ Cleanup -------------------------
-            e.WorkDoneCallback.Set(); //allow simulation to proceed
+            e.WorkDoneCallback.Set(); // Allow simulation to proceed
         }
         
         /// <summary>
@@ -171,7 +172,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SimulationFrequencyReported(object sender, int e)
+        private void SimulationFrequencyReported(object? sender, int e)
         {
             SimulationFPS = e;
         }

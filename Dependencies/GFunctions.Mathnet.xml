@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GFunctions.Mathnet</name>
+    </assembly>
+    <members>
+        <member name="T:GFunctions.Mathnet.KinematicMath">
+            <summary>
+            Contains various calculation methods for kinematics
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathnet.KinematicMath.RotationMatrixFromPRY(System.Double[])">
+            <summary>
+            Gets a rotation matrix from pitch roll yaw angles
+            </summary>
+            <param name="rotation">Pitch, roll, yaw in degrees</param>
+            <returns>Equivalent rotation matrix</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.KinematicMath.VectorLength(System.Double[],System.Double[])">
+            <summary>
+            Gets the length between two Nd vectors of the same order
+            </summary>
+            <param name="pos1">Position 1 (x,y,....)</param>
+            <param name="pos2">Position 2 (x,y,....)</param>
+            <returns>Distance between the two positions</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.KinematicMath.RotateVector(System.Double[],System.Double[])">
+            <summary>
+            Rotates a vector by the given pitch roll yaw angles
+            </summary>
+            <param name="vector">The vector to rotate (x,y,z)</param>
+            <param name="rotationPRY">Pitch, roll, yaw rotation in degrees</param>
+            <returns>The rotated vector (x,y,z)</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.KinematicMath.CalcGlobalCoord(System.Double[],System.Double[],System.Double[],System.Double[])">
+            <summary>
+            Calculates a coordinates with the applied translations and rotation
+            </summary>
+            <param name="localCoord">The local coordinate (x,y,z)</param>
+            <param name="trans1">First translation distance (x,y,z)</param>
+            <param name="trans2">Second translation distance (x,y,z)</param>
+            <param name="rotation">Pitch, roll, yaw rotation in degrees</param>
+            <returns>Transformed coordinates (x,y,z)</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.KinematicMath.CalcGlobalCoord2(System.Double[],System.Double[],System.Double[],System.Double[],System.Double[])">
+            <summary>
+            Calculates a coordinates with the applied translations and rotation
+            </summary>
+            <param name="localCoord">The local coordinate (x,y,z)</param>
+            <param name="trans1">Translation distance (x,y,z) before rotation</param>
+            <param name="trans2">Translation distance (x,y,z) after rotation</param>
+            <param name="rotation">Pitch, roll, yaw rotation in degrees</param>
+            <param name="relativeRotCenter">Coordinates of the rotation center (x,y,z) relative to the local coordinate</param>
+            <returns>Transformed coordinates (x,y,z)</returns>
+        </member>
+    </members>
+</doc>

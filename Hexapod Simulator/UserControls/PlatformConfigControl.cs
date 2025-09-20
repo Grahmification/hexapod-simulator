@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Hexapod_Simulator.SimObject;
-using GFunctions.Winforms.Controls;
+using GFunctions.Winforms.Input;
 using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.UserControls
@@ -10,7 +10,7 @@ namespace Hexapod_Simulator.UserControls
     public partial class PlatformConfigControl : UserControl
     {
         private List<NumericalInputTextBox> Txts = new List<NumericalInputTextBox>();
-        private IPlatform platform;
+        private IPlatform? platform;
         
         
         public PlatformConfigControl()
@@ -36,7 +36,7 @@ namespace Hexapod_Simulator.UserControls
                     Txts.Add((NumericalInputTextBox)cont);              
             }
         }
-        private void button_apply_Click(object sender, EventArgs e)
+        private void button_apply_Click(object? sender, EventArgs e)
         {
             foreach (NumericalInputTextBox txt in Txts) //make sure all textboxes are valid
             {
@@ -48,7 +48,7 @@ namespace Hexapod_Simulator.UserControls
             double angle = numericalInputTextBox_jointAngle.Value;
             double[] defaultPos = new double[] { numericalInputTextBox_posX.Value, numericalInputTextBox_posY.Value, numericalInputTextBox_posZ.Value };
 
-            platform.UpdateConfig(rad, angle, defaultPos);
+            platform?.UpdateConfig(rad, angle, defaultPos);
         }
     }
 }

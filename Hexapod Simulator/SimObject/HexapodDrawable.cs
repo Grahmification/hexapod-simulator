@@ -1,5 +1,4 @@
-﻿using System;
-using GFunctions.OpenTK;
+﻿using GFunctions.OpenTK;
 using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.SimObject
@@ -38,7 +37,7 @@ namespace Hexapod_Simulator.SimObject
         }
         protected override IActuator InitializeRotaryActuator(double[] position, double[] linkEndPosition, int index, double jointAngle, double armRadius, double linkLength)
         {
-            double motorAngle = RotaryActuator.calcMotorOffsetAngle(index, 0, Platform.CalcJointOffsetAngle(index, jointAngle));
+            double motorAngle = RotaryActuator.CalcMotorOffsetAngle(index, 0, Platform.CalcJointOffsetAngle(index, jointAngle));
             return new RotaryActuatorDrawable(armRadius, motorAngle, linkLength, position, linkEndPosition);
         }
     }

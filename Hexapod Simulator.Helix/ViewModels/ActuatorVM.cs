@@ -1,5 +1,4 @@
 ﻿using Hexapod_Simulator.Shared;
-using System;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {
@@ -19,7 +18,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// Coordinates of actuator arm end position, where it attaches to link start [x,y,z]
         /// </summary>
-        public double[] ArmEndPosition { get { return ActuatorModel.ArmEndPosition; } }
+        public double[] ArmEndPosition => ActuatorModel.ArmEndPosition;
         
         /// <summary>
         /// Coordinates where the link attaches to the moving portion of the device [x,y,z]
@@ -32,12 +31,12 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// Indicates whether the actuator is in a valid position
         /// </summary>
-        public bool SolutionValid { get { return ActuatorModel.SolutionValid; } }
+        public bool SolutionValid => ActuatorModel.SolutionValid;
 
         /// <summary>
         /// The current travel position of the actuator
         /// </summary>
-        public double TravelPosition { get { return ActuatorModel.TravelPosition; } }
+        public double TravelPosition => ActuatorModel.TravelPosition;
 
         /// <summary>
         /// The actuator number in the hexapod
@@ -47,23 +46,26 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// What type of actuator the model is
         /// </summary>
-        public ActuatorTypes ActuatorType { get { return ActuatorModel.ActuatorType; } }
-
+        public ActuatorTypes ActuatorType => ActuatorModel.ActuatorType;
 
         /// <summary>
         /// The model class for the VM - can be either a linear or rotary actuator
         /// </summary>
         private IActuator ActuatorModel { get; set; }
 
-
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public ActuatorVM(IActuator actuatorModel, int actuatorNumber)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             ActuatorNumber = actuatorNumber;
             UpdateModel(actuatorModel);
         }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public ActuatorVM()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            UpdateModel(new LinearActuator(10, 5, new double[] { 0, 0, 0 }, new double[] { 5, 5, 5 }));          
+            UpdateModel(new LinearActuator(10, 5, [0, 0, 0], [ 5, 5, 5]));
         }
 
         /// <summary>
@@ -73,8 +75,8 @@ namespace Hexapod_Simulator.Helix.ViewModels
         public void UpdateModel(IActuator actuatorModel)
         {
             ActuatorModel = actuatorModel;
-            ActuatorModel.RedrawRequired += onRedrawRequired;
-            onRedrawRequired(this, new EventArgs());
+            ActuatorModel.RedrawRequired += OnRedrawRequired;
+            OnRedrawRequired(this, new EventArgs());
         }
 
         /// <summary>
@@ -82,14 +84,13 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">Event arguments</param>
-        private void onRedrawRequired(object sender, EventArgs e)
+        private void OnRedrawRequired(object? sender, EventArgs e)
         {
-            OnPropertyChanged("ArmEndPosition");
-            OnPropertyChanged("LinkEndPosition");
-            OnPropertyChanged("Position");
-            OnPropertyChanged("SolutionValid");
-            OnPropertyChanged("TravelPosition");
+            OnPropertyChanged(nameof(ArmEndPosition));
+            OnPropertyChanged(nameof(LinkEndPosition));
+            OnPropertyChanged(nameof(Position));
+            OnPropertyChanged(nameof(SolutionValid));
+            OnPropertyChanged(nameof(TravelPosition));
         }
-
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using GFunctions.Mathematics;
+﻿using GFunctions.Mathematics;
 using GFunctions.Timing;
 using GFunctions.OpenTK;
 using Hexapod_Simulator.SimObject;
@@ -11,9 +8,9 @@ namespace Hexapod_Simulator
 {
     public partial class Mainform : Form
     {
-        public GLControlDraggable GLCont;
-        public HexapodDrawable Hexa;
-        
+        public GLControlDraggable? GLCont;
+        public HexapodDrawable Hexa = new HexapodDrawable(30, 30, 10, 30, 5);
+
         public IBall BTest;
         public TimeSimulation Sim = new TimeSimulation();
         public TimeSimulation TrajSim = new TimeSimulation();
@@ -28,17 +25,13 @@ namespace Hexapod_Simulator
         public Mainform()
         {
             InitializeComponent();
+
+            //BTest = new BallModelDrawable(0.1, 9800, Hexa.Top.Position);
+            BTest = new BallModelLocalDrawable(0.1, 9800, new double[] { 0, 0, 0 });
         }
 
-        private void Mainform_Load(object sender, EventArgs e)
+        private void Mainform_Load(object? sender, EventArgs e)
         {
-            
-            
-            Hexa = new HexapodDrawable(30, 30, 10, 30, 5);
-            //BTest = new Ball_Test(0.1, 9800, Hexa.Top.Position);
-            BTest = new Ball_Local_TestDrawable(0.1, 9800, new double[]{0,0,0});
-            
-
             GLCont = new GLControlDraggable(glControl_main);
 
             GLCont.DrawnObjects.Add(Hexa);
@@ -69,7 +62,7 @@ namespace Hexapod_Simulator
         }
         private void Mainform_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GLCont.Dispose(); 
+            GLCont?.Dispose(); 
             
             if (Sim.Running)
                 Sim.Stop();
@@ -77,70 +70,82 @@ namespace Hexapod_Simulator
 
         //-------------- Events to Set Controls ------------------
 
-        private void RefreshView(object sender, EventArgs e)
+        private void RefreshView(object? sender, EventArgs e)
         {
-            GLCont.Refresh();
+            GLCont?.Refresh();
         }
-        private void TopPosChanged(object sender, EventArgs e)
+        private void TopPosChanged(object? sender, EventArgs e)
         {
-            IPlatform plat = (IPlatform)sender;
-
-            control_CurrentPos1.SetPosition(plat.Translation);
-            control_CurrentPos1.SetRotation(plat.Rotation);
-
-
-            XController.SetTarget(plat.Position[0]);
-            YController.SetTarget(plat.Position[1]);
-        }
-        private void ServosCalculated(object sender, EventArgs e)
-        {
-            HexapodDrawable hex = (HexapodDrawable)sender;
-
-            for (int i = 0; i < hex.Actuators.Length; i++)
+            if (sender is not null)
             {
-                control_ServoPos1.SetAngle(i, hex.Actuators[i].TravelPosition, hex.Actuators[i].SolutionValid);
+                IPlatform plat = (IPlatform)sender;
+
+                control_CurrentPos1.SetPosition(plat.Translation);
+                control_CurrentPos1.SetRotation(plat.Rotation);
+
+
+                XController.SetTarget(plat.Position[0]);
+                YController.SetTarget(plat.Position[1]);
+            }
+        }
+        private void ServosCalculated(object? sender, EventArgs e)
+        {
+            if (sender is not null)
+            {
+                HexapodDrawable hex = (HexapodDrawable)sender;
+
+                for (int i = 0; i < hex.Actuators.Length; i++)
+                {
+                    control_ServoPos1.SetAngle(i, hex.Actuators[i].TravelPosition, hex.Actuators[i].SolutionValid);
+                }
             }
         }
 
         //-------------- Controls Updating ------------------
 
-        private void ManualDragControlPosChange(object sender, EventArgs e)
+        private void ManualDragControlPosChange(object? sender, EventArgs e)
         {
             Hexa.Top.TranslateAbs(control_ManualDrag_main.Position);
         }
-        private void ManualDragControlRotChange(object sender, EventArgs e)
+        private void ManualDragControlRotChange(object? sender, EventArgs e)
         {          
             Hexa.Top.RotateAbs(control_ManualDrag_main.Rotation);      
         }
 
         //-------------- Ball Balancing Simulation ------------------
 
-        private void toolStripButton_toggleSimulation_Click(object sender, EventArgs e)
+        private void toolStripButton_toggleSimulation_Click(object? sender, EventArgs e)
         {
-            ToolStripButton Btn = (ToolStripButton)sender;
-            
-            if (Sim.Running)
+            if (sender != null)
             {
-                Sim.Stop();
-                Btn.Text = "Start Simulation";
+                ToolStripButton Btn = (ToolStripButton)sender;
 
-                Hexa.Top.TranslationMode = TranslationModes.Instant;
-            }
-            else
-            {
-                Sim.Start(Convert.ToDouble(toolStripTextBox_simInterval.Text));
-                Btn.Text = "Stop Simulation";
+                if (Sim.Running)
+                {
+                    Sim.Stop();
+                    Btn.Text = "Start Simulation";
 
-                Hexa.Top.TranslationMode = TranslationModes.Servo;
+                    Hexa.Top.TranslationMode = TranslationModes.Instant;
+                }
+                else
+                {
+                    Sim.Start(Convert.ToDouble(toolStripTextBox_simInterval.Text));
+                    Btn.Text = "Stop Simulation";
+
+                    Hexa.Top.TranslationMode = TranslationModes.Servo;
+                }
             }
         }
-        private void toolStripButton_servoActive_CheckStateChanged(object sender, EventArgs e)
+        private void toolStripButton_servoActive_CheckStateChanged(object? sender, EventArgs e)
         {
-            ToolStripButton Btn = (ToolStripButton)sender;
-            servoActive = Btn.Checked; 
+            if (sender != null)
+            {
+                ToolStripButton Btn = (ToolStripButton)sender;
+                servoActive = Btn.Checked;
+            }
         }
 
-        private void SimulationTimeStepDoWork(object sender, TimeSimulationStepEventArgs e)
+        private void SimulationTimeStepDoWork(object? sender, TimeSimulationStepEventArgs e)
         {
             //------------ Do Calculations -------------------------
             
@@ -153,17 +158,17 @@ namespace Hexapod_Simulator
             BTest.UpdateGlobalCoords(Hexa.Top.CalcGlobalCoord(coords));
 
             if(servoActive)
-                Hexa.Top.RotateAbs(new double[] { XController.CalcOutput(BTest.Position[0], e.TimeIncrement), YController.CalcOutput(BTest.Position[1], e.TimeIncrement), 0 });
+                Hexa.Top.RotateAbs(new double[] { XController.CalculateOutput(BTest.Position[0], e.TimeIncrement), YController.CalculateOutput(BTest.Position[1], e.TimeIncrement), 0 });
 
             //------------ Draw Screen -------------------------
             
-            GLCont.Refresh(); //needs to occur in foreground thread
+            GLCont?.Refresh(); //needs to occur in foreground thread
 
             //------------ Cleanup -------------------------
 
             e.WorkDoneCallback.Set(); //allow simulation to proceed
         }
-        private void SimulationFrequencyReported(object sender, int e)
+        private void SimulationFrequencyReported(object? sender, int e)
         {
             toolStripStatusLabel_simFreq.Text = "FPS: " + e.ToString();
         }
@@ -175,7 +180,7 @@ namespace Hexapod_Simulator
         private List<double[]> TrajPosPoints = new List<double[]>(); //contains all calculated trajectory XYZ coordinates from start to end
         private List<double[]> TrajRotPoints = new List<double[]>(); //contains all calculated trajectory PRY rotation coordinates from start to end
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void toolStripButton1_Click(object? sender, EventArgs e)
         {
             int simSpeed = 30; //30 updates/second
 
@@ -211,7 +216,7 @@ namespace Hexapod_Simulator
                 TrajSim.Start(Convert.ToDouble(1.0 / simSpeed));
             }
         }
-        private void TrajSimulationTimeStepDoWork(object sender, TimeSimulationStepEventArgs e)
+        private void TrajSimulationTimeStepDoWork(object? sender, TimeSimulationStepEventArgs e)
         {
             //------------ Do Calculations -------------------------
 
@@ -227,13 +232,13 @@ namespace Hexapod_Simulator
 
             //------------ Draw Screen -------------------------
 
-            GLCont.Refresh(); //needs to occur in foreground thread
+            GLCont?.Refresh(); //needs to occur in foreground thread
 
             //------------ Cleanup -------------------------
 
             e.WorkDoneCallback.Set(); //allow simulation to proceed
         }
-        private void numericalInputTextBox1_TextChanged(object sender, EventArgs e)
+        private void numericalInputTextBox1_TextChanged(object? sender, EventArgs e)
         {
 
         }

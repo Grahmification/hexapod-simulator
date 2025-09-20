@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {
@@ -13,7 +12,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// The event that's fired when CanExecute value has changed
         /// </summary>
-        public event EventHandler CanExecuteChanged = (sender,e) =>{ };
+        public event EventHandler? CanExecuteChanged = (sender,e) =>{ };
 
         public RelayCommand(Action action)
         {
@@ -26,7 +25,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object? parameter)
         {
             return true;
         }
@@ -35,7 +34,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// Runs the action
         /// </summary>
         /// <param name="parameter"></param>
-        public void Execute(object parameter)
+        public void Execute(object? parameter)
         {
             mAction(); 
         }

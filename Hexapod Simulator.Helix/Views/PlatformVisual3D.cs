@@ -3,7 +3,6 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using System.Windows;
 using Hexapod_Simulator.Shared;
-using System.Threading;
 
 namespace Hexapod_Simulator.Helix.Views
 {

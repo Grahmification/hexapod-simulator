@@ -1,6 +1,5 @@
-﻿using Hexapod_Simulator.Shared;
-using System;
-using System.Windows.Media.Media3D;
+﻿using System.Windows.Media.Media3D;
+using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {
@@ -12,30 +11,34 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// The absolute transformation of the ball
         /// </summary>
-        public Transform3D Transform { get { return new TranslateTransform3D(BallModel.Position[0], BallModel.Position[1], BallModel.Position[2]); } }
+        public Transform3D Transform => new TranslateTransform3D(BallModel.Position[0], BallModel.Position[1], BallModel.Position[2]);
 
         /// <summary>
         /// The radius of the ball in [mm]
         /// </summary>
-        public double Radius { get { return BallModel.Radius*1000; } }
+        public double Radius => BallModel.Radius*1000;
 
         /// <summary>
         /// the model class for this VM
         /// </summary>
-        public IBall BallModel { get; private set; } 
+        public IBall BallModel { get; private set; }
 
         /// <summary>
         /// default constructor
         /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public BallVM()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            InitializeModel(new Ball_Local_Test(0.005, 9800, new double[] { 0, 0, 0 }));
+            InitializeModel(new BallModelLocal(0.005, 9800, new double[] { 0, 0, 0 }));
         }
 
         /// <summary>
         /// Allows setting a predefined ball model
         /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public BallVM(IBall ballModel)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             InitializeModel(ballModel);
         }
@@ -47,7 +50,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         private void InitializeModel(IBall ballModel)
         {
             BallModel = ballModel;
-            BallModel.RedrawRequired += onRedrawRequired;
+            BallModel.RedrawRequired += OnRedrawRequired;
         }
 
         /// <summary>
@@ -55,9 +58,9 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// </summary>
         /// <param name="sender">the sender</param>
         /// <param name="e">Event args</param>
-        private void onRedrawRequired(object sender, EventArgs e)
+        private void OnRedrawRequired(object? sender, EventArgs e)
         {
-            OnPropertyChanged("Transform");
+            OnPropertyChanged(nameof(Transform));
         }
     }
 }

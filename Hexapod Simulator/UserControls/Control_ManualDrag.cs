@@ -58,8 +58,8 @@ namespace Hexapod_Simulator.UserControls
         }
 
 
-        public event EventHandler PositionChanged;
-        public event EventHandler RotationChanged;
+        public event EventHandler? PositionChanged;
+        public event EventHandler? RotationChanged;
    
         public Control_ManualDrag()
         {
@@ -82,7 +82,7 @@ namespace Hexapod_Simulator.UserControls
 
 
 
-        private void trackBar_pos_Scroll(object sender, EventArgs e)
+        private void trackBar_pos_Scroll(object? sender, EventArgs e)
         {
             if (this.ignoreDrag == false)
             {
@@ -94,7 +94,7 @@ namespace Hexapod_Simulator.UserControls
             
             
         }
-        private void trackBar_rotate_Scroll(object sender, EventArgs e)
+        private void trackBar_rotate_Scroll(object? sender, EventArgs e)
         {
             if (this.ignoreDrag == false)
             {

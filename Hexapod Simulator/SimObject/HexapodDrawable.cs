@@ -1,4 +1,5 @@
-﻿using GFunctions.OpenTK;
+﻿using GFunctions.Mathnet;
+using GFunctions.OpenTK;
 using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.SimObject
@@ -29,13 +30,13 @@ namespace Hexapod_Simulator.SimObject
         }
         protected override IPlatform InitializeTop(double defaultHeight, double TopRad, double TopAngle)
         {
-            return new PlatformDrawable("Top", TopRad, TopAngle, new double[] { 0, 0, defaultHeight });
+            return new PlatformDrawable("Top", TopRad, TopAngle, new(0, 0, defaultHeight));
         }
-        protected override IActuator InitializeLinearActuator(double[] position, double[] linkEndPosition, double maxTravel, double linkLength)
+        protected override IActuator InitializeLinearActuator(Vector3 position, Vector3 linkEndPosition, double maxTravel, double linkLength)
         {
             return new LinearActuatorDrawable(maxTravel, linkLength, position, linkEndPosition);
         }
-        protected override IActuator InitializeRotaryActuator(double[] position, double[] linkEndPosition, int index, double jointAngle, double armRadius, double linkLength)
+        protected override IActuator InitializeRotaryActuator(Vector3 position, Vector3 linkEndPosition, int index, double jointAngle, double armRadius, double linkLength)
         {
             double motorAngle = RotaryActuator.CalcMotorOffsetAngle(index, 0, Platform.CalcJointOffsetAngle(index, jointAngle));
             return new RotaryActuatorDrawable(armRadius, motorAngle, linkLength, position, linkEndPosition);

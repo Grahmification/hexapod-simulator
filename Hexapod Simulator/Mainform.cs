@@ -9,14 +9,14 @@ namespace Hexapod_Simulator
     public partial class Mainform : Form
     {
         public GLControlDraggable? GLCont;
-        public HexapodDrawable Hexa = new HexapodDrawable(30, 30, 10, 30, 5);
+        public HexapodDrawable Hexa = new(30, 30, 10, 30, 5);
 
         public IBall BTest;
-        public TimeSimulation Sim = new TimeSimulation();
-        public TimeSimulation TrajSim = new TimeSimulation();
+        public TimeSimulation Sim = new();
+        public TimeSimulation TrajSim = new();
 
-        public PIDController XController = new PIDController(3, 1, 1, -0.5, 30);
-        public PIDController YController = new PIDController(-3, 1, 1, -0.5, 30);
+        public PIDController XController = new PIDController(1, 1, -0.5, 30) { Gain = 3 };
+        public PIDController YController = new PIDController(1, 1, -0.5, 30) { Gain = -3 };
 
         private bool servoActive = false;
 
@@ -27,7 +27,7 @@ namespace Hexapod_Simulator
             InitializeComponent();
 
             //BTest = new BallModelDrawable(0.1, 9800, Hexa.Top.Position);
-            BTest = new BallModelLocalDrawable(0.1, 9800, new double[] { 0, 0, 0 });
+            BTest = new BallModelLocalDrawable(0.1, 9800, new(0, 0, 0 ));
         }
 
         private void Mainform_Load(object? sender, EventArgs e)
@@ -55,7 +55,7 @@ namespace Hexapod_Simulator
 
 
             Sim.SimulationDoWorkRequest += this.SimulationTimeStepDoWork;
-            Sim.RunFreqUpdated += this.SimulationFrequencyReported;
+            Sim.RunFrequencyUpdated += this.SimulationFrequencyReported;
 
 
             TrajSim.SimulationDoWorkRequest += this.TrajSimulationTimeStepDoWork;
@@ -84,8 +84,8 @@ namespace Hexapod_Simulator
                 control_CurrentPos1.SetRotation(plat.Rotation);
 
 
-                XController.SetTarget(plat.Position[0]);
-                YController.SetTarget(plat.Position[1]);
+                XController.SetTarget(plat.Position.X);
+                YController.SetTarget(plat.Position.Y);
             }
         }
         private void ServosCalculated(object? sender, EventArgs e)
@@ -154,11 +154,11 @@ namespace Hexapod_Simulator
 
             //Update the Z coordinate of the ball based on it's XY position and the platform's tilt 
             var coords = BTest.Position;
-            coords[2] = BTest.Radius; //Z offset relative to the platform should be the ball's radius
+            coords.Z = BTest.Radius; //Z offset relative to the platform should be the ball's radius
             BTest.UpdateGlobalCoords(Hexa.Top.CalcGlobalCoord(coords));
 
             if(servoActive)
-                Hexa.Top.RotateAbs(new double[] { XController.CalculateOutput(BTest.Position[0], e.TimeIncrement), YController.CalculateOutput(BTest.Position[1], e.TimeIncrement), 0 });
+                Hexa.Top.RotateAbs(new(XController.CalculateOutput(BTest.Position.X, e.TimeIncrement), YController.CalculateOutput(BTest.Position.Y, e.TimeIncrement), 0));
 
             //------------ Draw Screen -------------------------
             
@@ -166,7 +166,7 @@ namespace Hexapod_Simulator
 
             //------------ Cleanup -------------------------
 
-            e.WorkDoneCallback.Set(); //allow simulation to proceed
+            e.FlagWorkDone(); // Allow simulation to proceed
         }
         private void SimulationFrequencyReported(object? sender, int e)
         {
@@ -220,8 +220,8 @@ namespace Hexapod_Simulator
         {
             //------------ Do Calculations -------------------------
 
-            Hexa.Top.TranslateAbs(TrajPosPoints[counter]);
-            Hexa.Top.RotateAbs(TrajRotPoints[counter]);
+            Hexa.Top.TranslateAbs(new(TrajPosPoints[counter]));
+            Hexa.Top.RotateAbs(new(TrajRotPoints[counter]));
 
             counter += 1;
 
@@ -236,7 +236,7 @@ namespace Hexapod_Simulator
 
             //------------ Cleanup -------------------------
 
-            e.WorkDoneCallback.Set(); //allow simulation to proceed
+            e.FlagWorkDone(); // Allow simulation to proceed
         }
         private void numericalInputTextBox1_TextChanged(object? sender, EventArgs e)
         {

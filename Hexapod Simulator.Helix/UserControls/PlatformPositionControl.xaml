@@ -35,13 +35,13 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBox Grid.Row="0" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Position[0], StringFormat=\{0:N3\}}" Tag="X [mm]:"/>
-                <TextBox Grid.Row="1" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Position[1], StringFormat=\{0:N3\}}" Tag="Y [mm]:"/>
-                <TextBox Grid.Row="2" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Position[2], StringFormat=\{0:N3\}}" Tag="Z [mm]:"/>
+                <TextBox Grid.Row="0" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Position.X, StringFormat=\{0:N3\}}" Tag="X [mm]:"/>
+                <TextBox Grid.Row="1" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Position.Y, StringFormat=\{0:N3\}}" Tag="Y [mm]:"/>
+                <TextBox Grid.Row="2" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Position.Z, StringFormat=\{0:N3\}}" Tag="Z [mm]:"/>
 
-                <TextBox Grid.Row="4" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Rotation[0], StringFormat=\{0:N3\}}" Tag="Pitch [deg]:"/>
-                <TextBox Grid.Row="5" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Rotation[1], StringFormat=\{0:N3\}}" Tag="Roll [deg]:"/>
-                <TextBox Grid.Row="6" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Rotation[2], StringFormat=\{0:N3\}}" Tag="Yaw [deg]:"/>
+                <TextBox Grid.Row="4" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Rotation.Pitch, StringFormat=\{0:N3\}}" Tag="Pitch [deg]:"/>
+                <TextBox Grid.Row="5" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Rotation.Roll, StringFormat=\{0:N3\}}" Tag="Roll [deg]:"/>
+                <TextBox Grid.Row="6" Style="{StaticResource PositionDisplayTextBox}" Text="{Binding Rotation.Yaw, StringFormat=\{0:N3\}}" Tag="Yaw [deg]:"/>
                 
             </Grid>
         </Grid>

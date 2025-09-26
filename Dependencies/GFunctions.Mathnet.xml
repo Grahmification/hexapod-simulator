@@ -4,6 +4,88 @@
         <name>GFunctions.Mathnet</name>
     </assembly>
     <members>
+        <member name="T:GFunctions.Mathnet.FFT">
+            <summary>
+            Class for working with fast fourier transforms
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathnet.FFT.SamplingFrequencyAverage(System.Double[])">
+            <summary>
+            Calculates the average sampling frequency based on start/end times
+            </summary>
+            <param name="timeData">The time data, from earliest to latest</param>
+            <returns>The average sampling frequency</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.FFT.MaxFrequency(System.Double)">
+            <summary>
+            Calculates the max frequency the FFT can compute
+            </summary>
+            <param name="samplingRate">The data sampling rate [Hz]</param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.FFT.MinFrequency(System.Double,System.Int32)">
+            <summary>
+            Calculates the min frequency the FFT can compute
+            </summary>
+            <param name="samplingRate">The data sampling rate [Hz]</param>
+            <param name="length">The dataset length</param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.FFT.CalculateFrequencies(System.Int32,System.Double)">
+            <summary>
+            Calculate the frequencies in an FFT dataset
+            </summary>
+            <param name="n">The number of samples</param>
+            <param name="samplingRate">The sampling frequency in HZ</param>
+            <returns>The corresponding FFT frequencies for the dataset</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.FFT.CalculatePSD(System.Double[],MathNet.Numerics.Complex32[],System.Nullable{System.Double})">
+            <summary>
+            Calculate the Power Spectral Density (PSD)
+            </summary>
+            <param name="frequencies">The FFT frequencies [Hz]</param>
+            <param name="FFTData">The raw FFT output data</param>
+            <param name="frequencyCutoff">Optional frequency limit to remove values below</param>
+            <returns>The power spectral density [Frequencies, Magnitudes]</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.FFT.ComputeFFT(System.Double[])">
+            <summary>
+            Computes the FFT and calculates the power spectral 
+            </summary>
+            <param name="inputData">The data [times, values]</param>
+            <returns>The complex FFT</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.FFT.ComputeComponents(System.Double[],System.Double)">
+            <summary>
+            Performs the FFT, calculating all signalcomponents of the data
+            </summary>
+            <param name="inputData">The data to perform the fft on</param>
+            <param name="samplingRate">The data sampling rate [Hz]</param>
+            <returns>All signal components for the FFT of the dataset</returns>
+            <exception cref="T:System.ArgumentException">The data was an invalid length</exception>
+        </member>
+        <member name="M:GFunctions.Mathnet.FFT.IsPowerOfTwo(System.Int32)">
+            <summary>
+            Returns whether the number is a power of two
+            </summary>
+            <param name="x">The number</param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.FFT.PowersOfTwo(System.Int32,System.Int32)">
+            <summary>
+            Gets all values that are powers of two between a maximum and minimum
+            </summary>
+            <param name="max">The maximum value (inclusive).</param>
+            <param name="min">The minimum value (inclusive).</param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.FFT.GenerateTestSignal(System.Int32)">
+            <summary>
+            Generates a random signal for testing based on a sine wave and noise
+            </summary>
+            <param name="points">The number of points to generate</param>
+            <returns>A list of values to input into an FFT</returns>
+        </member>
         <member name="T:GFunctions.Mathnet.KinematicMath">
             <summary>
             Contains various calculation methods for kinematics
@@ -24,15 +106,15 @@
             <param name="pos2">Position 2 (x,y,....)</param>
             <returns>Distance between the two positions</returns>
         </member>
-        <member name="M:GFunctions.Mathnet.KinematicMath.RotateVector(System.Double[],System.Double[])">
+        <member name="M:GFunctions.Mathnet.KinematicMath.RotateVector(GFunctions.Mathnet.Vector3,GFunctions.Mathnet.RotationPRY)">
             <summary>
             Rotates a vector by the given pitch roll yaw angles
             </summary>
-            <param name="vector">The vector to rotate (x,y,z)</param>
+            <param name="vector">The vector to rotate</param>
             <param name="rotationPRY">Pitch, roll, yaw rotation in degrees</param>
             <returns>The rotated vector (x,y,z)</returns>
         </member>
-        <member name="M:GFunctions.Mathnet.KinematicMath.CalcGlobalCoord(System.Double[],System.Double[],System.Double[],System.Double[])">
+        <member name="M:GFunctions.Mathnet.KinematicMath.CalcGlobalCoord(GFunctions.Mathnet.Vector3,GFunctions.Mathnet.Vector3,GFunctions.Mathnet.Vector3,GFunctions.Mathnet.RotationPRY)">
             <summary>
             Calculates a coordinates with the applied translations and rotation
             </summary>
@@ -42,7 +124,7 @@
             <param name="rotation">Pitch, roll, yaw rotation in degrees</param>
             <returns>Transformed coordinates (x,y,z)</returns>
         </member>
-        <member name="M:GFunctions.Mathnet.KinematicMath.CalcGlobalCoord2(System.Double[],System.Double[],System.Double[],System.Double[],System.Double[])">
+        <member name="M:GFunctions.Mathnet.KinematicMath.CalcGlobalCoord2(GFunctions.Mathnet.Vector3,GFunctions.Mathnet.Vector3,GFunctions.Mathnet.Vector3,GFunctions.Mathnet.RotationPRY,GFunctions.Mathnet.Vector3)">
             <summary>
             Calculates a coordinates with the applied translations and rotation
             </summary>
@@ -52,6 +134,357 @@
             <param name="rotation">Pitch, roll, yaw rotation in degrees</param>
             <param name="relativeRotCenter">Coordinates of the rotation center (x,y,z) relative to the local coordinate</param>
             <returns>Transformed coordinates (x,y,z)</returns>
+        </member>
+        <member name="T:GFunctions.Mathnet.RotationPRY">
+            <summary>
+            Combined Pitch Roll Yaw Rotation
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.RotationPRY.Pitch">
+            <summary>
+            Pitch angle in degrees
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.RotationPRY.Roll">
+            <summary>
+            Roll angle in degrees
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.RotationPRY.Yaw">
+            <summary>
+            Yaw angle in degrees
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.#ctor">
+            <summary>
+            Initialize to zero
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            Initialize with values
+            </summary>
+            <param name="pitch">Pitch angle in degrees</param>
+            <param name="roll">Roll angle in degrees</param>
+            <param name="yaw">Yaw angle in degrees</param>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.#ctor(System.Double[])">
+            <summary>
+            Initialize from an array
+            </summary>
+            <param name="array">An array of [pitch, roll, yaw] in degrees</param>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.ToRotationMatrix">
+            <summary>
+            Get the equivalent rotation matrix for the rotation
+            </summary>
+            <returns>The rotation matrix</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.Operate(System.Func{System.Double,System.Double})">
+            <summary>
+            Perform an arbitrary operation on all coordinates of the Rotation
+            </summary>
+            <param name="operation">The function to operate on each coordinate in the rotation</param>
+            <returns>A rotation which is the result of the operation on Pitch, Roll, and Yaw</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.ToArray">
+            <summary>
+            Get the array implementation [Pitch, Roll, Yaw]
+            </summary>
+            <returns>The rotation in array form</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.Equals(System.Object)">
+            <summary>
+            Checks if this vector equals another one
+            </summary>
+            <param name="obj">Input object to test</param>
+            <returns>True of the objects are equivalent</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.GetHashCode">
+            <summary>
+            Compute the hash code
+            </summary>
+            <returns>The object hash code</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.op_Addition(GFunctions.Mathnet.RotationPRY,GFunctions.Mathnet.RotationPRY)">
+            <summary>
+            Add two rotations together
+            </summary>
+            <param name="a">Rotation a</param>
+            <param name="b">Rotation b</param>
+            <returns>Sum of the two rotations</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.op_Subtraction(GFunctions.Mathnet.RotationPRY,GFunctions.Mathnet.RotationPRY)">
+            <summary>
+            Subtract two rotations
+            </summary>
+            <param name="a">Rotation a</param>
+            <param name="b">Rotation b</param>
+            <returns>Difference of the two rotations</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.op_Multiply(GFunctions.Mathnet.RotationPRY,System.Double)">
+            <summary>
+            Multiply the rotation by a value
+            </summary>
+            <param name="v">The rotation</param>
+            <param name="scalar">The scalar</param>
+            <returns>The rotation multiplied by the scalar</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.op_Multiply(System.Double,GFunctions.Mathnet.RotationPRY)">
+            <summary>
+            Multiply the rotation by a value
+            </summary>
+            <param name="v">The rotation</param>
+            <param name="scalar">The scalar</param>
+            <returns>The rotation multiplied by the scalar</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.RotationPRY.op_Division(GFunctions.Mathnet.RotationPRY,System.Double)">
+            <summary>
+            Divide a rotation by a value
+            </summary>
+            <param name="v">The rotation</param>
+            <param name="scalar">The scalar</param>
+            <returns>The rotation divided by the scalar</returns>
+        </member>
+        <member name="T:GFunctions.Mathnet.SignalComponent">
+            <summary>
+            Represents an individual sinusoidal signal from the decomposed fft
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.SignalComponent.DCOffset">
+            <summary>
+            Whether this component is the DC offset
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.SignalComponent.Index">
+            <summary>
+            The index of this component in the fft
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.SignalComponent.RealComponent">
+            <summary>
+            The real portion of the signal
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.SignalComponent.ImaginaryComponent">
+            <summary>
+            The imaginary portion of the signal
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.SignalComponent.Frequency">
+            <summary>
+            The signal's frequency
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.SignalComponent.Period">
+            <summary>
+            The signal's period
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.SignalComponent.ContributionFraction">
+            <summary>
+            What fraction of the total fft signal this component contributes to
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.SignalComponent.Magnitude">
+            <summary>
+            The signal's magnitude
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.SignalComponent.MagnitudeDb">
+            <summary>
+            The signal's magnitude in decibels
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.SignalComponent.Phase">
+            <summary>
+            The signal's phase in radians
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathnet.SignalComponent.#ctor(System.Double,System.Double,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Construct from FFT outputs
+            </summary>
+            <param name="freqency">The frequency in hz</param>
+            <param name="real">FFT real component</param>
+            <param name="imaginary">FFT imaginary component</param>
+            <param name="index">Index in the FFT</param>
+            <param name="datasetSize">Number of datapoints used to compute the FFT</param>
+        </member>
+        <member name="M:GFunctions.Mathnet.SignalComponent.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathnet.SignalComponent.GetYValue(System.Double)">
+            <summary>
+            Gets the sinusoidal value of the signal
+            </summary>
+            <param name="xValue">The x axis time value</param>
+            <returns>The sinusoidal Y value of the signal</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.SignalComponent.SetContributionFractions(GFunctions.Mathnet.SignalComponent[])">
+            <summary>
+            Populates the <see cref="P:GFunctions.Mathnet.SignalComponent.ContributionFraction"/> property for a list of SignalComponents
+            </summary>
+            <param name="components">The list of SignalComponents to populate</param>
+        </member>
+        <member name="M:GFunctions.Mathnet.SignalComponent.UnwrapPhases(GFunctions.Mathnet.SignalComponent[])">
+            <summary>
+            Unwraps all phases for a list of signal components so there are no jumps in phase due to arctan limitations
+            </summary>
+            <param name="components">The list of SignalComponents to populate</param>
+        </member>
+        <member name="T:GFunctions.Mathnet.Vector3">
+            <summary>
+            A 3 dimensional (XYZ) vector
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.Vector3.X">
+            <summary>
+            X Component
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.Vector3.Y">
+            <summary>
+            Y Component
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.Vector3.Z">
+            <summary>
+            Z Component
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathnet.Vector3.Magnitude">
+            <summary>
+            Vector length
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.#ctor">
+            <summary>
+            Initialize to zero
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            Initialize with values
+            </summary>
+            <param name="x">X Component</param>
+            <param name="y">Y Component</param>
+            <param name="z">Z Component</param>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.#ctor(System.Double[])">
+            <summary>
+            Initialize from an array
+            </summary>
+            <param name="array">An array of [x, y, z]</param>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.Normalize(System.Double)">
+            <summary>
+            Normalize the vector to a magnitude, while maintaining direction
+            </summary>
+            <param name="newMagnitude">Optional magnitude (defaults to 1)</param>
+            <exception cref="T:System.InvalidOperationException">Can't normalize a vector with zero length</exception>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.GetUnitVector">
+            <summary>
+            Gets the unit vector (length = 1) of this vector
+            </summary>
+            <returns>The unit vector</returns>
+            <exception cref="T:System.InvalidOperationException">Can't normalize a vector with zero length</exception>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.Dot(GFunctions.Mathnet.Vector3)">
+            <summary>
+            Compute the vector dot product
+            </summary>
+            <param name="other">Other vector</param>
+            <returns>Dot product between this vector and the other</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.LengthBetween(GFunctions.Mathnet.Vector3)">
+            <summary>
+            Compute the length between this vector and the other one
+            </summary>
+            <param name="other">Other vector</param>
+            <returns>The distance between this vector and the other</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.ToArray">
+            <summary>
+            Get the array implementation (X, Y, Z)
+            </summary>
+            <returns>The vector in array form</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.ToColumnMatrix">
+            <summary>
+            Get the matrix with values in a single column
+            </summary>
+            <returns>The vector in column maxtrix form</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.Operate(System.Func{System.Double,System.Double})">
+            <summary>
+            Perform an arbitrary operation on all coordinates of the vector
+            </summary>
+            <param name="operation">The function to operate on each coordinate in the vector</param>
+            <returns>A vector which is the result of the operation on X, Y, and Z</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.Equals(System.Object)">
+            <summary>
+            Checks if this vector equals another one
+            </summary>
+            <param name="obj">Input object to test</param>
+            <returns>True of the objects are equivalent</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.GetHashCode">
+            <summary>
+            Compute the hash code
+            </summary>
+            <returns>The object hash code</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.op_Addition(GFunctions.Mathnet.Vector3,GFunctions.Mathnet.Vector3)">
+            <summary>
+            Add two vectors together
+            </summary>
+            <param name="a">Vector a</param>
+            <param name="b">Vector b</param>
+            <returns>Sum of the two vectors</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.op_Subtraction(GFunctions.Mathnet.Vector3,GFunctions.Mathnet.Vector3)">
+            <summary>
+            Subtract two vectors
+            </summary>
+            <param name="a">Vector a</param>
+            <param name="b">Vector b</param>
+            <returns>Difference of the two vectors</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.op_UnaryNegation(GFunctions.Mathnet.Vector3)">
+            <summary>
+            Negate a vector
+            </summary>
+            <param name="v">Input vector</param>
+            <returns>The vector, negated</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.op_Multiply(GFunctions.Mathnet.Vector3,System.Double)">
+            <summary>
+            Multiply a vector by a value
+            </summary>
+            <param name="v">The vector</param>
+            <param name="scalar">The scalar</param>
+            <returns>The vector multiplied by the scalar</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.op_Multiply(System.Double,GFunctions.Mathnet.Vector3)">
+            <summary>
+            Multiply a vector by a value
+            </summary>
+            <param name="v">The vector</param>
+            <param name="scalar">The scalar</param>
+            <returns>The vector multiplied by the scalar</returns>
+        </member>
+        <member name="M:GFunctions.Mathnet.Vector3.op_Division(GFunctions.Mathnet.Vector3,System.Double)">
+            <summary>
+            Divide a vector by a value
+            </summary>
+            <param name="v">The vector</param>
+            <param name="scalar">The scalar</param>
+            <returns>The vector divided by the scalar</returns>
         </member>
     </members>
 </doc>

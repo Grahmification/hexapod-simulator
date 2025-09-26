@@ -1,4 +1,5 @@
-﻿using GFunctions.OpenTK;
+﻿using GFunctions.Mathnet;
+using GFunctions.OpenTK;
 using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.SimObject
@@ -7,14 +8,14 @@ namespace Hexapod_Simulator.SimObject
     {
         public bool IsDrawn { get; set; }
 
-        public BallModelDrawable(double radius, double density, double[] startingPos) : base(radius, density, startingPos)
+        public BallModelDrawable(double radius, double density, Vector3 startingPos) : base(radius, density, startingPos)
         {
             this.IsDrawn = true;
         }
 
         public void Draw()
         {
-            GLObjects.Cube(Color.LightGreen, Position, 5);
+            GLObjects.Cube(Color.LightGreen, Position.ToArray(), 5);
         }
     }
 }

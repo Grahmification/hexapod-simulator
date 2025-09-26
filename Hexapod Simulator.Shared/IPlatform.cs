@@ -1,4 +1,6 @@
-﻿namespace Hexapod_Simulator.Shared
+﻿using GFunctions.Mathnet;
+
+namespace Hexapod_Simulator.Shared
 {
     /// <summary>
     /// Generic definition for the top or bottom platform of a hexapod
@@ -8,12 +10,12 @@
         /// <summary>
         /// XYZ position [mm] of each joint, without translation/rotation 
         /// </summary>
-        double[][] LocalJointCoords { get; }
+        Vector3[] LocalJointCoords { get; }
 
         /// <summary>
         /// XYZ position [mm] of each joint
         /// </summary>
-        double[][] GlobalJointCoords { get; }
+        Vector3[] GlobalJointCoords { get; }
 
         /// <summary>
         /// Determines whether the platform will translate instantly, or gradually during a simulation
@@ -33,47 +35,47 @@
         /// <summary>
         /// Default center position of the platform with no translation
         /// </summary>
-        double[] DefaultPos { get; }
+        Vector3 DefaultPos { get; }
 
         /// <summary>
         /// The platform target translation (X, Y, Z) [mm]
         /// </summary>
-        double[] TranslationTarget { get; }
+        Vector3 TranslationTarget { get; }
 
         /// <summary>
         /// The platform target rotation (Pitch, Roll, Yaw) [deg]
         /// </summary>
-        double[] RotationTarget { get; }
+        RotationPRY RotationTarget { get; }
 
         /// <summary>
         /// The actual platform translation (may be different than target if mode isn't instant)
         /// </summary>
-        double[] Translation { get; }
+        Vector3 Translation { get; }
 
         /// <summary>
         /// The actual platform rotation (Pitch, Roll, Yaw) [deg], may be different than target if mode isn't instant
         /// </summary>
-        double[] Rotation { get; }
+        RotationPRY Rotation { get; }
 
         /// <summary>
         /// Rotation including translation if <see cref="FixedRotationCenter"/> is false
         /// </summary>
-        double[] RotationCenter { get; }
+        Vector3 RotationCenter { get; }
 
         /// <summary>
         /// Absolute center position of the platform (default offset + translation), (X, Y, Z) [mm]
         /// </summary>
-        double[] Position { get; }
+        Vector3 Position { get; }
 
         /// <summary>
         /// The absolute rotation center position (default offset + rotation center), (X, Y, Z) [mm]
         /// </summary>
-        double[] AbsRotationCenter { get; }
+        Vector3 AbsRotationCenter { get; }
 
         /// <summary>
         /// The unit vector of platform normal direction (x,y,z)
         /// </summary>
-        double[] NormalVector { get; }
+        Vector3 NormalVector { get; }
 
         /// <summary>
         /// Whether the rotation point is fixed in space, or moves when the platform translates
@@ -97,19 +99,19 @@
         /// Translates the platform to the given absolute position
         /// </summary>
         /// <param name="position">X,Y,Z position [mm]</param>
-        void TranslateAbs(double[] position);
+        void TranslateAbs(Vector3 position);
 
         /// <summary>
         /// Translates the platform to the given relative position
         /// </summary>
         /// <param name="position">X,Y,Z position [mm]</param>
-        void TranslateRel(double[] position);
+        void TranslateRel(Vector3 position);
 
         /// <summary>
         /// Translates the platform to the given absolute angle
         /// </summary>
         /// <param name="rotation">Pitch, Roll, Yaw rotation [deg]</param>
-        void RotateAbs(double[] rotation);
+        void RotateAbs(RotationPRY rotation);
 
         /// <summary>
         /// Updates the platform local configuration, allowing the whole config to be updated without many re-calculations
@@ -117,14 +119,14 @@
         /// <param name="radius">Radius of the platform joints [mm]</param>
         /// <param name="jointAngle">The angle of base nodes from an even 120 [deg]</param>
         /// <param name="defaultPos">Default center position of the platform with no translation</param>
-        void UpdateConfig(double radius, double jointAngle, double[] defaultPos);
+        void UpdateConfig(double radius, double jointAngle, Vector3 defaultPos);
 
         /// <summary>
         /// Allows whole rotation center to be updated without many re-calculations
         /// </summary>
         /// <param name="position">Position of the rotation center (x,y,z) [mm]</param>
         /// <param name="fixedPosition">Whether the rotation center translates with the platform</param>
-        void UpdateRotationCenter(double[] position, bool fixedPosition);
+        void UpdateRotationCenter(Vector3 position, bool fixedPosition);
 
         /// <summary>
         /// Hard resets the translation and rotation
@@ -146,6 +148,6 @@
         /// </summary>
         /// <param name="localcoord">Local [X,Y,Z] coordinates, relative to the platform center</param>
         /// <returns>Global coordinates, including translation and rotation</returns>
-        double[] CalcGlobalCoord(double[] localcoord);
+        Vector3 CalcGlobalCoord(Vector3 localcoord);
     }
 }

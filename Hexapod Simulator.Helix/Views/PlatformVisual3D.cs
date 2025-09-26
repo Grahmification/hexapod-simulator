@@ -3,6 +3,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using System.Windows;
 using Hexapod_Simulator.Shared;
+using GFunctions.Mathnet;
 
 namespace Hexapod_Simulator.Helix.Views
 {
@@ -93,7 +94,7 @@ namespace Hexapod_Simulator.Helix.Views
         /// <summary>
         /// XYZ pos [mm] of each joint, without trans/rotation 
         /// </summary>
-        private double[][] LocalJointCoords;
+        private Vector3[] LocalJointCoords;
 
         /// <summary>
         /// default constructor
@@ -136,7 +137,7 @@ namespace Hexapod_Simulator.Helix.Views
                 //-------------- Create each joint node ---------------
                 var joint = new SphereVisual3D();
                 joint.BeginEdit();
-                joint.Center = new Point3D(p0[0], p0[1], p0[2]);
+                joint.Center = new Point3D(p0.X, p0.Y, p0.Z);
                 joint.Radius = 1;
                 joint.Fill = new SolidColorBrush(this.JointColor);
                 joint.EndEdit();
@@ -145,8 +146,8 @@ namespace Hexapod_Simulator.Helix.Views
                 //-------------- Create each connection link ---------------
                 var link = new PipeVisual3D();
                 link.BeginEdit();
-                link.Point1 = new Point3D(p0[0], p0[1], p0[2]);
-                link.Point2 = new Point3D(p1[0], p1[1], p1[2]);
+                link.Point1 = new Point3D(p0.X, p0.Y, p0.Z);
+                link.Point2 = new Point3D(p1.X, p1.Y, p1.Z);
                 link.Diameter = 0.5;
                 link.Fill = new SolidColorBrush(this.LinkColor);
                 link.EndEdit();

@@ -1,4 +1,5 @@
-﻿using HelixToolkit.Wpf;
+﻿using GFunctions.Mathnet;
+using HelixToolkit.Wpf;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -12,27 +13,27 @@ namespace Hexapod_Simulator.Helix.Views
         /// </summary>
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register(
             "Position",
-            typeof(double[]),
+            typeof(Vector3),
             typeof(LinearActuatorVisual3D),
-            new UIPropertyMetadata(new double[] { 0, 0, 0 }, GeometryChanged));
+            new UIPropertyMetadata(new Vector3(0, 0, 0), GeometryChanged));
 
         /// <summary>
         /// Identifies the <see cref="ArmEndPosition"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ArmEndPositionProperty = DependencyProperty.Register(
             "ArmEndPosition",
-            typeof(double[]),
+            typeof(Vector3),
             typeof(LinearActuatorVisual3D),
-            new UIPropertyMetadata(new double[] { 0, 0, 1 }, GeometryChanged));
+            new UIPropertyMetadata(new Vector3(0, 0, 1), GeometryChanged));
 
         /// <summary>
         /// Identifies the <see cref="LinkEndPosition"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty LinkEndPositionProperty = DependencyProperty.Register(
             "LinkEndPosition",
-            typeof(double[]),
+            typeof(Vector3),
             typeof(LinearActuatorVisual3D),
-            new UIPropertyMetadata(new double[] { 0, 0, 5 }, GeometryChanged));
+            new UIPropertyMetadata(new Vector3(0, 0, 5), GeometryChanged));
 
         /// <summary>
         /// Identifies the <see cref="ArmColorProperty"/> dependency property.
@@ -56,27 +57,27 @@ namespace Hexapod_Simulator.Helix.Views
         /// <summary>
         /// Coordinates where the base of the actuator is located on the base [x,y,z]
         /// </summary>
-        public double[] Position
+        public Vector3 Position
         {
-            get { return (double[])GetValue(PositionProperty); }
+            get { return (Vector3)GetValue(PositionProperty); }
             set { SetValue(PositionProperty, value); }
         }
 
         /// <summary>
         /// Coordinates of actuator arm end position, where it attaches to link start [x,y,z]
         /// </summary>
-        public double[] ArmEndPosition
+        public Vector3 ArmEndPosition
         {
-            get { return (double[])GetValue(ArmEndPositionProperty); }
+            get { return (Vector3)GetValue(ArmEndPositionProperty); }
             set { SetValue(ArmEndPositionProperty, value); }
         }
 
         /// <summary>
         /// Coordinates where the link attaches to the moving portion of the device [x,y,z]
         /// </summary>
-        public double[] LinkEndPosition
+        public Vector3 LinkEndPosition
         {
-            get { return (double[])GetValue(LinkEndPositionProperty); }
+            get { return (Vector3)GetValue(LinkEndPositionProperty); }
             set { SetValue(LinkEndPositionProperty, value); }
         }
 
@@ -129,8 +130,8 @@ namespace Hexapod_Simulator.Helix.Views
             //----------------- Add the actuator arm ---------------------------
             var arm = new PipeVisual3D();
             arm.BeginEdit();
-            arm.Point1 = new Point3D(ArmEndPosition[0], ArmEndPosition[1], ArmEndPosition[2]);
-            arm.Point2 = new Point3D(Position[0], Position[1], Position[2]);
+            arm.Point1 = new Point3D(ArmEndPosition.X, ArmEndPosition.Y, ArmEndPosition.Z);
+            arm.Point2 = new Point3D(Position.X, Position.Y, Position.Z);
             arm.Diameter = 1;
             arm.Fill = new SolidColorBrush(ArmColor);
             arm.EndEdit();
@@ -139,8 +140,8 @@ namespace Hexapod_Simulator.Helix.Views
             //-------------- Add the link -------------------
             var link = new PipeVisual3D();
             link.BeginEdit();
-            link.Point1 = new Point3D(ArmEndPosition[0], ArmEndPosition[1], ArmEndPosition[2]);
-            link.Point2 = new Point3D(LinkEndPosition[0], LinkEndPosition[1], LinkEndPosition[2]);
+            link.Point1 = new Point3D(ArmEndPosition.X, ArmEndPosition.Y, ArmEndPosition.Z);
+            link.Point2 = new Point3D(LinkEndPosition.X, LinkEndPosition.Y, LinkEndPosition.Z);
             link.Diameter = 0.5;
             link.Fill = new SolidColorBrush(LinkColor);
             link.EndEdit();

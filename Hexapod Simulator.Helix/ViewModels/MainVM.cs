@@ -49,12 +49,12 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// PID Controller Tracking Monitoring the X Position of the <see cref="Ball"/>
         /// </summary>
-        private PIDController XController = new(3, 1, 1, -0.5, 30);
+        private PIDController XController = new(1, 1, -0.5, 30) { Gain = 3 };
 
         /// <summary>
         /// PID Controller Tracking Monitoring the Y Position of the <see cref="Ball"/>
         /// </summary>
-        public PIDController YController = new(-3, 1, 1, -0.5, 30);
+        public PIDController YController = new(1, 1, -0.5, 30) { Gain = -3 };
 
 
         /// <summary>
@@ -123,16 +123,16 @@ namespace Hexapod_Simulator.Helix.ViewModels
                 Hexapod?.TopPlatform?.ResetPositionCommand?.Execute(null);
              
             //setup ball
-            Ball = new BallVM(new BallModelLocal(0.0025, 9800, [0, 0, 0]));
+            Ball = new BallVM(new BallModelLocal(0.0025, 9800, new(0, 0, 0)));
 
             //setup simulation model
             SimModel = new TimeSimulation();
             SimModel.SimulationDoWorkRequest += SimulationTimeStepDoWork;
-            SimModel.RunFreqUpdated += SimulationFrequencyReported;
+            SimModel.RunFrequencyUpdated += SimulationFrequencyReported;
 
             //Setup PID Controllers
-            XController = new PIDController(3, 1, 1, -0.5, 30);
-            YController = new PIDController(-3, 1, 1, -0.5, 30);
+            XController = new PIDController(1, 1, -0.5, 30) { Gain = 3 };
+            YController = new PIDController(1, 1, -0.5, 30) { Gain = -3 };
         }
 
         /// <summary>
@@ -151,20 +151,20 @@ namespace Hexapod_Simulator.Helix.ViewModels
             Hexapod.TopPlatform.PlatformModel.CalculateTimeStep(e.TimeIncrement);
 
             //Update the ball servo target positions to the center of the platform
-            XController.SetTarget(Hexapod.TopPlatform.PlatformModel.Position[0]);
-            YController.SetTarget(Hexapod.TopPlatform.PlatformModel.Position[1]);
+            XController.SetTarget(Hexapod.TopPlatform.PlatformModel.Position.X);
+            YController.SetTarget(Hexapod.TopPlatform.PlatformModel.Position.Y);
 
             //Update the Z coordinate of the ball based on it's XY position and the platform's tilt
             var coords = Ball.BallModel.Position;
-            coords[2] = Ball.Radius; //Z offset relative to the platform should be the ball's radius
+            coords.Z = Ball.Radius; //Z offset relative to the platform should be the ball's radius
             Ball.BallModel.UpdateGlobalCoords(Hexapod.TopPlatform.PlatformModel.CalcGlobalCoord(coords));
 
             //If the servo is active, rotate the platform to try and center the ball
             if (ServoActive)
-                Hexapod.TopPlatform.PlatformModel.RotateAbs([XController.CalculateOutput(Ball.BallModel.Position[0], e.TimeIncrement), YController.CalculateOutput(Ball.BallModel.Position[1], e.TimeIncrement), 0]);
+                Hexapod.TopPlatform.PlatformModel.RotateAbs(new(XController.CalculateOutput(Ball.BallModel.Position.X, e.TimeIncrement), YController.CalculateOutput(Ball.BallModel.Position.Y, e.TimeIncrement), 0));
 
             //------------ Cleanup -------------------------
-            e.WorkDoneCallback.Set(); // Allow simulation to proceed
+            e.FlagWorkDone(); // Allow simulation to proceed
         }
         
         /// <summary>

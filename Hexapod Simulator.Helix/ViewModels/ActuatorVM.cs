@@ -1,4 +1,5 @@
-﻿using Hexapod_Simulator.Shared;
+﻿using GFunctions.Mathnet;
+using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {
@@ -10,7 +11,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// Coordinates where the base of the actuator is located on the base [x,y,z]
         /// </summary>
-        public double[] Position { 
+        public Vector3 Position { 
             get { return ActuatorModel.Position; }  
             set { ActuatorModel.Position = value; }
         }
@@ -18,12 +19,12 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// Coordinates of actuator arm end position, where it attaches to link start [x,y,z]
         /// </summary>
-        public double[] ArmEndPosition => ActuatorModel.ArmEndPosition;
+        public Vector3 ArmEndPosition => ActuatorModel.ArmEndPosition;
         
         /// <summary>
         /// Coordinates where the link attaches to the moving portion of the device [x,y,z]
         /// </summary>
-        public double[] LinkEndPosition { 
+        public Vector3 LinkEndPosition { 
             get { return ActuatorModel.LinkEndPosition; } 
             set { ActuatorModel.LinkEndPosition = value; }
         }
@@ -65,7 +66,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         public ActuatorVM()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            UpdateModel(new LinearActuator(10, 5, [0, 0, 0], [ 5, 5, 5]));
+            UpdateModel(new LinearActuator(10, 5, new(0, 0, 0), new(5, 5, 5)));
         }
 
         /// <summary>

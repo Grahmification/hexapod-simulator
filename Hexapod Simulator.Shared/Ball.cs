@@ -1,4 +1,6 @@
-﻿namespace Hexapod_Simulator.Shared
+﻿using GFunctions.Mathnet;
+
+namespace Hexapod_Simulator.Shared
 {
     /// <summary>
     /// A ball that can be used in the 3D space simulation
@@ -8,22 +10,22 @@
         /// <summary>
         /// PRY rotation about centerpoint [deg]
         /// </summary>
-        public double[] Angle { get; protected set; } = [0, 0, 0];
+        public RotationPRY Angle { get; protected set; } = new();
 
         /// <summary>
         /// XYZ position of centerpoint [m]
         /// </summary>
-        public double[] Position { get; protected set; } = [0, 0, 0];
+        public Vector3 Position { get; protected set; } = new();
 
         /// <summary>
         /// XYZ velocity of centerpoint [m/s]
         /// </summary>
-        public double[] Velocity { get; protected set; } = [0, 0, 0];
+        public Vector3 Velocity { get; protected set; } = new();
 
         /// <summary>
         /// XYZ accel of centerpoint [m/s/s]
         /// </summary>
-        public double[] Acceleration { get; protected set; } = [0, 0, 0];
+        public Vector3 Acceleration { get; protected set; } = new();
 
         /// <summary>
         /// Ball radius [m]

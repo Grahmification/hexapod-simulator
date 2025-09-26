@@ -48,6 +48,9 @@
     <Reference Include="GFunctions">
       <HintPath>..\Dependencies\GFunctions.dll</HintPath>
     </Reference>
+    <Reference Include="GFunctions.Mathnet">
+      <HintPath>..\Dependencies\GFunctions.Mathnet.dll</HintPath>
+    </Reference>
     <Reference Include="GFunctions.OpenTK">
       <HintPath>..\Dependencies\GFunctions.OpenTK.dll</HintPath>
     </Reference>

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using System.Windows.Media.Media3D;
+using GFunctions.Mathnet;
 using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.Helix.ViewModels
@@ -11,39 +12,39 @@ namespace Hexapod_Simulator.Helix.ViewModels
     {
         public double XTranslation
         {
-            get { return PlatformModel.TranslationTarget[0]; }
-            set { PlatformModel.TranslateAbs([value, YTranslation, ZTranslation]); }
+            get { return PlatformModel.TranslationTarget.X; }
+            set { PlatformModel.TranslateAbs(new(value, YTranslation, ZTranslation)); }
         }
         public double YTranslation
         {
-            get { return PlatformModel.TranslationTarget[1]; }
-            set { PlatformModel.TranslateAbs([XTranslation, value, ZTranslation]); }
+            get { return PlatformModel.TranslationTarget.Y; }
+            set { PlatformModel.TranslateAbs(new(XTranslation, value, ZTranslation)); }
         }
         public double ZTranslation 
         {
-            get { return PlatformModel.TranslationTarget[2]; }
-            set { PlatformModel.TranslateAbs([XTranslation, YTranslation, value]); }
+            get { return PlatformModel.TranslationTarget.Z; }
+            set { PlatformModel.TranslateAbs(new(XTranslation, YTranslation, value)); }
         }
         public double PitchRotation
         {
-            get { return PlatformModel.RotationTarget[0]; }
-            set { PlatformModel.RotateAbs([value, RollRotation, YawRotation]); }
+            get { return PlatformModel.RotationTarget.Pitch; }
+            set { PlatformModel.RotateAbs(new(value, RollRotation, YawRotation)); }
         }
         public double RollRotation
         {
-            get { return PlatformModel.RotationTarget[1]; }
-            set { PlatformModel.RotateAbs([PitchRotation, value, YawRotation]); }
+            get { return PlatformModel.RotationTarget.Roll; }
+            set { PlatformModel.RotateAbs(new(PitchRotation, value, YawRotation)); }
         }
         public double YawRotation
         {
-            get { return PlatformModel.RotationTarget[2]; }
-            set { PlatformModel.RotateAbs([PitchRotation, RollRotation, value]); }
+            get { return PlatformModel.RotationTarget.Yaw; }
+            set { PlatformModel.RotateAbs(new(PitchRotation, RollRotation, value)); }
         }
 
 
-        public double[] Position => PlatformModel.Position;
-        public double[] Rotation => PlatformModel.Rotation;
-        public double[] AbsRotationCenter => PlatformModel.AbsRotationCenter;
+        public Vector3 Position => PlatformModel.Position;
+        public RotationPRY Rotation => PlatformModel.Rotation;
+        public Vector3 AbsRotationCenter => PlatformModel.AbsRotationCenter;
         public double Radius
         {
             get { return PlatformModel.Radius; }
@@ -80,12 +81,12 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// Holds a temporary value of the <see cref="Platform.DefaultPos"/> until the updateconfig command is executed
         /// </summary>
-        public double[] DefaultPositionTemp { get; set; } = [0, 0, 0];
+        public Vector3 DefaultPositionTemp { get; set; } = new(0, 0, 0);
 
         /// <summary>
         /// Holds a temporary value of the <see cref="Platform.RotationCenter"/> until the updateconfig command is executed
         /// </summary>
-        public double[] RotationCenterTemp { get; set; } = [0, 0, 0];
+        public Vector3 RotationCenterTemp { get; set; } = new(0, 0, 0);
 
         /// <summary>
         /// Holds a temporary value of the <see cref="Platform.FixedRotationCenter"/> until the updateconfig command is executed
@@ -206,10 +207,10 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <param name="rotation">[P,R,Y] rotation of the object (degrees)</param>
         /// <param name="rotationCenter">[X,Y,Z] position of the object's rotation center</param>
         /// <returns></returns>
-        private static Transform3D CreateTransform(double[] translation, double[] rotation, double[] rotationCenter)
+        private static Transform3D CreateTransform(Vector3 translation, RotationPRY rotation, Vector3 rotationCenter)
         {
-            var trans = new TranslateTransform3D(translation[0], translation[1], translation[2]);
-            var rot = new RotateTransform3D(new QuaternionRotation3D(EulerToQuaternion(rotation[0], rotation[1], rotation[2])), new Point3D(rotationCenter[0], rotationCenter[1], rotationCenter[2]));
+            var trans = new TranslateTransform3D(translation.X, translation.Y, translation.Z);
+            var rot = new RotateTransform3D(new QuaternionRotation3D(EulerToQuaternion(rotation)), new Point3D(rotationCenter.X, rotationCenter.Y, rotationCenter.Z));
 
             var output = new Transform3DGroup();
             output.Children.Add(trans);
@@ -220,24 +221,20 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// Converts euler rotation angles to a quaternion
         /// </summary>
-        /// <param name="pitch">Pitch rotation [deg]</param>
-        /// <param name="roll">Roll rotation [deg]</param>
-        /// <param name="yaw">Yaw rotation [deg]</param>
+        /// <param name="rotation">The rotatin in degrees</param>
         /// <returns>The corresponding quaternion</returns>
-        private static Quaternion EulerToQuaternion(double pitch, double roll, double yaw)
+        private static Quaternion EulerToQuaternion(RotationPRY rotation)
         {
             //convert from degrees to radians
-            pitch *= Math.PI / 180.0;
-            roll *= Math.PI / 180.0;
-            yaw *= Math.PI / 180.0;
+            rotation *= Math.PI / 180.0;
 
             // Abbreviations for the various angular functions
-            double cy = Math.Cos(yaw * 0.5);
-            double sy = Math.Sin(yaw * 0.5);
-            double cp = Math.Cos(pitch * 0.5);
-            double sp = Math.Sin(pitch * 0.5);
-            double cr = Math.Cos(roll * 0.5);
-            double sr = Math.Sin(roll * 0.5);
+            double cy = Math.Cos(rotation.Yaw * 0.5);
+            double sy = Math.Sin(rotation.Yaw * 0.5);
+            double cp = Math.Cos(rotation.Pitch * 0.5);
+            double sp = Math.Sin(rotation.Pitch * 0.5);
+            double cr = Math.Cos(rotation.Roll * 0.5);
+            double sr = Math.Sin(rotation.Roll * 0.5);
 
             Quaternion q = new()
             {

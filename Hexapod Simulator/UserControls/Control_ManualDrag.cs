@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GFunctions.Mathnet;
 
 namespace Hexapod_Simulator.UserControls
 {
@@ -17,43 +18,41 @@ namespace Hexapod_Simulator.UserControls
         private double rotTravelRange = 100.0; //full travel range for each slider [deg]
 
 
-        private double[] _position = new double[] { 0, 0, 0 };
-        private double[] _rotation = new double[] { 0, 0, 0 };
+        private Vector3 _position = new(0, 0, 0);
+        private RotationPRY _rotation = new(0, 0, 0);
 
-        public double[] Position
+        public Vector3 Position
         {
-            get { return this._position; }
+            get { return _position; }
             set
             {
                 ignoreDrag = true;
-                this._position = value;
+                _position = value;
 
-                calcPositionSlider(trackBar_x, _position[0]);
-                calcPositionSlider(trackBar_y, _position[1]);
-                calcPositionSlider(trackBar_z, _position[2]);
+                calcPositionSlider(trackBar_x, _position.X);
+                calcPositionSlider(trackBar_y, _position.Y);
+                calcPositionSlider(trackBar_z, _position.Z);
 
                 ignoreDrag = false;
 
-                if (PositionChanged != null)
-                    PositionChanged(this, new EventArgs());
+                PositionChanged?.Invoke(this, new EventArgs());
             }
         }
-        public double[] Rotation
+        public RotationPRY Rotation
         {
-            get { return this._rotation; }
+            get { return _rotation; }
             set
             {
                 ignoreDrag = true;
-                this._rotation = value;
+                _rotation = value;
 
-                calcRotationSlider(trackBar_pitch, _rotation[0]);
-                calcRotationSlider(trackBar_roll, _rotation[1]);
-                calcRotationSlider(trackBar_yaw, _rotation[2]);
+                calcRotationSlider(trackBar_pitch, _rotation.Pitch);
+                calcRotationSlider(trackBar_roll, _rotation.Roll);
+                calcRotationSlider(trackBar_yaw, _rotation.Yaw);
 
                 ignoreDrag = false;
 
-                if (RotationChanged != null)
-                    RotationChanged(this, new EventArgs());
+                RotationChanged?.Invoke(this, new EventArgs());
             }
         }
 
@@ -78,30 +77,25 @@ namespace Hexapod_Simulator.UserControls
             button_reset.PerformClick();
         }
 
-    
-
-
 
         private void trackBar_pos_Scroll(object? sender, EventArgs e)
         {
-            if (this.ignoreDrag == false)
+            if (!ignoreDrag)
             {
-                this._position = new double[] { calcPosition(trackBar_x), calcPosition(trackBar_y), calcPosition(trackBar_z) };
+                _position = new(calcPosition(trackBar_x), calcPosition(trackBar_y), calcPosition(trackBar_z));
 
-                if (PositionChanged != null)
-                    PositionChanged(this, new EventArgs());
+                PositionChanged?.Invoke(this, new EventArgs());
             }
             
             
         }
         private void trackBar_rotate_Scroll(object? sender, EventArgs e)
         {
-            if (this.ignoreDrag == false)
+            if (!ignoreDrag)
             {
-                this._rotation = new double[] { calcRotation(trackBar_pitch), calcRotation(trackBar_roll), calcRotation(trackBar_yaw) };
+                _rotation = new(calcRotation(trackBar_pitch), calcRotation(trackBar_roll), calcRotation(trackBar_yaw));
 
-                if (RotationChanged != null)
-                    RotationChanged(this, new EventArgs());
+                RotationChanged?.Invoke(this, new EventArgs());
             }
         }
         private double calcPosition(TrackBar Bar)
@@ -112,7 +106,6 @@ namespace Hexapod_Simulator.UserControls
         {
             return (Bar.Value - Bar.Maximum / 2.0) * rotTravelRange / (double)Bar.Maximum; 
         }
-
 
 
         private void calcPositionSlider(TrackBar Bar, double Pos)
@@ -126,7 +119,7 @@ namespace Hexapod_Simulator.UserControls
             if (intVal < Bar.Minimum)
                 intVal = Bar.Minimum;
 
-            Bar.Value = intVal;                  
+            Bar.Value = intVal;
         }
         private void calcRotationSlider(TrackBar Bar, double Rot)
         {
@@ -139,20 +132,18 @@ namespace Hexapod_Simulator.UserControls
             if (intVal < Bar.Minimum)
                 intVal = Bar.Minimum;
 
-            Bar.Value = intVal;     
+            Bar.Value = intVal;
         }
 
         private void button_reset_Click(object sender, EventArgs e)
         {
-            this.Position = new double[] { 0, 0, 0 };
-            this.Rotation = new double[] { 0, 0, 0 };
+            Position = new(0, 0, 0);
+            Rotation = new(0, 0, 0);
         }
 
         private void Control_ManualDrag_Load(object sender, EventArgs e)
         {
 
         }
-
-
     }
 }

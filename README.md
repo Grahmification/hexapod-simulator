@@ -8,9 +8,9 @@ Hexapod simulator is a piece of software written to simulate the movement of a 6
 
 ### Projects
 
-1. [Hexapod Simulator](/Hexapod%20Simulator) - A GUI for simulating the hexapod written using winforms and OpenTK.
-1. [Hexapod Simulator.Helix](/Hexapod%20Simulator.Helix) - An improved GUI written using WPF and HelixToolKit. 
-1. [Hexapod Simulator.Shared](/Hexapod%20Simulator.Shared) - Shared lower level components handling all of the math which are used by each GUI.
+1. [Hexapod Simulator](Source/Hexapod%20Simulator) - A GUI for simulating the hexapod written using winforms and OpenTK.
+1. [Hexapod Simulator.Helix](Source/Hexapod%20Simulator.Helix) - An improved GUI written using WPF and HelixToolKit. 
+1. [Hexapod Simulator.Shared](Source/Hexapod%20Simulator.Shared) - Shared lower level components handling all of the math which are used by each GUI.
 
 <p align="center">
   <img src="./Docs/Hexapod Simulator Helix GUI Overview.png" alt="Hexpod Simulator.Helix GUI" height="200">

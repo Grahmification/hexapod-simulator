@@ -94,7 +94,7 @@ namespace Hexapod_Simulator.Helix.Views
         /// <summary>
         /// XYZ pos [mm] of each joint, without trans/rotation 
         /// </summary>
-        private Vector3[] LocalJointCoords;
+        private Vector3[]? LocalJointCoords;
 
         /// <summary>
         /// default constructor

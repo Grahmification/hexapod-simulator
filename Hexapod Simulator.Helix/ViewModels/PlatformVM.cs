@@ -2,6 +2,7 @@
 using System.Windows.Media.Media3D;
 using GFunctions.Mathnet;
 using Hexapod_Simulator.Shared;
+using PropertyChanged;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {
@@ -193,6 +194,8 @@ namespace Hexapod_Simulator.Helix.ViewModels
             OnPropertyChanged(nameof(Position));
             OnPropertyChanged(nameof(Rotation));
         }
+
+        [SuppressPropertyChangedWarnings]
         private void OnLocalCoordsChanged(object? sender, EventArgs e)
         {
             OnPropertyChanged(nameof(Radius));

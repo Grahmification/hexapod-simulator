@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Hexapod_Simulator.Shared;
+using PropertyChanged;
 
 namespace Hexapod_Simulator.Helix.ViewModels
 {
@@ -88,6 +89,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
             UpdateActuators();
         }
 
+        [SuppressPropertyChangedWarnings]
         private void OnPlatFormGeometryChanged(object? sender, EventArgs e)
         {
             for(int i = 0; i < 6; i++)

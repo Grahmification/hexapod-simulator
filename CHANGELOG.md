@@ -1,5 +1,11 @@
 ## Changelog
 
+### V1.2.0.0
+
+2025-09-26
+* Update to GFunctions 1.2.0
+* Refactor to use Vector3 and RotationPRY classes instead of double arrays
+* Minor cleanup
 
 ### V1.1.0.0
 

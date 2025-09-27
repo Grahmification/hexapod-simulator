@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GFunctions.Mathnet;
 
 namespace Hexapod_Simulator.UserControls
 {
@@ -18,16 +19,16 @@ namespace Hexapod_Simulator.UserControls
             InitializeComponent();
         }
 
-        public void SetPosition(double[] Pos){
-            FormatText(label_x, Pos[0]);
-            FormatText(label_y, Pos[1]);
-            FormatText(label_z, Pos[2]);
+        public void SetPosition(Vector3 position){
+            FormatText(label_x, position.X);
+            FormatText(label_y, position.Y);
+            FormatText(label_z, position.Z);
         }
-        public void SetRotation(double[] Rot)
+        public void SetRotation(RotationPRY rotation)
         {
-            FormatText(label_pitch, Rot[0]);
-            FormatText(label_roll, Rot[1]);
-            FormatText(label_yaw, Rot[2]);
+            FormatText(label_pitch, rotation.Pitch);
+            FormatText(label_roll, rotation.Roll);
+            FormatText(label_yaw, rotation.Yaw);
         }
         private void FormatText(Label lbl, double value)
         {

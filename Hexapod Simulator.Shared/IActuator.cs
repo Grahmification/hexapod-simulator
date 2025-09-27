@@ -1,4 +1,6 @@
-﻿namespace Hexapod_Simulator.Shared
+﻿using GFunctions.Mathnet;
+
+namespace Hexapod_Simulator.Shared
 {
     public interface IActuator
     {
@@ -20,17 +22,17 @@
         /// <summary>
         /// Where the base of the actuator is attached to the hexapod base [x,y,z]
         /// </summary>
-        double[] Position { get; set; }
+        Vector3 Position { get; set; }
 
         /// <summary>
         /// Actuator arm end position, where it attaches to link start [x,y,z]
         /// </summary>
-        double[] ArmEndPosition { get; }
+        Vector3 ArmEndPosition { get; }
 
         /// <summary>
         /// where the link attaches to the hexapod top [x,y,z]
         /// </summary>
-        double[] LinkEndPosition { get; set; }
+        Vector3 LinkEndPosition { get; set; }
 
         /// <summary>
         /// The length of the link joining the actuator tip to the hexapod top

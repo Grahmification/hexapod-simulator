@@ -9,8 +9,8 @@
     <Nullable>enable</Nullable>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <ApplicationIcon>Resources\app_256px.ico</ApplicationIcon>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\app_256px.ico" />
@@ -47,6 +47,9 @@
   <ItemGroup>
     <Reference Include="GFunctions">
       <HintPath>..\Dependencies\GFunctions.dll</HintPath>
+    </Reference>
+    <Reference Include="GFunctions.Mathnet">
+      <HintPath>..\Dependencies\GFunctions.Mathnet.dll</HintPath>
     </Reference>
     <Reference Include="GFunctions.OpenTK">
       <HintPath>..\Dependencies\GFunctions.OpenTK.dll</HintPath>

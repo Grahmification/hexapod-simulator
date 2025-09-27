@@ -12,8 +12,8 @@ namespace Hexapod_Simulator.Shared
         protected double _minTravel = 0; //minimum travel [mm]
         private double _linkLength = 0; //link length between actuator tip and top [mm]
 
-        protected double[] _position = [0, 0, 0]; //XYZ position actuator tip start point [mm]
-        private double[] _linkEndPosition = [0, 0, 0]; //XYZ position of link attached to actuator [mm] 
+        protected Vector3 _position = new(0, 0, 0); //XYZ position actuator tip start point [mm]
+        private Vector3 _linkEndPosition = new(0, 0, 0); //XYZ position of link attached to actuator [mm] 
 
         /// <summary>
         /// Used for solving kinematics iteratively to get actuator position
@@ -50,7 +50,7 @@ namespace Hexapod_Simulator.Shared
         /// <summary>
         /// Where the base of the actuator is attached to the hexapod base [x,y,z]
         /// </summary>
-        public double[] Position
+        public Vector3 Position
         {
             get { return _position; }
             set { _position = value; CalculateMotorAngle(); }
@@ -59,7 +59,7 @@ namespace Hexapod_Simulator.Shared
         /// <summary>
         /// where the link attaches to the hexapod top [x,y,z]
         /// </summary>
-        public double[] LinkEndPosition
+        public Vector3 LinkEndPosition
         {
             get { return _linkEndPosition; }
             set
@@ -72,7 +72,7 @@ namespace Hexapod_Simulator.Shared
         /// <summary>
         /// Actuator arm end position, where it attaches to link start [x,y,z]
         /// </summary>
-        public double[] ArmEndPosition { get; protected set; } = [0, 0, 0];
+        public Vector3 ArmEndPosition { get; protected set; } = new();
 
         /// <summary>
         /// Current position of the actuator [mm] 
@@ -98,20 +98,27 @@ namespace Hexapod_Simulator.Shared
         /// </summary>
         public event EventHandler? RedrawRequired; // Not called by anything currently, but could be
 
-        public LinearActuator(double maxTravel, double linkLength, double[] position, double[] linkEndPosition)
+        public LinearActuator(double maxTravel, double linkLength, Vector3 position, Vector3 linkEndPosition)
         {
             _maxTravel = maxTravel;
             _position = position;
             _linkEndPosition = linkEndPosition;
             _linkLength = linkLength;
 
-            Solver = new IterativeSolver(0.01, 100, 0.01, ComputeError, _maxTravel, _minTravel);
+            Solver = new IterativeSolver(ComputeError)
+            {
+                InitialStepSize = 0.01,
+                MaxSteps = 100,
+                SuccessErrorThreshold = 0.01
+            };
 
             CalculateMotorAngle();
         }
 
         protected void CalculateMotorAngle()
         {
+            Solver.MaxSolutionValue = _maxTravel;
+            Solver.MinSolutionValue = _minTravel;
             TravelPosition = Solver.Solve(TravelPosition);
 
             if (!Solver.SolutionValid)
@@ -123,19 +130,12 @@ namespace Hexapod_Simulator.Shared
         {
             TravelPosition = iterationValue;
             CalculateArmEndCoords();
-            return (KinematicMath.VectorLength(ArmEndPosition, LinkEndPosition) - LinkLength);
+            return (KinematicMath.VectorLength(ArmEndPosition.ToArray(), LinkEndPosition.ToArray()) - LinkLength);
         }
         protected virtual void CalculateArmEndCoords()
         {
-            double[] localCoord = [0, 0, TravelPosition]; //travel is in the Z direction
-            double[] coords = [0, 0, 0];
-
-            for (int i = 0; i < 3; i++)
-            {
-                coords[i] = localCoord[i] + _position[i];
-            }
-
-            ArmEndPosition = coords;
+            Vector3 localCoord = new(0, 0, TravelPosition); // Travel is in the Z direction
+            ArmEndPosition = localCoord + _position;
         }
     }
 }

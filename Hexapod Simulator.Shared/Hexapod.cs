@@ -1,4 +1,6 @@
-﻿namespace Hexapod_Simulator.Shared
+﻿using GFunctions.Mathnet;
+
+namespace Hexapod_Simulator.Shared
 {
     /// <summary>
     /// Represents a hexapod that can be translated and rotated in 3D space
@@ -92,13 +94,13 @@
         }
         protected virtual IPlatform InitializeTop(double defaultHeight, double topRadius, double topAngle)
         {
-            return new Platform("Top", topRadius, topAngle, [0, 0, defaultHeight]);
+            return new Platform("Top", topRadius, topAngle, new(0, 0, defaultHeight));
         }
-        protected virtual IActuator InitializeLinearActuator(double[] position, double[] linkEndPosition, double maxTravel, double linkLength)
+        protected virtual IActuator InitializeLinearActuator(Vector3 position, Vector3 linkEndPosition, double maxTravel, double linkLength)
         {
             return new LinearActuator(maxTravel, linkLength, position, linkEndPosition);
         }
-        protected virtual IActuator InitializeRotaryActuator(double[] position, double[] linkEndPosition, int index, double jointAngle, double armRadius, double linkLength)
+        protected virtual IActuator InitializeRotaryActuator(Vector3 position, Vector3 linkEndPosition, int index, double jointAngle, double armRadius, double linkLength)
         {
             double motorAngle = RotaryActuator.CalcMotorOffsetAngle(index, 0, Platform.CalcJointOffsetAngle(index, jointAngle));
             return new RotaryActuator(armRadius, motorAngle, linkLength, position, linkEndPosition);

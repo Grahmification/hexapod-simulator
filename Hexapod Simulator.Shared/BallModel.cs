@@ -1,6 +1,5 @@
 ﻿using GFunctions.Mathematics;
-using MathNet.Numerics.LinearAlgebra.Double;
-
+using GFunctions.Mathnet;
 
 namespace Hexapod_Simulator.Shared
 {
@@ -19,7 +18,7 @@ namespace Hexapod_Simulator.Shared
         /// </summary>
         public event EventHandler? RedrawRequired;
 
-        public BallModel(double radius, double density, double[] startingPos)
+        public BallModel(double radius, double density, Vector3 startingPos)
         {
             Radius = radius;
             Density = density;
@@ -35,15 +34,16 @@ namespace Hexapod_Simulator.Shared
         /// </summary>
         /// <param name="timeIncrement">The simulation time step</param>
         /// <param name="normalForceVector">Normal vector of the surface the ball is on</param>
-        public void CalculateTimeStep(double timeIncrement, double[] normalForceVector)
+        public void CalculateTimeStep(double timeIncrement, Vector3 normalForceVector)
         {
-            CalcKineticSolution(new DenseVector(normalForceVector)); //calculates acceleration
+            CalcKineticSolution(normalForceVector); //calculates acceleration
 
-            for (int i = 0; i < 2; i++)
-            {
-                Velocity[i] = Velocity[i] + Calculus.Integrate(Acceleration[i], timeIncrement);
-                Position[i] = Position[i] + Calculus.Integrate(Velocity[i], timeIncrement);
-            }
+            // Integration function definition
+            double integration(double v) => Calculus.Integrate(v, timeIncrement);
+
+            // Integrate acceleration and velocity
+            Velocity += Acceleration.Operate(integration);
+            Position += Velocity.Operate(integration);
 
             RedrawRequired?.Invoke(this, new EventArgs());
         }
@@ -52,65 +52,42 @@ namespace Hexapod_Simulator.Shared
         /// Updates the ball's global coordinates
         /// </summary>
         /// <param name="globalCoords">The global position coordinates [X,Y,Z]</param>
-        public void UpdateGlobalCoords(double[] globalCoords)
+        public void UpdateGlobalCoords(Vector3 globalCoords)
         {
             return;
         } // Does nothing for this ball
 
-        private void CalcKineticSolution(DenseVector normalForceVector)
+        private void CalcKineticSolution(Vector3 normalForceVector)
         {
             double mass = Mass;
-            DenseVector gravityForceVector = new([0, 0, -9.81 * mass * 100]);
+            Vector3 gravityForceVector = new(0, 0, -9.81 * mass * 100);
 
-            double stepSize = 0.01; //initial change to test
-            double maxSteps = 100;
-            double errorTolerance = 0.01;
-
-            double startingValue = _normalForce; //starting guess
-            double prevError = CalcAccelVectorError(CalcAccelVector(gravityForceVector, normalForceVector, startingValue, mass), [.. normalForceVector]);
-            double newError = 0;
-            double ratio = 0;
-
-            for (int i = 0; i < maxSteps; i++)
+            // Note: Solver declaration could be moved to save resources
+            double errorFunc(double x) => CalcAccelVectorError(CalcAccelVector(gravityForceVector, normalForceVector, x, mass), normalForceVector);
+            IterativeSolver kineticSolver = new(errorFunc)
             {
-                // Valid solution
-                if (Math.Abs(prevError) <= errorTolerance)
-                {
-                    Acceleration = CalcAccelVector(gravityForceVector, normalForceVector, _normalForce, mass);
-                    return;
-                }
+                InitialStepSize = 0.01,
+                MaxSteps = 100,
+                SuccessErrorThreshold = 0.01
+            };
 
-                _normalForce += stepSize; // Change by the stepsize
+            _normalForce = kineticSolver.Solve(_normalForce);
 
-                newError = CalcAccelVectorError(CalcAccelVector(gravityForceVector, normalForceVector, _normalForce, mass), [.. normalForceVector]);
-
-                ratio = (prevError - newError) / stepSize; // Ratio between change in k and error
-                stepSize = newError / (ratio * 2.0);
-                prevError = newError;
+            if (kineticSolver.SolutionValid)
+            {
+                Acceleration = CalcAccelVector(gravityForceVector, normalForceVector, _normalForce, mass);
             }
-
-            _normalForce = startingValue; // Solution has failed. Reset to starting. 
-
         } //iterative solution
-        private static double[] CalcAccelVector(DenseVector gravityForceVector, DenseVector normalForceVector, double normalForce, double mass)
+        private static Vector3 CalcAccelVector(Vector3 gravityForceVector, Vector3 normalForceVector, double normalForce, double mass)
         {
             // accel = (Gravity Force + NormalForce) / mass
-
-            DenseVector output = (gravityForceVector + (normalForceVector * normalForce)) / mass;
-            return [.. output];
+            return (gravityForceVector + (normalForceVector * normalForce)) / mass;
         }
-        private static double CalcAccelVectorError(double[] accelVector, double[] normalForceVector)
+        
+        private static double CalcAccelVectorError(Vector3 accelVector, Vector3 normalForceVector)
         {
             // Vectors should be perpendicular (dot product = 0), error is any value produced
-
-            double output = 0;
-
-            for (int i = 0; i < accelVector.Length; i++)
-            {
-                output += accelVector[i] * normalForceVector[i];
-            }
-
-            return output;
+            return accelVector.Dot(normalForceVector);
         }
     }
 }

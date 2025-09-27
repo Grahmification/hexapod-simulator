@@ -55,7 +55,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Margin="50,5,5,5" VerticalAlignment="Center" Text="X [mm]:"/>
-                <TextBox Grid.Column="1" Margin="10,2,10,2" Text="{Binding DefaultPositionTemp[0], StringFormat=\{0:N1\}}"/>
+                <TextBox Grid.Column="1" Margin="10,2,10,2" Text="{Binding DefaultPositionTemp.X, StringFormat=\{0:N1\}}"/>
             </Grid>
 
             <Grid Grid.Row="5">
@@ -64,7 +64,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Margin="50,5,5,5" VerticalAlignment="Center" Text="Y [mm]:"/>
-                <TextBox Grid.Column="1" Margin="10,2,10,2" Text="{Binding DefaultPositionTemp[1], StringFormat=\{0:N1\}}"/>
+                <TextBox Grid.Column="1" Margin="10,2,10,2" Text="{Binding DefaultPositionTemp.Y, StringFormat=\{0:N1\}}"/>
             </Grid>
 
             <Grid Grid.Row="6">
@@ -73,7 +73,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Margin="50,5,5,5" VerticalAlignment="Center" Text="Z [mm]:"/>
-                <TextBox Grid.Column="1" Margin="10,2,10,2" Text="{Binding DefaultPositionTemp[2], StringFormat=\{0:N1\}}"/>
+                <TextBox Grid.Column="1" Margin="10,2,10,2" Text="{Binding DefaultPositionTemp.Z, StringFormat=\{0:N1\}}"/>
             </Grid>
 
             <Button Grid.Row="7" Content="Apply" Width="80" HorizontalAlignment="Center" Margin="5" Command="{Binding UpdateConfigCommand}"/>

@@ -1,4 +1,6 @@
-﻿namespace Hexapod_Simulator.Shared
+﻿using GFunctions.Mathnet;
+
+namespace Hexapod_Simulator.Shared
 {
     /// <summary>
     /// Generic definition of a ball that can be used in the 3D space simulation
@@ -13,22 +15,22 @@
         /// <summary>
         /// PRY rotation about centerpoint [deg]
         /// </summary>
-        double[] Angle { get; }
+        RotationPRY Angle { get; }
 
         /// <summary>
         /// XYZ position of centerpoint [m]
         /// </summary>
-        double[] Position { get; }
+        Vector3 Position { get; }
 
         /// <summary>
         /// XYZ velocity of centerpoint [m/s]
         /// </summary>
-        double[] Velocity { get; }
+        Vector3 Velocity { get; }
 
         /// <summary>
         /// XYZ accel of centerpoint [m/s/s]
         /// </summary>
-        double[] Acceleration { get; }
+        Vector3 Acceleration { get; }
 
         /// <summary>
         /// Ball radius [m]
@@ -55,12 +57,12 @@
         /// </summary>
         /// <param name="timeIncrement">The simulation time step</param>
         /// <param name="normalForceVector">Normal vector of the surface the ball is on</param>
-        void CalculateTimeStep(double timeIncrement, double[] normalForceVector);
+        void CalculateTimeStep(double timeIncrement, Vector3 normalForceVector);
 
         /// <summary>
         /// Updates the ball's global coordinates
         /// </summary>
         /// <param name="globalCoords">The global position coordinates [X,Y,Z]</param>
-        void UpdateGlobalCoords(double[] globalCoords);
+        void UpdateGlobalCoords(Vector3 globalCoords);
     }
 }

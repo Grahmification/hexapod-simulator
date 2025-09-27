@@ -11,7 +11,7 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// The absolute transformation of the ball
         /// </summary>
-        public Transform3D Transform => new TranslateTransform3D(BallModel.Position[0], BallModel.Position[1], BallModel.Position[2]);
+        public Transform3D Transform => new TranslateTransform3D(BallModel.Position.X, BallModel.Position.Y, BallModel.Position.Z);
 
         /// <summary>
         /// The radius of the ball in [mm]
@@ -26,28 +26,16 @@ namespace Hexapod_Simulator.Helix.ViewModels
         /// <summary>
         /// default constructor
         /// </summary>
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public BallVM()
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            InitializeModel(new BallModelLocal(0.005, 9800, new double[] { 0, 0, 0 }));
+            BallModel = new BallModelLocal(0.005, 9800, new(0, 0, 0));
+            BallModel.RedrawRequired += OnRedrawRequired;
         }
 
         /// <summary>
         /// Allows setting a predefined ball model
         /// </summary>
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public BallVM(IBall ballModel)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        {
-            InitializeModel(ballModel);
-        }
-
-        /// <summary>
-        /// Properly sets up the model within the class
-        /// </summary>
-        /// <param name="ballModel">The ball model</param>
-        private void InitializeModel(IBall ballModel)
         {
             BallModel = ballModel;
             BallModel.RedrawRequired += OnRedrawRequired;

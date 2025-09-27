@@ -16,7 +16,7 @@ namespace Hexapod_Simulator.Shared
         /// </summary>
         public override ActuatorTypes ActuatorType => ActuatorTypes.Rotary;
 
-        public RotaryActuator(double armRadius, double armAngle, double linkLength, double[] position, double[] linkEndPosition) : base(180, linkLength, position, linkEndPosition)
+        public RotaryActuator(double armRadius, double armAngle, double linkLength, Vector3 position, Vector3 linkEndPosition) : base(180, linkLength, position, linkEndPosition)
         {
             _armLength = armRadius;
             _armAngle = armAngle;
@@ -24,7 +24,12 @@ namespace Hexapod_Simulator.Shared
             _maxTravel = 180; //done this way so everything doesn't calculate
             _minTravel = -180; //done this way so everything doesn't calculate
 
-            Solver = new IterativeSolver(0.01, 100, 0.001, ComputeError, _maxTravel, _minTravel);
+            Solver = new IterativeSolver(ComputeError)
+            {
+                InitialStepSize = 0.01,
+                MaxSteps = 100,
+                SuccessErrorThreshold = 0.001,
+            };
 
             CalculateMotorAngle();
         }
@@ -34,12 +39,11 @@ namespace Hexapod_Simulator.Shared
         /// </summary>
         protected override void CalculateArmEndCoords()
         {
-            double[] localCoord = [_armLength, 0, 0];
-            double[] translation = _position;
-            double[] rotation = [TravelPosition, 0, _armAngle];
+            Vector3 localCoord = new(_armLength, 0, 0);
+            Vector3 translation = _position;
+            RotationPRY rotation = new(TravelPosition, 0, _armAngle);
 
-            double[] coords = KinematicMath.CalcGlobalCoord(localCoord, translation, [0, 0, 0], rotation);
-            ArmEndPosition = coords;
+            ArmEndPosition = KinematicMath.CalcGlobalCoord(localCoord, translation, new(0, 0, 0), rotation);
         }
         
         /// <summary>

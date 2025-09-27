@@ -9,8 +9,8 @@
     <Nullable>enable</Nullable>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <ApplicationIcon>Resources\app_256px.ico</ApplicationIcon>
-    <FileVersion>1.1.0.0</FileVersion>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\app_256px.ico" />
@@ -23,7 +23,7 @@
     <PackageReference Include="HelixToolkit" Version="2.27.3" />
     <PackageReference Include="HelixToolkit.Wpf" Version="2.27.3" />
     <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hexapod Simulator.Shared\Hexapod Simulator.Shared.csproj" />
@@ -31,6 +31,9 @@
   <ItemGroup>
     <Reference Include="GFunctions">
       <HintPath>..\Dependencies\GFunctions.dll</HintPath>
+    </Reference>
+    <Reference Include="GFunctions.Mathnet">
+      <HintPath>..\Dependencies\GFunctions.Mathnet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

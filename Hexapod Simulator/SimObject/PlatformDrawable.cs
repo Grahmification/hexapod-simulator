@@ -1,4 +1,5 @@
-﻿using GFunctions.OpenTK;
+﻿using GFunctions.Mathnet;
+using GFunctions.OpenTK;
 using Hexapod_Simulator.Shared;
 
 namespace Hexapod_Simulator.SimObject
@@ -7,9 +8,9 @@ namespace Hexapod_Simulator.SimObject
     {
         public bool IsDrawn { get; set; }
 
-        public PlatformDrawable(string name, double radius, double jointAngle, double[]? defaultPos = null) : base(name, radius, jointAngle, defaultPos)
+        public PlatformDrawable(string name, double radius, double jointAngle, Vector3? defaultPos = null) : base(name, radius, jointAngle, defaultPos)
         {
-            this.IsDrawn = true;
+            IsDrawn = true;
         }
 
         public void Draw()
@@ -20,20 +21,20 @@ namespace Hexapod_Simulator.SimObject
                 {
                     for (int i = 0; i < 6; i++)
                     {
-                        GLObjects.Cube(System.Drawing.Color.Red, this.GlobalJointCoords[i], 1);
+                        GLObjects.Cube(Color.Red, GlobalJointCoords[i].ToArray(), 1);
 
                         if (i != 5)
                         {
-                            GLObjects.Line(Color.Green, this.GlobalJointCoords[i], this.GlobalJointCoords[i + 1]);
+                            GLObjects.Line(Color.Green, GlobalJointCoords[i].ToArray(), GlobalJointCoords[i + 1].ToArray());
                         }
                         else
                         {
-                            GLObjects.Line(Color.Green, this.GlobalJointCoords[i], this.GlobalJointCoords[0]);
+                            GLObjects.Line(Color.Green, GlobalJointCoords[i].ToArray(), GlobalJointCoords[0].ToArray());
                         }
 
                     }
 
-                    GLObjects.Cube(System.Drawing.Color.Yellow, this.AbsRotationCenter, 1);
+                    GLObjects.Cube(Color.Yellow, AbsRotationCenter.ToArray(), 1);
                 }
             }
         }

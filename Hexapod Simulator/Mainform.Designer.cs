@@ -208,18 +208,9 @@ namespace Hexapod_Simulator
             control_ManualDrag_main.Location = new Point(7, 7);
             control_ManualDrag_main.Margin = new Padding(5, 3, 5, 3);
             control_ManualDrag_main.Name = "control_ManualDrag_main";
-            control_ManualDrag_main.Position = new double[]
-    {
-    0D,
-    0D,
-    0D
-    };
-            control_ManualDrag_main.Rotation = new double[]
-    {
-    0D,
-    0D,
-    0D
-    };
+            control_ManualDrag_main.Position = new();
+            control_ManualDrag_main.Rotation = new();
+
             control_ManualDrag_main.Size = new Size(275, 247);
             control_ManualDrag_main.TabIndex = 1;
             // 

@@ -9,6 +9,423 @@
             A class for saving and loading program settings to a file
             </summary>
         </member>
+        <member name="F:GFunctions.IO.Config.settingNames">
+            <summary>
+            Do not directly set this - for serializer
+            </summary>
+        </member>
+        <member name="F:GFunctions.IO.Config.settingValues">
+            <summary>
+            Do not directly set this - for serializer
+            </summary>
+        </member>
+        <member name="F:GFunctions.IO.Config.DefaultFolderPath">
+            <summary>
+            The default relative folder for saving settings
+            </summary>
+        </member>
+        <member name="F:GFunctions.IO.Config.FileName">
+            <summary>
+            Name of the configuration file
+            </summary>
+        </member>
+        <member name="F:GFunctions.IO.Config.FileNameDefault">
+            <summary>
+            Name of the default configuration file.
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.Config.FolderPath">
+            <summary>
+            An optional folder path if desired to save config files at a location other than with the application, can be absolute or relative
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.Config.Instance">
+            <summary>
+            Globally accessable instance of the loaded configuration
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.Config.#ctor">
+            <summary>
+            Empty constructor for XmlSerializer
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.Config.DataExists(System.String)">
+            <summary>
+            Checks if config data exists
+            </summary>
+            <param name="folderPath">Optional folder path to check, defaults to <see cref="F:GFunctions.IO.Config.DefaultFolderPath"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.IO.Config.Load(System.String)">
+            <summary>
+            Loads the configuration from file.
+            </summary>
+            <param name="folderPath">Optional folder path to check, defaults to <see cref="F:GFunctions.IO.Config.DefaultFolderPath"/></param>
+        </member>
+        <member name="M:GFunctions.IO.Config.LoadDefault(System.String)">
+            <summary>
+            Loads the default configuration from file.
+            </summary>
+            <param name="folderPath">Optional folder path to check, defaults to <see cref="F:GFunctions.IO.Config.DefaultFolderPath"/></param>
+        </member>
+        <member name="M:GFunctions.IO.Config.LoadDoWork(System.String,System.String)">
+            <summary>
+            Loads a configuration file - Called by both functions
+            </summary>
+            <param name="fileName">The filename to load</param>
+            <param name="folderPath">Optional folder path to check</param>
+        </member>
+        <member name="M:GFunctions.IO.Config.Save">
+            <summary>
+            Saves the configuration to a file.
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.Config.AddSetting(System.String,System.Object)">
+            <summary>
+            Adds a setting
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <param name="value">Setting value. Can be types: string, double, int, or Lists of each</param>
+        </member>
+        <member name="M:GFunctions.IO.Config.DeleteSetting(System.String)">
+            <summary>
+            Attempts to delete a setting
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+        </member>
+        <member name="M:GFunctions.IO.Config.SettingExists(System.String)">
+            <summary>
+            Checks if a setting exists
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <returns></returns>
+        </member>
+        <member name="M:GFunctions.IO.Config.SetSetting(System.String,System.Object)">
+            <summary>
+            Sets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <param name="value">Setting value. Can be types: string, double, int, or Lists of each</param>
+            <exception cref="T:System.Exception">The setting didn't exist</exception>
+        </member>
+        <member name="M:GFunctions.IO.Config.SetSetting(System.String,System.String)">
+            <summary>
+            Sets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <param name="value">The setting value</param>
+        </member>
+        <member name="M:GFunctions.IO.Config.SetSetting(System.String,System.Int32)">
+            <summary>
+            Sets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <param name="value">The setting value</param>
+        </member>
+        <member name="M:GFunctions.IO.Config.SetSetting(System.String,System.Double)">
+            <summary>
+            Sets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <param name="value">The setting value</param>
+        </member>
+        <member name="M:GFunctions.IO.Config.SetSetting(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Sets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <param name="value">The setting value</param>
+        </member>
+        <member name="M:GFunctions.IO.Config.SetSetting(System.String,System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Sets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <param name="value">The setting value</param>
+        </member>
+        <member name="M:GFunctions.IO.Config.SetSetting(System.String,System.Collections.Generic.List{System.Double})">
+            <summary>
+            Sets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <param name="value">The setting value</param>
+        </member>
+        <member name="M:GFunctions.IO.Config.GetSetting(System.String)">
+            <summary>
+            Gets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <returns>The setting value as an object</returns>
+            <exception cref="T:System.Exception">The setting didn't exist</exception>
+        </member>
+        <member name="M:GFunctions.IO.Config.GetSettingInt(System.String)">
+            <summary>
+            Gets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <returns>The setting value</returns>
+        </member>
+        <member name="M:GFunctions.IO.Config.GetSettingDouble(System.String)">
+            <summary>
+            Gets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <returns>The setting value</returns>
+        </member>
+        <member name="M:GFunctions.IO.Config.GetSettingString(System.String)">
+            <summary>
+            Gets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <returns>The setting value</returns>
+        </member>
+        <member name="M:GFunctions.IO.Config.GetSettingListInt(System.String)">
+            <summary>
+            Gets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <returns>The setting value</returns>
+        </member>
+        <member name="M:GFunctions.IO.Config.GetSettingListDouble(System.String)">
+            <summary>
+            Gets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <returns>The setting value</returns>
+        </member>
+        <member name="M:GFunctions.IO.Config.GetSettingListString(System.String)">
+            <summary>
+            Gets a setting value
+            </summary>
+            <param name="settingName">Unique name of the setting</param>
+            <returns>The setting value</returns>
+        </member>
+        <member name="T:GFunctions.IO.CSVFormattedData">
+            <summary>
+            Formatted data which can be written to or read from a csv file
+            </summary>
+        </member>
+        <member name="F:GFunctions.IO.CSVFormattedData.Delimiter">
+            <summary>
+            The delimiter for items in the file
+            </summary>
+        </member>
+        <member name="F:GFunctions.IO.CSVFormattedData.HeaderEndString">
+            <summary>
+            CSV Line marking the end of the metadata region header
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVFormattedData.MetaData">
+            <summary>
+            Metadata fields at the top of the csv file
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVFormattedData.DataHeaders">
+            <summary>
+            Contains the data column headers
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVFormattedData.Data">
+            <summary>
+            Contains the list of data, with each row as a list item
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.CSVFormattedData.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.CSVFormattedData.#ctor(System.Collections.Generic.List{GFunctions.IO.ICSVWriteable},System.Collections.Generic.List{GFunctions.IO.CSVMetaData})">
+            <summary>
+            Construct from data classes
+            </summary>
+            <param name="data">List of data items to write</param>
+            <param name="metaData">Metadata fields to go at the top of the file</param>
+            <exception cref="T:System.DataMisalignedException"></exception>
+        </member>
+        <member name="M:GFunctions.IO.CSVFormattedData.WriteToFile(GFunctions.IO.CSVWriter)">
+            <summary>
+            Writes the class to a csv file
+            </summary>
+            <param name="writer">Writer to write the file</param>
+        </member>
+        <member name="M:GFunctions.IO.CSVFormattedData.GetFromFile(GFunctions.IO.CSVReader)">
+            <summary>
+            Reads in formatted data from a csv file
+            </summary>
+            <param name="reader">Reader with an open file</param>
+            <returns>Data in the file</returns>
+            <exception cref="T:System.IO.IOException">No file is opened</exception>
+            <exception cref="T:System.FormatException">The file is formatted incorrectly</exception>
+        </member>
+        <member name="M:GFunctions.IO.CSVFormattedData.ReadMetaData(GFunctions.IO.CSVReader)">
+            <summary>
+            Reads the metadata fields for a formatted csv, including the header end line
+            </summary>
+            /// <param name="reader">CSV reader class</param>
+            <returns>List of metadata rows [name, value]</returns>
+            <exception cref="T:System.IO.IOException">No file is opened</exception>
+            <exception cref="T:System.FormatException">The file is formatted incorrectly</exception>
+        </member>
+        <member name="T:GFunctions.IO.CSVMetaData">
+            <summary>
+            Metadata which goes at the top of a csv file
+            </summary>
+            <param name="name">Name of the field</param>
+            <param name="value">The value</param>
+        </member>
+        <member name="M:GFunctions.IO.CSVMetaData.#ctor(System.String,System.String)">
+            <summary>
+            Metadata which goes at the top of a csv file
+            </summary>
+            <param name="name">Name of the field</param>
+            <param name="value">The value</param>
+        </member>
+        <member name="P:GFunctions.IO.CSVMetaData.Name">
+            <summary>
+            The field name
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVMetaData.Value">
+            <summary>
+            The field value
+            </summary>
+        </member>
+        <member name="T:GFunctions.IO.CSVReader">
+            <summary>
+            Class to simplify reading from csv files
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVReader.Delimiter">
+            <summary>
+            The delimiter for items in the file
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVReader.FilePath">
+            <summary>
+            Full path of the file being read from
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVReader.WaitingForFile">
+            <summary>
+            True if the class is waiting to open a file
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVReader.IsFileOpen">
+            <summary>
+            Returns true of the reader has a file open
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVReader.MoreLinesToRead">
+            <summary>
+            Returns true if there are more lines that can be read
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.CSVReader.Open(System.String,System.String,System.Boolean)">
+            <summary>
+            Open a csv file, waiting if it does not exist
+            </summary>
+            <param name="folder">Folder path containing the file</param>
+            <param name="fileName">File name</param>
+            <param name="waitForFile">If true, the method will hang until the file exists or the search is cancelled</param>
+        </member>
+        <member name="M:GFunctions.IO.CSVReader.Open(System.String,System.Boolean)">
+            <summary>
+            Open a csv file, waiting if it does not exist
+            </summary>
+            <param name="filePath">File path to the csv file</param>
+            <param name="waitForFile">If true, the method will hang until the file exists or the search is cancelled</param>
+        </member>
+        <member name="M:GFunctions.IO.CSVReader.Close(System.Boolean)">
+            <summary>
+            Close the csv file
+            </summary>
+            <param name="deleteFile">Deletes the file if true</param>
+        </member>
+        <member name="M:GFunctions.IO.CSVReader.CancelWaitForFile">
+            <summary>
+            If waiting to open a csv file that doesn't exist, cancels the process
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.CSVReader.ReadLine">
+            <summary>
+            Reads the latest line from the csv file
+            </summary>
+            <returns>The complete line</returns>
+            <exception cref="T:System.IO.IOException">No file is opened</exception>
+        </member>
+        <member name="M:GFunctions.IO.CSVReader.ReadAllLines">
+            <summary>
+            Reads all unread lines from the csv file
+            </summary>
+            <returns>A list of lines in the file</returns>
+            <exception cref="T:System.IO.IOException">No file is opened</exception>
+        </member>
+        <member name="M:GFunctions.IO.CSVReader.SplitLine(System.String)">
+            <summary>
+            Splits a csv line into individual items
+            </summary>
+            <param name="line">The whole csv line</param>
+            <returns>The individual fields</returns>
+        </member>
+        <member name="M:GFunctions.IO.CSVReader.WaitForFile(System.String,System.Int32)">
+            <summary>
+            Hangs until a file exists
+            </summary>
+            <param name="fullPath">The file paths</param>
+            <param name="reCheckPeriod">How often to re-check for the file [ms]</param>
+        </member>
+        <member name="T:GFunctions.IO.CSVWriter">
+            <summary>
+            Class to simplify writing to csv files
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVWriter.Delimiter">
+            <summary>
+            The delimiter for items in the file
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVWriter.FileName">
+            <summary>
+            File name of the file being written to
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVWriter.FilePath">
+            <summary>
+            Full path of the file being written to
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.CSVWriter.IsFileOpen">
+            <summary>
+            Returns true of the writer has a file open
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.CSVWriter.#ctor(System.String,System.String)">
+            <summary>
+            Opens the csv file which will be written to
+            </summary>
+            <param name="folder">Folder containing the file</param>
+            <param name="fileName">Name of the file</param>
+        </member>
+        <member name="M:GFunctions.IO.CSVWriter.Close">
+            <summary>
+            Closes the csv file
+            </summary>
+        </member>
+        <member name="M:GFunctions.IO.CSVWriter.WriteLine(System.String[])">
+            <summary>
+            Writes a line to the csv file
+            </summary>
+            <param name="lineItems">Fields in the line</param>
+            <exception cref="T:System.IO.IOException">No file is open.</exception>
+        </member>
+        <member name="M:GFunctions.IO.CSVWriter.WriteLines(System.Collections.Generic.List{System.String[]})">
+            <summary>
+            Writes multiple lines to the csv file
+            </summary>
+            <param name="lines">A list of lines containing fields</param>
+            <exception cref="T:System.IO.IOException">No file is open.</exception>
+        </member>
         <member name="T:GFunctions.IO.IExceptionLogger">
             <summary>
             Generic definition of an exception logging class
@@ -38,6 +455,21 @@
             </summary>
             <param name="ex">Exception to log</param>
         </member>
+        <member name="T:GFunctions.IO.ICSVWriteable">
+            <summary>
+            Generic definition for a class that can be saved to as csv file
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.ICSVWriteable.DataRowFields">
+            <summary>
+            A list of data rows that can be saved to the csv file
+            </summary>
+        </member>
+        <member name="P:GFunctions.IO.ICSVWriteable.HeaderFields">
+            <summary>
+            The data column headers to be written to the csv file
+            </summary>
+        </member>
         <member name="T:GFunctions.IO.IOHelpers">
             <summary>
             Helper functions for creating, reading and writing files
@@ -57,7 +489,13 @@
             <param name="nowDateOverride">Override for the current time</param>
             <returns>The formatted time stamp string</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:GFunctions.IO.IOHelpers.DateTimeStamp(System.Nullable{System.DateTime})" -->
+        <member name="M:GFunctions.IO.IOHelpers.DateTimeStamp(System.Nullable{System.DateTime})">
+            <summary>
+            Gets a date and time stamp string yy-mm-dd xxhyymzzs
+            </summary>
+            <param name="nowDateOverride">Override for the current time</param>
+            <returns>The formatted date and time stamp string</returns>
+        </member>
         <member name="M:GFunctions.IO.IOHelpers.CreateExportFolder(System.String,System.String)">
             <summary>
             Checks if a folder exists and creates a new one if not
@@ -65,6 +503,15 @@
             <param name="basePath">The path where to create the folder</param>
             <param name="folderName">The name of the folder</param>
             <returns>The created or existing folder's information</returns>
+        </member>
+        <member name="M:GFunctions.IO.IOHelpers.PrepareSaveFilePath(System.String,System.String)">
+            <summary>
+            Prepare a path for saving a file. Create folders if needed and change the name to prevent duplicates
+            </summary>
+            <param name="filePath">The full filepath</param>
+            <param name="validateExtension">Check if the file has a valid extension (".csv")</param>
+            <returns></returns>
+            <exception cref="T:System.FormatException"></exception>
         </member>
         <member name="T:GFunctions.IO.Logger">
             <summary>
@@ -111,14 +558,6 @@
             </summary>
             <param name="text">The text to include inside the block</param>
         </member>
-        <member name="M:GFunctions.IO.Paths.BuildFullFilePath(System.String,System.String)">
-            <summary>
-            Returns the filename, or optionally with the folder as a full path if specifed
-            </summary>
-            <param name="fileName">The filename</param>
-            <param name="folderPath">The optional folder path</param>
-            <returns>The filename, or full path with folder</returns>
-        </member>
         <member name="T:GFunctions.IO.XMLSerializer`1">
             <summary>
             Allows easily reading and writing data to an xml file
@@ -129,8 +568,8 @@
             <summary>
             Load a class from a file
             </summary>
+            <param name="folderPath">The folder path</param>
             <param name="fileName">The file name to load</param>
-            <param name="folderPath">An optional folder path</param>
             <returns>The instance of the class in the file, or an empty version of the class</returns>
         </member>
         <member name="M:GFunctions.IO.XMLSerializer`1.Save(System.String,System.String,`0)">
@@ -174,31 +613,86 @@
         </member>
         <member name="T:GFunctions.Mathematics.IterativeSolver">
             <summary>
-            Uses gradient descent to find an optimal value that minimizes error a function
+            Uses gradient descent to find an optimal value that minimizes error of a function with 1 input and 1 output value
             </summary>
         </member>
-        <member name="T:GFunctions.Mathematics.IterativeSolver.DoubleFunction">
+        <member name="T:GFunctions.Mathematics.IterativeSolver.ErrorFunction1D">
             <summary>
             Template for the function used to calculate the error
             </summary>
-            <param name="param1">Generic input parameter</param>
+            <param name="iterationValue">Input value being optimized</param>
             <returns>The error</returns>
+        </member>
+        <member name="F:GFunctions.Mathematics.IterativeSolver._errorFunction">
+            <summary>
+            Function which calculates the error
+            </summary>
+        </member>
+        <member name="F:GFunctions.Mathematics.IterativeSolver._iterationValues">
+            <summary>
+            Keeps track of solution values as the solver runs
+            </summary>
+        </member>
+        <member name="F:GFunctions.Mathematics.IterativeSolver._errorValues">
+            <summary>
+            Keeps track of solution values as the solver runs
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.IterativeSolver.MaxSteps">
+            <summary>
+            The max allowable iteration steps before solution fails
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.IterativeSolver.MaxSolutionValue">
+            <summary>
+            Max allowable output value before the solution fails
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.IterativeSolver.MinSolutionValue">
+            <summary>
+            Min allowable output value before the solution fails
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.IterativeSolver.SolutionLimitsEnabled">
+            <summary>
+            Whether max/min solution limits are enabled
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.IterativeSolver.InitialStepSize">
+            <summary>
+            The initial step size to test when solving
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.IterativeSolver.SuccessErrorThreshold">
+            <summary>
+            A solution is considered valid if the absolute error is less than this value
+            </summary>
         </member>
         <member name="P:GFunctions.Mathematics.IterativeSolver.SolutionValid">
             <summary>
             Whether a valid solution was found
             </summary>
         </member>
-        <member name="M:GFunctions.Mathematics.IterativeSolver.#ctor(System.Double,System.Double,System.Double,GFunctions.Mathematics.IterativeSolver.DoubleFunction,System.Double,System.Double)">
+        <member name="P:GFunctions.Mathematics.IterativeSolver.Solving">
+            <summary>
+            True if the solver is actively running a solution
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.IterativeSolver.IterationValues">
+            <summary>
+            The list of iterated input values from earliest to latest as the solver runs
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.IterativeSolver.ErrorValues">
+            <summary>
+            The list of iterated error values from earliest to latest as the solver runs
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathematics.IterativeSolver.#ctor(GFunctions.Mathematics.IterativeSolver.ErrorFunction1D)">
             <summary>
             Default constructor
             </summary>
-            <param name="stepSize">The step at each iteration</param>
-            <param name="maxSteps">The max steps before a solution fails</param>
-            <param name="errorTolerance">The error tolerance for successful solution</param>
             <param name="errorFunc">Function which will calculate the error</param>
-            <param name="maxValue">Solution will fail if this value is exceeded</param>
-            <param name="minValue">Solution will fail if this value is exceeded</param>
         </member>
         <member name="M:GFunctions.Mathematics.IterativeSolver.Solve(System.Double)">
             <summary>
@@ -212,6 +706,26 @@
             Model of a PID controller
             </summary>
         </member>
+        <member name="P:GFunctions.Mathematics.PIDController.Gain">
+            <summary>
+            Global controller gain
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.PIDController.P">
+            <summary>
+            Proportional gain
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.PIDController.I">
+            <summary>
+            Integral gain
+            </summary>
+        </member>
+        <member name="P:GFunctions.Mathematics.PIDController.D">
+            <summary>
+            Derivative gain
+            </summary>
+        </member>
         <member name="P:GFunctions.Mathematics.PIDController.SatLimit">
             <summary>
             Limits max/min output value of controller, 0 = no limit
@@ -219,8 +733,17 @@
         </member>
         <member name="P:GFunctions.Mathematics.PIDController.TargetIsolatedDerivative">
             <summary>
-            If True, d is calculated from output change, not error change (isolating it from setpoint changes)
+            If True, d is calculated from feedback change, not error change (isolating it from setpoint changes)
             </summary>
+        </member>
+        <member name="M:GFunctions.Mathematics.PIDController.#ctor(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="p">Proportional gain</param>
+            <param name="i">Integral gain</param>
+            <param name="d">Derivative gain</param>
+            <param name="saturationLimit">Limits max/min output value of controller, 0 = no limit</param>
         </member>
         <member name="M:GFunctions.Mathematics.PIDController.SetTarget(System.Double)">
             <summary>
@@ -232,9 +755,89 @@
             <summary>
             Computes one cycle of the controller, calculating the output value
             </summary>
-            <param name="processVar">The feedback value from the system, used to calculate error</param>
+            <param name="feedbackValue">The feedback value from the system, used to calculate error</param>
             <param name="timeStep">The delta t value</param>
             <returns>The controller output</returns>
+        </member>
+        <member name="T:GFunctions.Mathematics.TrapezoidalTrajectory">
+            <summary>
+            Calculations for a trapezoidal velocity motion trajectory
+            </summary>
+        </member>
+        <member name="M:GFunctions.Mathematics.TrapezoidalTrajectory.AccelDistance(System.Double,System.Double,System.Double)">
+            <summary>
+            Calculate the distance required to accelerate
+            </summary>
+            <param name="moveDist">Total trajectory distance</param>
+            <param name="maxSpeed">Maximum trajectory speed</param>
+            <param name="accel">Trajectory acceleration</param>
+            <returns>The distance for acceleration to occur</returns>
+        </member>
+        <member name="M:GFunctions.Mathematics.TrapezoidalTrajectory.AccelTime(System.Double,System.Double,System.Double)">
+            <summary>
+            Calculate the time required to accelerate
+            </summary>
+            <param name="moveDist">Total trajectory distance</param>
+            <param name="maxSpeed">Maximum trajectory speed</param>
+            <param name="accel">Trajectory acceleration</param>
+            <returns>The time for acceleration to occur</returns>
+        </member>
+        <member name="M:GFunctions.Mathematics.TrapezoidalTrajectory.MaxSpeedDistance(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Calculate the distance at maximum trajectory speed
+            </summary>
+            <param name="moveDist">Total trajectory distance</param>
+            <param name="maxSpeed">Maximum trajectory speed</param>
+            <param name="accel">Trajectory acceleration</param>
+            <param name="decel">Trajectory deceleration</param>
+            <returns>The distance spent at maximum speed</returns>
+        </member>
+        <member name="M:GFunctions.Mathematics.TrapezoidalTrajectory.MaxSpeedTime(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Calculate the time at maximum trajectory speed
+            </summary>
+            <param name="moveDist">Total trajectory distance</param>
+            <param name="maxSpeed">Maximum trajectory speed</param>
+            <param name="accel">Trajectory acceleration</param>
+            <param name="decel">Trajectory deceleration</param>
+            <returns>The time spent at maximum speed</returns>
+        </member>
+        <member name="M:GFunctions.Mathematics.TrapezoidalTrajectory.TrapezoidalProfileTime(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Calculate total time for a trapezoidal trajectory
+            </summary>
+            <param name="moveDist">Total trajectory distance</param>
+            <param name="maxSpeed">Maximum trajectory speed</param>
+            <param name="accel">Trajectory acceleration</param>
+            <param name="decel">Trajectory deceleration</param>
+            <returns>The total trajectory time</returns>
+        </member>
+        <member name="T:GFunctions.Process.IViewLock">
+            <summary>
+            Generic definition for a controller connected to a view that supports locking out
+            </summary>
+        </member>
+        <member name="P:GFunctions.Process.IViewLock.ViewLocker">
+            <summary>
+            The local object that controls reporting back to the <see cref="T:GFunctions.Process.ViewLockController"/>
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.IViewLock.ReleaseView">
+            <summary>
+            Cancels any long running processes associated with the connected view
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.IViewLock.AllowViewUse(System.Boolean)">
+            <summary>
+            Enables or disables use of the connected view
+            </summary>
+            <param name="enabled">True to enable the view</param>
+        </member>
+        <member name="T:GFunctions.Process.ProcessControllerBase`1">
+            <summary>
+            Base definition for a class which manages a process running in the background
+            </summary>
+            <typeparam name="T">Argument to pass into the background process when it starts</typeparam>
         </member>
         <member name="P:GFunctions.Process.ProcessControllerBase`1.Running">
             <summary>
@@ -271,7 +874,7 @@
             <summary>
             Starts the process
             </summary>
-            <param name="ProcessArgs">Arguments to be passed into the process</param>
+            <param name="processArgs">Arguments to be passed into the process</param>
             <returns></returns>
         </member>
         <member name="M:GFunctions.Process.ProcessControllerBase`1.Stop">
@@ -290,15 +893,21 @@
             <summary>
             Gets called by the primary background work process
             </summary>
+            <param name="processArgs">Misc arguments to be passed into the process</param>
+            <param name="progress">Progress reporter for the process</param>
+            <param name="cToken">Cancellation token for the process</param>
         </member>
         <member name="M:GFunctions.Process.ProcessControllerBase`1.DoCleanup(`0,System.IProgress{GFunctions.Process.ProcessProgressArgs},System.Threading.CancellationToken)">
             <summary>
             Gets called by the primary background work process in the finally block
+            <param name="processArgs">Misc arguments to be passed into the process</param>
+            <param name="progress">Progress reporter for the process</param>
+            <param name="cToken">Cancellation token for the process</param>
             </summary>
         </member>
         <member name="M:GFunctions.Process.ProcessControllerBase`1.OnProgress(GFunctions.Process.ProcessProgressArgs)">
             <summary>
-            Gets called whenever progress is updated by the background process
+            Gets called in the foreground thread whenever progress is updated by the background process
             </summary>
             <param name="progArgs">Information about the progress</param>
         </member>
@@ -306,12 +915,12 @@
             <summary>
             Primary method for doing work in the background
             </summary>
-            <param name="ProcessArgs">Misc arguments to be passed into the process</param>
-            <param name="Progress">Progress reporter for the process</param>
+            <param name="processArgs">Misc arguments to be passed into the process</param>
+            <param name="progress">Progress reporter for the process</param>
             <param name="cToken">Cancellation token for the process</param>
             <returns></returns>
         </member>
-        <member name="M:GFunctions.Process.ProcessControllerBase`1._onProgress(GFunctions.Process.ProcessProgressArgs)">
+        <member name="M:GFunctions.Process.ProcessControllerBase`1._OnProgress(GFunctions.Process.ProcessProgressArgs)">
             <summary>
             Private helper which gets called by process progressReporter
             </summary>
@@ -368,9 +977,194 @@
             Tags to describe the running state of a process
             </summary>
         </member>
+        <member name="F:GFunctions.Process.ProcessStatus.Running">
+            <summary>
+            Process is running
+            </summary>
+        </member>
+        <member name="F:GFunctions.Process.ProcessStatus.Idle">
+            <summary>
+            Process is waiting to be started
+            </summary>
+        </member>
+        <member name="F:GFunctions.Process.ProcessStatus.Cancelling">
+            <summary>
+            Process is in the process of cancelling
+            </summary>
+        </member>
+        <member name="F:GFunctions.Process.ProcessStatus.Cancelled">
+            <summary>
+            Process has finished cancelling
+            </summary>
+        </member>
+        <member name="F:GFunctions.Process.ProcessStatus.Complete">
+            <summary>
+            Process has completed succesfully
+            </summary>
+        </member>
+        <member name="F:GFunctions.Process.ProcessStatus.Error">
+            <summary>
+            Process has exited due to an error
+            </summary>
+        </member>
+        <member name="T:GFunctions.Process.ViewLock">
+            <summary>
+            A class that controls locking out an individual view, reporting back to the <see cref="T:GFunctions.Process.ViewLockController"/> about long running processes
+            </summary>
+        </member>
+        <member name="P:GFunctions.Process.ViewLock.ViewInUse">
+            <summary>
+            Returns true if the view is in active use with a long running process
+            </summary>
+        </member>
+        <member name="E:GFunctions.Process.ViewLock.ViewUseChanged">
+            <summary>
+            Notifies that the view has started being in use, potentially locking or releasing other views
+            </summary>
+        </member>
+        <member name="E:GFunctions.Process.ViewLock.ViewReleaseRequest">
+            <summary>
+            Alerts any other views that have an active long running process to stop as soon as possible
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ViewLock.StartViewUse">
+            <summary>
+            Start using this view with a long running process, potentially locking out other views
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ViewLock.EndViewUse">
+            <summary>
+            End using this view with a long running process, potentially unlocking other views
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ViewLock.RequestViewRelease">
+            <summary>
+            Requests any other views that have an active long running process to stop as soon as possible
+            </summary>
+        </member>
+        <member name="T:GFunctions.Process.ViewLockController">
+            <summary>
+            Controller that manages locking/unlocking views when a long running process is running that must block other things
+            </summary>
+        </member>
+        <member name="P:GFunctions.Process.ViewLockController.Controllers">
+            <summary>
+            The list of items that support locking out their view, or have long running processes
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ViewLockController.AddController(GFunctions.Process.IViewLock)">
+            <summary>
+            Adds a controller to be controlled with viewlocking
+            </summary>
+            <param name="controller">The controller to add</param>
+        </member>
+        <member name="M:GFunctions.Process.ViewLockController.RemoveController(GFunctions.Process.IViewLock)">
+            <summary>
+            Removes a controller from ing controlled with viewlocking
+            </summary>
+            <param name="controller">The controller to remove</param>
+        </member>
+        <member name="M:GFunctions.Process.ViewLockController.ReleaseAllViews">
+            <summary>
+            Stops long running processes on all views, for example if a global cancel/error occurs
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ViewLockController.OnViewUseChanged(System.Object,System.Boolean)">
+            <summary>
+            Fires when a view notifies that a long running process has started or stopped
+            </summary>
+            <param name="sender">The sender</param>
+            <param name="e">True if a long running process has started</param>
+        </member>
+        <member name="M:GFunctions.Process.ViewLockController.OnViewReleaseRequest(System.Object,System.EventArgs)">
+            <summary>
+            Fires when a view requests that all others stop their long running processes
+            </summary>
+            <param name="sender">The sender</param>
+            <param name="e">Event args</param>
+        </member>
+        <member name="M:GFunctions.Process.ViewLockController.SetGlobalViewLock">
+            <summary>
+            Locks out all views, except the one with the long running process
+            </summary>
+        </member>
+        <member name="M:GFunctions.Process.ViewLockController.ReleaseGlobalViewLock">
+            <summary>
+            Unlocks all views, allowing user input
+            </summary>
+        </member>
+        <member name="T:GFunctions.ProgramUtils">
+            <summary>
+            Contains various utilities
+            </summary>
+        </member>
+        <member name="P:GFunctions.ProgramUtils.IsDebugExecutable">
+            <summary>
+            Determine if the program executable has been run in debug mode.
+            </summary>
+        </member>
+        <member name="M:GFunctions.ProgramUtils.CheckDebugExecutable(System.Boolean@)">
+            <summary>
+            Returns true if the program executable has been run in debug mode.
+            </summary>
+            <param name="isDebug"></param>
+        </member>
+        <member name="M:GFunctions.ProgramUtils.IsDuplicateExecutable(System.String)">
+            <summary>
+            Determines if the executable is a duplicated (there's already another one running)
+            </summary>
+            <param name="appName">The name of the Executable file (no extension)</param>
+            <returns>True if the app is a duplicate</returns>
+        </member>
+        <member name="F:GFunctions.ProgramUtils._isDuplicateMutex">
+            <summary>
+            Used for determining if a duplicate application is running
+            </summary>
+        </member>
+        <member name="M:GFunctions.ProgramUtils.GetAssemblyVersion(GFunctions.IO.IExceptionLogger)">
+            <summary>
+            Gets the version of the assembly which calls this method
+            </summary>
+            <returns>The version string (ex. 1.0.1)</returns>
+        </member>
+        <member name="T:GFunctions.Timing.ICurrentTimeProvider">
+            <summary>
+            Generic definition for a class that keeps track of the current time
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.ICurrentTimeProvider.IsRunning">
+            <summary>
+            True if the time provider is actively recording time
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.ICurrentTimeProvider.ElapsedSeconds">
+            <summary>
+            The number of seconds since the time provider started counting time
+            </summary>
+        </member>
         <member name="T:GFunctions.Timing.StopWatchPrecision">
             <summary>
             A stopwatch that operations much more accurately than the default <see cref="T:System.Diagnostics.Stopwatch"/> becuase it uses ticks.
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.StopWatchPrecision.IsRunning">
+            <summary>
+            True if the stopwatch is running
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.StopWatchPrecision.ElapsedMilliseconds">
+            <summary>
+            The number of milliseconds since starting
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.StopWatchPrecision.ElapsedSeconds">
+            <summary>
+            The number of seconds since starting
+            </summary>
+        </member>
+        <member name="M:GFunctions.Timing.StopWatchPrecision.#ctor">
+            <summary>
+            Default constructor
             </summary>
         </member>
         <member name="M:GFunctions.Timing.StopWatchPrecision.StartNew">
@@ -381,6 +1175,115 @@
         <member name="M:GFunctions.Timing.StopWatchPrecision.Stop">
             <summary>
             Stop of the stopwatch
+            </summary>
+        </member>
+        <member name="T:GFunctions.Timing.TimeSimulation">
+            <summary>
+            Class for performing a simulation that involves calling a foreground method at a specific time interval
+            </summary>
+        </member>
+        <member name="F:GFunctions.Timing.TimeSimulation._finishedStop">
+            <summary>
+            Flag to notify that background thread has finished
+            </summary>
+        </member>
+        <member name="F:GFunctions.Timing.TimeSimulation._workDoneHandle">
+            <summary>
+            Flag to indicate foreground work has been finished for cycle, must be set after doing work from <see cref="E:GFunctions.Timing.TimeSimulation.SimulationDoWorkRequest"/> eventArgs
+            </summary>
+        </member>
+        <member name="F:GFunctions.Timing.TimeSimulation._stopWatch">
+            <summary>
+            Keeps track of simulation time
+            </summary>
+        </member>
+        <member name="E:GFunctions.Timing.TimeSimulation.SimulationDoWorkRequest">
+            <summary>
+            Fires to indicate the simulation work method should run based on the event
+            </summary>
+        </member>
+        <member name="E:GFunctions.Timing.TimeSimulation.RunFrequencyUpdated">
+            <summary>
+            Fires to indicate the simulation run frequency has been updated. Int value is the current frequency [Hz].
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.TimeSimulation.Running">
+            <summary>
+            True if the simulation is running
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.TimeSimulation.CycleCount">
+            <summary>
+            The number of simulation cycles that have passed since starting
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.TimeSimulation.TargetCycleTime">
+            <summary>
+            The target simulation cycle time increment in ms
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.TimeSimulation.Time">
+            <summary>
+            Elapsed time since the simulation was started
+            </summary>
+        </member>
+        <member name="M:GFunctions.Timing.TimeSimulation.Start(System.Double)">
+            <summary>
+            Start the simulation running
+            </summary>
+            <param name="timeIncrement">The time increment in ms between simulation cycles</param>
+        </member>
+        <member name="M:GFunctions.Timing.TimeSimulation.Stop">
+            <summary>
+            Stop the simulation from running
+            </summary>
+        </member>
+        <member name="M:GFunctions.Timing.TimeSimulation.RunDoWork(System.IProgress{System.Int32},System.IProgress{System.Boolean})">
+            <summary>
+            Runs the simulation in the background thread
+            </summary>
+            <param name="freqCallBack">Callback to indicate when simulation run frequency is updated</param>
+            <param name="workCallBack">Callback to indicate when foreground work should be performed</param>
+        </member>
+        <member name="M:GFunctions.Timing.TimeSimulation.OnWorkCallbackProgress">
+            <summary>
+            Foreground thread - notifies work method to run
+            </summary>
+        </member>
+        <member name="T:GFunctions.Timing.TimeSimulationStepEventArgs">
+            <summary>
+            Arguments for when the <see cref="T:GFunctions.Timing.TimeSimulation"/> work method is called
+            </summary>
+            <param name="timeIncrement">The simulation cycle time [s]</param>
+            <param name="time">Elapsed time since the simulation was started [s]</param>
+            <param name="workDoneCallBack">Callback to indicate the simulation should proceed</param>
+        </member>
+        <member name="M:GFunctions.Timing.TimeSimulationStepEventArgs.#ctor(System.Double,System.Double,System.Threading.ManualResetEvent)">
+            <summary>
+            Arguments for when the <see cref="T:GFunctions.Timing.TimeSimulation"/> work method is called
+            </summary>
+            <param name="timeIncrement">The simulation cycle time [s]</param>
+            <param name="time">Elapsed time since the simulation was started [s]</param>
+            <param name="workDoneCallBack">Callback to indicate the simulation should proceed</param>
+        </member>
+        <member name="F:GFunctions.Timing.TimeSimulationStepEventArgs._workDoneCallback">
+            <summary>
+            The work method should set this callback to indicate that the simulation can proceed with another cycle
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.TimeSimulationStepEventArgs.TimeIncrement">
+            <summary>
+            The simulation cycle time [s]
+            </summary>
+        </member>
+        <member name="P:GFunctions.Timing.TimeSimulationStepEventArgs.Time">
+            <summary>
+            Elapsed time since the simulation was started [s]
+            </summary>
+        </member>
+        <member name="M:GFunctions.Timing.TimeSimulationStepEventArgs.FlagWorkDone">
+            <summary>
+            The work method should call this method when all work is done to indicate that the simulation can proceed with another cycle
             </summary>
         </member>
     </members>

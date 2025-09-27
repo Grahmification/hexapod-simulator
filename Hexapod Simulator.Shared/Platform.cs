@@ -10,10 +10,10 @@ namespace Hexapod_Simulator.Shared
     {
         private double _radius = 1; //radius of joints [mm]
         private double _jointAngle = 0; //angle of base nodes from 120 [deg]
-        private double[] _defaultPos = [0, 0, 0]; //Default starting position (X, Y, Z) [mm]
-        private double[] _translation = [0, 0, 0]; //Platform translation (X, Y, Z) [mm]
-        private double[] _rotation = [0, 0, 0]; //Platform rotation (Pitch, Roll, Yaw) [deg]
-        private double[] _rotationCenter = [0, 0, 0]; //Platform relative rotation center (x,y,z) [mm]     
+        private Vector3 _defaultPos = new(); //Default starting position (X, Y, Z) [mm]
+        private Vector3 _translation = new(); //Platform translation (X, Y, Z) [mm]
+        private RotationPRY _rotation = new(); //Platform rotation (Pitch, Roll, Yaw) [deg]
+        private Vector3 _rotationCenter = new(); //Platform relative rotation center (x,y,z) [mm]
         private bool _fixedRotationCenter = false; //if false, rotation center moves to follow translation
 
         //----------- Public get + set properties ----------------------
@@ -56,27 +56,27 @@ namespace Hexapod_Simulator.Shared
         /// <summary>
         /// XYZ position [mm] of each joint, without translation/rotation 
         /// </summary>
-        public double[][] LocalJointCoords { get; private set; } = new double[6][];
+        public Vector3[] LocalJointCoords { get; private set; } = new Vector3[6];
 
         /// <summary>
         /// XYZ position [mm] of each joint
         /// </summary>
-        public double[][] GlobalJointCoords { get; private set; } = new double[6][];
+        public Vector3[] GlobalJointCoords { get; private set; } = new Vector3[6];
 
         /// <summary>
         /// The platform target translation (X, Y, Z) [mm]
         /// </summary>
-        public double[] TranslationTarget { get; private set; } = [0, 0, 0];
+        public Vector3 TranslationTarget { get; private set; } = new();
 
         /// <summary>
         /// The platform target rotation (Pitch, Roll, Yaw) [deg]
         /// </summary>
-        public double[] RotationTarget { get; private set; } = [0, 0, 0];
+        public RotationPRY RotationTarget { get; private set; } = new();
 
         /// <summary>
         /// Default center position of the platform with no translation
         /// </summary>
-        public double[] DefaultPos
+        public Vector3 DefaultPos
         {
             get { return _defaultPos; }
             private set { _defaultPos = value; CalcGlobalCoords(); }
@@ -85,7 +85,7 @@ namespace Hexapod_Simulator.Shared
         /// <summary>
         /// The actual platform translation (may be different than target if mode isn't instant)
         /// </summary>
-        public double[] Translation
+        public Vector3 Translation
         {
             get { return _translation; }
             private set { _translation = value; CalcGlobalCoords(); }
@@ -94,7 +94,7 @@ namespace Hexapod_Simulator.Shared
         /// <summary>
         /// The actual platform rotation (Pitch, Roll, Yaw) [deg], may be different than target if mode isn't instant
         /// </summary>
-        public double[] Rotation
+        public RotationPRY Rotation
         {
             get { return _rotation; }
             private set { _rotation = value; CalcGlobalCoords(); }
@@ -103,23 +103,11 @@ namespace Hexapod_Simulator.Shared
         /// <summary>
         /// Rotation including translation if <see cref="FixedRotationCenter"/> is false
         /// </summary>
-        public double[] RotationCenter
+        public Vector3 RotationCenter
         {
             get
             {
-                if (_fixedRotationCenter)
-                {
-                    return _rotationCenter;
-                }
-                else
-                {
-                    var output = new double[] { 0, 0, 0 };
-                    for (int i = 0; i < Translation.Length; i++)
-                    {
-                        output[i] = _rotationCenter[i] + Translation[i];
-                    }
-                    return output;
-                }
+                return _fixedRotationCenter ? _rotationCenter : _rotationCenter + Translation;
             }
             private set
             {
@@ -131,43 +119,17 @@ namespace Hexapod_Simulator.Shared
         /// <summary>
         /// Absolute center position of the platform (default offset + translation), (X, Y, Z) [mm]
         /// </summary>
-        public double[] Position
-        {
-            get
-            {
-                var output = new double[] { 0, 0, 0 };
-
-                for (int i = 0; i < Translation.Length; i++)
-                {
-                    output[i] = Translation[i] + DefaultPos[i];
-                }
-
-                return output;
-            }
-        }
+        public Vector3 Position => Translation + DefaultPos;
 
         /// <summary>
         /// The absolute rotation center position (default offset + rotation center), (X, Y, Z) [mm]
         /// </summary>
-        public double[] AbsRotationCenter
-        {
-            get
-            {
-                var output = new double[] { 0, 0, 0 };
-
-                for (int i = 0; i < Translation.Length; i++)
-                {
-                    output[i] = RotationCenter[i] + DefaultPos[i];
-                }
-
-                return output;
-            }
-        }
+        public Vector3 AbsRotationCenter => RotationCenter + DefaultPos;
 
         /// <summary>
         /// The unit vector of platform normal direction (x,y,z)
         /// </summary>
-        public double[] NormalVector { get; private set; } = [0, 0, 1];
+        public Vector3 NormalVector { get; private set; } = new(0, 0, 1);
 
         //----------- Events ----------------------
 
@@ -188,7 +150,7 @@ namespace Hexapod_Simulator.Shared
 
         //----------- Public Methods ----------------------
 
-        public Platform(string name, double radius, double jointAngle, double[]? defaultPos = null)
+        public Platform(string name, double radius, double jointAngle, Vector3? defaultPos = null)
         {
             //------------- Initialize Everything ------------------------
             Name = name;
@@ -203,7 +165,7 @@ namespace Hexapod_Simulator.Shared
         /// Translates the platform to the given absolute position
         /// </summary>
         /// <param name="position">X,Y,Z position [mm]</param>
-        public void TranslateAbs(double[] position)
+        public void TranslateAbs(Vector3 position)
         {
             TranslationTarget = position;
 
@@ -215,16 +177,9 @@ namespace Hexapod_Simulator.Shared
         /// Translates the platform to the given relative position
         /// </summary>
         /// <param name="position">X,Y,Z position [mm]</param>
-        public void TranslateRel(double[] position)
+        public void TranslateRel(Vector3 position)
         {
-            double[] newPos = [0, 0, 0];
-
-            for (int i = 0; i < Translation.Length; i++)
-            {
-                newPos[i] = Translation[i] + position[i];
-            }
-
-            TranslationTarget = newPos;
+            TranslationTarget = Translation + position;
 
             if (TranslationMode == TranslationModes.Instant)
                 Translation = TranslationTarget;
@@ -234,7 +189,7 @@ namespace Hexapod_Simulator.Shared
         /// Translates the platform to the given absolute angle
         /// </summary>
         /// <param name="rotation">Pitch, Roll, Yaw rotation [deg]</param>
-        public void RotateAbs(double[] rotation)
+        public void RotateAbs(RotationPRY rotation)
         {
             RotationTarget = rotation;
 
@@ -248,7 +203,7 @@ namespace Hexapod_Simulator.Shared
         /// <param name="radius">Radius of the platform joints [mm]</param>
         /// <param name="jointAngle">The angle of base nodes from an even 120 [deg]</param>
         /// <param name="defaultPos">Default center position of the platform with no translation</param>
-        public void UpdateConfig(double radius, double jointAngle, double[]? defaultPos)
+        public void UpdateConfig(double radius, double jointAngle, Vector3? defaultPos)
         {
             _radius = radius;
             _jointAngle = jointAngle;
@@ -266,7 +221,7 @@ namespace Hexapod_Simulator.Shared
         /// </summary>
         /// <param name="position">Position of the rotation center (x,y,z) [mm]</param>
         /// <param name="fixedPosition">Whether the rotation center translates with the platform</param>
-        public void UpdateRotationCenter(double[] position, bool fixedPosition)
+        public void UpdateRotationCenter(Vector3 position, bool fixedPosition)
         {
             _fixedRotationCenter = fixedPosition;
             RotationCenter = position; //will also re-calculate coords
@@ -277,11 +232,11 @@ namespace Hexapod_Simulator.Shared
         /// </summary>
         public void ResetPosition()
         {
-            TranslationTarget = [0, 0, 0];
-            RotationTarget = [0, 0, 0];
+            TranslationTarget = new(0, 0, 0);
+            RotationTarget = new(0, 0, 0);
 
-            Translation = [0, 0, 0];
-            Rotation = [0, 0, 0];
+            Translation = new(0, 0, 0);
+            Rotation = new(0, 0, 0);
 
             // Reset the servo controllers in case the integral is wound up.
             InitializeServoControllers();
@@ -299,21 +254,23 @@ namespace Hexapod_Simulator.Shared
         {
             //--------------------- Position ------------------------------
             double[] translation = [0, 0, 0];
+            double[] distanceError = (TranslationTarget - Translation).ToArray();
 
-            for (int i = 0; i < TranslationTarget.Length; i++)
+            for (int i = 0; i < translation.Length; i++)
             {
-                translation[i] = _positionControllers[i].CalculateOutput(TranslationTarget[i] - Translation[i], timeStep);
+                translation[i] = _positionControllers[i].CalculateOutput(distanceError[i], timeStep);
             }
-            _translation = translation;
+            _translation = new(translation);
 
             //--------------------- Rotation ------------------------------
             double[] rotation = [0, 0, 0];
+            double[] rotationError = (RotationTarget - Rotation).ToArray();
 
-            for (int i = 0; i < RotationTarget.Length; i++)
+            for (int i = 0; i < rotation.Length; i++)
             {
-                rotation[i] = _rotationControllers[i].CalculateOutput(RotationTarget[i] - Rotation[i], timeStep);
+                rotation[i] = _rotationControllers[i].CalculateOutput(rotationError[i], timeStep);
             }
-            _rotation = rotation;
+            _rotation = new(rotation);
 
             //----------- Cleanup ------------------------------------------
 
@@ -327,8 +284,8 @@ namespace Hexapod_Simulator.Shared
             // Need controllers for X,Y,Z and P,R,Y
             for (int i = 0; i < 3; i++)
             {
-                _positionControllers.Add(new PIDController(-1, 0.5, 3, 0));
-                _rotationControllers.Add(new PIDController(-1, 0.5, 3, 0));
+                _positionControllers.Add(new PIDController(0.5, 3, 0) { Gain = -1});
+                _rotationControllers.Add(new PIDController(0.5, 3, 0) { Gain = -1});
             }
         }
 
@@ -348,7 +305,7 @@ namespace Hexapod_Simulator.Shared
         /// </summary>
         /// <param name="localcoord">Local [X,Y,Z] coordinates, relative to the platform center</param>
         /// <returns>Global coordinates, including translation and rotation</returns>
-        public double[] CalcGlobalCoord(double[] localcoord)
+        public Vector3 CalcGlobalCoord(Vector3 localcoord)
         {
             return KinematicMath.CalcGlobalCoord2(localcoord, Translation, DefaultPos, Rotation, RotationCenter);
         }
@@ -368,7 +325,7 @@ namespace Hexapod_Simulator.Shared
         }
         private void CalcNormalVector()
         {
-            double[] normal = [0, 0, 1]; //local vector without rotation
+            Vector3 normal = new(0, 0, 1); //local vector without rotation
             NormalVector = KinematicMath.RotateVector(normal, Rotation);
         }
 
@@ -402,9 +359,9 @@ namespace Hexapod_Simulator.Shared
         /// <param name="offsetAngle">The angle offset from nominal 120 degrees</param>
         /// <param name="radius">The platform radius</param>
         /// <returns>X,Y,Z coordinates of each joint, sorted by joint index</returns>
-        public static double[][] CalcLocalCoords(double offsetAngle, double radius)
+        public static Vector3[] CalcLocalCoords(double offsetAngle, double radius)
         {
-            var output = new double[6][];
+            var output = new Vector3[6];
 
             for (int i = 0; i < 6; i++)
                 output[i] = CalcLocalCoord(i, offsetAngle, radius);
@@ -420,7 +377,7 @@ namespace Hexapod_Simulator.Shared
         /// <param name="radius">The platform radius</param>
         /// <returns>X,Y,Z coordinates of the joint</returns>
         /// <exception cref="IndexOutOfRangeException"></exception>
-        private static double[] CalcLocalCoord(int index, double offsetAngle, double radius)
+        private static Vector3 CalcLocalCoord(int index, double offsetAngle, double radius)
         {
             if (index < 0 || index > 5)
                 throw new IndexOutOfRangeException("Index out of range when grabbing local hexapod coords.");
@@ -429,8 +386,7 @@ namespace Hexapod_Simulator.Shared
             double X = Math.Cos(angle * Math.PI / 180.0) * radius;
             double Y = Math.Sin(angle * Math.PI / 180.0) * radius;
 
-            double[] output =  [X, Y, 0];
-            return output;
+            return new(X, Y, 0);
         }
     }
 }

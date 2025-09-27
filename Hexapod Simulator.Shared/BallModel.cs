@@ -62,35 +62,21 @@ namespace Hexapod_Simulator.Shared
             double mass = Mass;
             Vector3 gravityForceVector = new(0, 0, -9.81 * mass * 100);
 
-            double stepSize = 0.01; //initial change to test
-            double maxSteps = 100;
-            double errorTolerance = 0.01;
-
-            double startingValue = _normalForce; //starting guess
-            double prevError = CalcAccelVectorError(CalcAccelVector(gravityForceVector, normalForceVector, startingValue, mass), normalForceVector);
-            double newError = 0;
-            double ratio = 0;
-
-            for (int i = 0; i < maxSteps; i++)
+            // Note: Solver declaration could be moved to save resources
+            double errorFunc(double x) => CalcAccelVectorError(CalcAccelVector(gravityForceVector, normalForceVector, x, mass), normalForceVector);
+            IterativeSolver kineticSolver = new(errorFunc)
             {
-                // Valid solution
-                if (Math.Abs(prevError) <= errorTolerance)
-                {
-                    Acceleration = CalcAccelVector(gravityForceVector, normalForceVector, _normalForce, mass);
-                    return;
-                }
+                InitialStepSize = 0.01,
+                MaxSteps = 100,
+                SuccessErrorThreshold = 0.01
+            };
 
-                _normalForce += stepSize; // Change by the stepsize
+            _normalForce = kineticSolver.Solve(_normalForce);
 
-                newError = CalcAccelVectorError(CalcAccelVector(gravityForceVector, normalForceVector, _normalForce, mass), normalForceVector);
-
-                ratio = (prevError - newError) / stepSize; // Ratio between change in k and error
-                stepSize = newError / (ratio * 2.0);
-                prevError = newError;
+            if (kineticSolver.SolutionValid)
+            {
+                Acceleration = CalcAccelVector(gravityForceVector, normalForceVector, _normalForce, mass);
             }
-
-            _normalForce = startingValue; // Solution has failed. Reset to starting. 
-
         } //iterative solution
         private static Vector3 CalcAccelVector(Vector3 gravityForceVector, Vector3 normalForceVector, double normalForce, double mass)
         {
